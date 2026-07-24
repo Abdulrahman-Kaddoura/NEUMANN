@@ -14,26 +14,48 @@
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
 
-        function Product({ text, price, discountprice }) {
+        function Counter({ count, setCount }) {
+
+
+            function incCount() {
+                setCount(count + 1);
+            }
+
             return (
                 <>
-                    <p>{text}</p>
-                    
-                    {discountprice ? <><del>Price: {price}</del> <p>Discount: {discountprice}</p></> : <p>Price: {price}</p>}
-                    <button>Add to cart</button>
+                    <button onClick={incCount}>Clicked {count} {count === 1 ? 'time' : 'times'}</button>
                 </>
+            );
+        }
+
+        function Reset({ count, setCount }) {
+            function resetCount() {
+                setCount(0);
+            }
+
+            return (
+                <button onClick={resetCount}>Reset</button>
             );
         }
 
 
 
         function App() {
+            const [count, setCount] = React.useState(0);
             return (
                 <>
-                    <Product text='Socks' price='$10.9' discountprice='$5'/>
-                    <br />
-                    <br />
-                    <Product text='Tennis' price='$1.9' />
+                    <Counter
+                        count={count}
+                        setCount={setCount}
+                    />
+                    <Counter
+                        count={count}
+                        setCount={setCount}
+                    />
+                    <Reset
+                        count={count}
+                        setCount={setCount}
+                    />
                 </>
             );
         }
