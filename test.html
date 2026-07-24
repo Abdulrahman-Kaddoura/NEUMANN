@@ -14,47 +14,57 @@
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
 
-        function Counter({ count, setCount }) {
+        function InputText({ text, setText }) {
 
 
-            function incCount() {
-                setCount(count + 1);
+            function saveText(event) {
+                setText(event.target.value);
             }
 
             return (
                 <>
-                    <button onClick={incCount}>Clicked {count} {count === 1 ? 'time' : 'times'}</button>
+                    <input
+                        placeholder="Enter text"
+                        onChange={saveText}
+                        value={text}
+                    />
+                    <p>{text}</p>
                 </>
             );
         }
 
-        function Reset({ count, setCount }) {
-            function resetCount() {
-                setCount(0);
+        function Reset({ setText }) {
+            function resetText() {
+                setText('');
             }
 
             return (
-                <button onClick={resetCount}>Reset</button>
+                <button onClick={resetText}>Reset</button>
             );
         }
 
-
+        function Example({ setText }) {
+            function setExample() {
+                setText("Example text here");
+            }
+            return (
+                <button onClick={setExample}>Example</button>
+            );
+        }
 
         function App() {
-            const [count, setCount] = React.useState(0);
+            const [text, setText] = React.useState('');
             return (
                 <>
-                    <Counter
-                        count={count}
-                        setCount={setCount}
-                    />
-                    <Counter
-                        count={count}
-                        setCount={setCount}
+                    <InputText
+                        text={text}
+                        setText={setText}
                     />
                     <Reset
-                        count={count}
-                        setCount={setCount}
+                        setText={setText}
+                    />
+                    <Example
+                        setText={setText}
                     />
                 </>
             );
