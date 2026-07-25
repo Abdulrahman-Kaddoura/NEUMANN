@@ -3,6 +3,27 @@
 
 <head>
     <title>Hello World</title>
+    <style>
+        .button-on {
+            background-color: green;
+            border-radius: 5px;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-family: Arial;
+            cursor: pointer;
+        }
+
+        .button-off {
+            background-color: red;
+            border-radius: 5px;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-family: Arial;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -13,59 +34,21 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
-
-        function InputText({ text, setText }) {
-
-
-            function saveText(event) {
-                setText(event.target.value);
-            }
-
-            return (
-                <>
-                    <input
-                        placeholder="Enter text"
-                        onChange={saveText}
-                        value={text}
-                    />
-                    <p>{text}</p>
-                </>
-            );
-        }
-
-        function Reset({ setText }) {
-            function resetText() {
-                setText('');
-            }
-
-            return (
-                <button onClick={resetText}>Reset</button>
-            );
-        }
-
-        function Example({ setText }) {
-            function setExample() {
-                setText("Example text here");
+        function Button() {
+            const [isButtonOn, setIsButtonOn] = React.useState("ON");
+            function toggleMode() {
+                isButtonOn === "ON" ? setIsButtonOn("OFF") : setIsButtonOn("ON");
             }
             return (
-                <button onClick={setExample}>Example</button>
-            );
+                <button className={isButtonOn === "ON" ? 'button-on' : 'button-off'} onClick={toggleMode}>{isButtonOn}</button>
+            );  
         }
+    
 
         function App() {
-            const [text, setText] = React.useState('');
             return (
                 <>
-                    <InputText
-                        text={text}
-                        setText={setText}
-                    />
-                    <Reset
-                        setText={setText}
-                    />
-                    <Example
-                        setText={setText}
-                    />
+                    <Button />
                 </>
             );
         }
