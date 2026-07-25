@@ -1,71 +1,57 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <title>Hello World</title>
-    <style>
-        .input-fields {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .input-fields input {
-            max-width: 200px;
-            margin: 10px 10px;
-            border-radius: 3px;
-            padding: 5px 10px;
-            border: 1px solid black;
-        }
-
-        .submits button {
-            color: white;
-            background-color: blue;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            margin-left: 5px;
-        }
-    </style>
-</head>
-
-<body>
+  <head>
+    <title>React Basics</title>
+  </head>
+  <body>
     <div class="js-container"></div>
 
     <script src="https://unpkg.com/supersimpledev/react.js"></script>
     <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
 
-    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
-
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
+      function App() {
+        const [count, setCount] = React.useState(0);
+        const buttonRef = React.useRef();
 
-        function Clock() {
-
-            React.useEffect(() => {
-                setInterval(() => {
-                    setTime(dayjs().format('HH:mm:ss'));
-                }, 1000)
-            }, []);
-
-            const [time, setTime] = React.useState(dayjs().format('HH:mm:ss'));
-
-            return (
-                <p>{time}</p>
-            );
+        function increaseCount() {
+          setCount(count + 1);
         }
 
-        function App() {
-            return (
-                <>
-                    <Clock />
-                </>
-            );
+        function resetCount() {
+          setCount(0);
         }
 
-        const container = document.querySelector('.js-container');
-        const root = ReactDOM.createRoot(container);
-        root.render(<App />);
+        function autoClick() {
+          setInterval(() => {
+            const buttonElem = buttonRef.current;
+            if (buttonElem) {
+              buttonElem.click();
+            }
+          }, 1000);
+        }
+
+        return (
+          <>
+            <button
+              onClick={increaseCount}
+              ref={buttonRef}
+            >
+              Clicked {count} {count === 1 ? 'time' : 'times'}
+            </button>
+            <button onClick={resetCount}>
+              Reset
+            </button>
+            <button onClick={autoClick}>
+              Auto Click
+            </button>
+          </>
+        );
+      }
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App />);
     </script>
-</body>
-
+  </body>
 </html>
