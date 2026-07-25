@@ -9,6 +9,17 @@
   cursor: pointer;
 }
 
+.clear-button {
+  background-color: blue;
+  color: white;
+  padding: 12px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
 .input-container {
   display: flex;
   margin-bottom: 60px;
