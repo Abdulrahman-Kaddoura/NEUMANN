@@ -34,44 +34,30 @@
     <script src="https://unpkg.com/supersimpledev/react.js"></script>
     <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
 
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
-        function Welcome() {
-            return (
-                <p>Welcome to website</p>
-            );
-        }
 
-        function LoginFields() {
-            const [isPass, setIsPass] = React.useState("password");
+        function Clock() {
 
-            function togglePass() {
-                isPass === "password" ? setIsPass("text") : setIsPass("password");
-            }
+            React.useEffect(() => {
+                setInterval(() => {
+                    setTime(dayjs().format('HH:mm:ss'));
+                }, 1000)
+            }, []);
+
+            const [time, setTime] = React.useState(dayjs().format('HH:mm:ss'));
 
             return (
-                <>
-                    <div className="input-fields">
-                        <input placeholder="Email" />
-                        <div className="password-container">
-                            <input type={isPass} placeholder="Password" />
-                            <button onClick={togglePass}>Show</button>
-                        </div>
-                    </div>
-                    <div className="submits">
-                        <button>Login</button>
-                        <button>Signup</button>
-                    </div>
-                </>
+                <p>{time}</p>
             );
         }
-
 
         function App() {
             return (
                 <>
-                    <Welcome />
-                    <LoginFields />
+                    <Clock />
                 </>
             );
         }
