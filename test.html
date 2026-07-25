@@ -4,24 +4,26 @@
 <head>
     <title>Hello World</title>
     <style>
-        .button-on {
-            background-color: green;
-            border-radius: 5px;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            font-family: Arial;
-            cursor: pointer;
+        .input-fields {
+            display: flex;
+            flex-direction: column;
         }
 
-        .button-off {
-            background-color: red;
-            border-radius: 5px;
+        .input-fields input {
+            max-width: 200px;
+            margin: 10px 10px;
+            border-radius: 3px;
+            padding: 5px 10px;
+            border: 1px solid black;
+        }
+
+        .submits button {
             color: white;
-            padding: 10px 20px;
+            background-color: blue;
             border: none;
-            font-family: Arial;
-            cursor: pointer;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-left: 5px;
         }
     </style>
 </head>
@@ -34,21 +36,42 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
-        function Button() {
-            const [isButtonOn, setIsButtonOn] = React.useState("ON");
-            function toggleMode() {
-                isButtonOn === "ON" ? setIsButtonOn("OFF") : setIsButtonOn("ON");
-            }
+        function Welcome() {
             return (
-                <button className={isButtonOn === "ON" ? 'button-on' : 'button-off'} onClick={toggleMode}>{isButtonOn}</button>
-            );  
+                <p>Welcome to website</p>
+            );
         }
-    
+
+        function LoginFields() {
+            const [isPass, setIsPass] = React.useState("password");
+
+            function togglePass() {
+                isPass === "password" ? setIsPass("text") : setIsPass("password");
+            }
+
+            return (
+                <>
+                    <div className="input-fields">
+                        <input placeholder="Email" />
+                        <div className="password-container">
+                            <input type={isPass} placeholder="Password" />
+                            <button onClick={togglePass}>Show</button>
+                        </div>
+                    </div>
+                    <div className="submits">
+                        <button>Login</button>
+                        <button>Signup</button>
+                    </div>
+                </>
+            );
+        }
+
 
         function App() {
             return (
                 <>
-                    <Button />
+                    <Welcome />
+                    <LoginFields />
                 </>
             );
         }
