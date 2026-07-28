@@ -1,4 +1,4 @@
-import { Header } from '../components/Header';
+import { Header } from '../components/Header.jsx';
 import { products } from '../../starting/data/products.js'
 import './HomePage.css';
 
