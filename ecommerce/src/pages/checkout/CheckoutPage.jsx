@@ -17,9 +17,12 @@ export function CheckoutPage({ cart }) {
 
         getDeliveryOptions();
 
-        axios.get('/api/payment-summary').then((response) => {
+        const getPaymentSummary = async () => {
+            const response = axios.get('/api/payment-summary');
             setPaymentSummary(response.data);
-        });
+        }
+
+        getPaymentSummary();
     }, []);
 
     return (
