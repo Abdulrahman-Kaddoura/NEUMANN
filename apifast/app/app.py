@@ -19,7 +19,7 @@ async def upload_file(
     caption: str = Form(""),
     session: AsyncSession = Depends(get_async_session)
 ): 
-    post = POST(
+    post = Post(
         caption=caption,
         url="dummyurl",
         file_type="photo",
@@ -36,7 +36,7 @@ async def get_feed(session: AsyncSession = Depends(get_async_session)):
     posts = [row[0] for row in result.all()]
 
     posts_data = []
-    for post in posts[]:
+    for post in posts:
         posts_data.append(
             {
                 "id": str(post.id),
