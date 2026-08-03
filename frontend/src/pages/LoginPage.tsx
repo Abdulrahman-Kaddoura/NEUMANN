@@ -10,11 +10,11 @@ export function LoginPage() {
                 <form className="login-submission">
                     <div className="form-group">
 
-                        <label htmlFor="username">Username</label>
+                        <label htmlFor="email">Email</label>
                         <input
-                            id="username"
+                            id="email"
                             type="text"
-                            placeholder="Enter username"
+                            placeholder="Enter email"
                         />
                     </div>
 

@@ -9,12 +9,20 @@ export function SignUpPage() {
 
                 <form className="login-submission">
                     <div className="form-group">
-
-                        <label htmlFor="username">Username</label>
+                        <label htmlFor="username">Email</label>
                         <input
-                            id="username"
+                            id="email"
                             type="text"
-                            placeholder="Enter username"
+                            placeholder="Enter email"
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="name">Name</label>
+                        <input
+                            id="name"
+                            type="text"
+                            placeholder="Enter name"
                         />
                     </div>
 
@@ -27,16 +35,23 @@ export function SignUpPage() {
                         />
                     </div>
 
+                    <div className="form-group">
+                        <label htmlFor="confirm-password">Confirm Password</label>
+                        <input
+                            id="confirm-password"
+                            type="password"
+                            placeholder="Confirm password"
+                        />
+                    </div>
+
                     <div className="login-options">
                         <label className="remember-me">
                             <input type="checkbox" />
-                            Remember me
+                            I agree to the <Link to="/terms">terms and conditions</Link>
                         </label>
+                        </div>
 
-                        <Link to="/forgot-password">Forgot password?</Link>
-                    </div>
-
-                    <button type="submit">Login</button>
+                    <button type="submit">Create Account</button>
 
                     <p className="signup-link">Have an account? <Link to="/login">Login</Link></p>
                 </form>
