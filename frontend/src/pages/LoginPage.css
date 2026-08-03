@@ -9,7 +9,7 @@ body {
     align-items: center;
     min-height: 100vh;
     font-family: Arial;
-    background-color: rgb(190, 187, 187);
+    background: linear-gradient(135deg, #6984f9, #95c2f5);
 }
 
 .login-container {
