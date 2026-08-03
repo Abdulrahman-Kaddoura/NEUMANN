@@ -15,6 +15,7 @@ export function LoginPage() {
                             id="email"
                             type="text"
                             placeholder="Enter email"
+                            required
                         />
                     </div>
 
@@ -24,6 +25,7 @@ export function LoginPage() {
                             id="password"
                             type="password"
                             placeholder="Enter password"
+                            required
                         />
                     </div>
 

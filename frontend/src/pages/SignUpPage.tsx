@@ -1,19 +1,35 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
 import './SignUpPage.css'
 
 export function SignUpPage() {
+    const [pass, setPass] = useState("");
+    const [confirmPass, setConfirmPass] = useState("");
+    const [error, setError] = useState("");
+
+    function checkPass(event: React.SubmitEvent<HTMLFormElement>) {
+        event.preventDefault();
+        if (pass !== confirmPass) {
+            setError("Passwords do not match");
+            return;
+        }
+
+        setError("");
+    }
+
     return (
         <div className="login-wrapper">
             <div className='login-container'>
                 <h1>Sign Up</h1>
 
-                <form className="login-submission">
+                <form onSubmit={checkPass} className="login-submission">
                     <div className="form-group">
                         <label htmlFor="username">Email</label>
                         <input
                             id="email"
                             type="text"
                             placeholder="Enter email"
+                            required
                         />
                     </div>
 
@@ -23,6 +39,7 @@ export function SignUpPage() {
                             id="name"
                             type="text"
                             placeholder="Enter name"
+                            required
                         />
                     </div>
 
@@ -32,6 +49,10 @@ export function SignUpPage() {
                             id="password"
                             type="password"
                             placeholder="Enter password"
+                            required
+                            onChange={(e) => {
+                                setPass(e.target.value);
+                            }}
                         />
                     </div>
 
@@ -41,15 +62,21 @@ export function SignUpPage() {
                             id="confirm-password"
                             type="password"
                             placeholder="Confirm password"
+                            required
+                            onChange={(e) => {
+                                setConfirmPass(e.target.value);
+                            }}
                         />
                     </div>
 
+                    {error && <p style={{color: 'red'}}>{error}</p>}
+
                     <div className="login-options">
                         <label className="remember-me">
-                            <input type="checkbox" />
+                            <input type="checkbox" required />
                             I agree to the <Link to="/terms">terms and conditions</Link>
                         </label>
-                        </div>
+                    </div>
 
                     <button type="submit">Create Account</button>
 

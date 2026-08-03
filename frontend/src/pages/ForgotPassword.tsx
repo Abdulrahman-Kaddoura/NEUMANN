@@ -13,6 +13,7 @@ export function ForgotPassword() {
                             id="email"
                             type="text"
                             placeholder="Enter email"
+                            required
                         />
                     </div>
 
