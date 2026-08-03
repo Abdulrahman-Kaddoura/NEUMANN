@@ -3,6 +3,7 @@ import { LoginPage } from './pages/LoginPage';
 import { Unknown } from './pages/Unknown';
 import { SignUpPage } from './pages/SignUpPage';
 import { Terms } from './pages/Terms';
+import { ForgotPassword } from './pages/ForgotPassword';
 import './App.css'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <Route path="/login" element={<LoginPage />}/>
       <Route path="/signup" element={<SignUpPage />}/>
       <Route path="/terms" element={<Terms />}/>
+      <Route path="/forgot-password" element={<ForgotPassword />}/>
       <Route path="*" element={<Unknown />}/>
     </Routes> 
   )
