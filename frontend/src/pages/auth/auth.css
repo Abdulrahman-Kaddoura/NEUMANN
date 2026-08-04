@@ -35,10 +35,12 @@ body {
 }
 
 .login-options {
+    margin: 20px;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    padding-left: 10px;
-    padding-right: 10px;
+    align-items: center;
+    text-align: left;
 }
 
 .login-submission {
