@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
+import EyeIcon from '../../assets/eye.svg';
 import './auth.css'
 
 export function SignUpPage() {
     const [pass, setPass] = useState("");
     const [confirmPass, setConfirmPass] = useState("");
     const [error, setError] = useState("");
+    const [showPass, setShowPass] = useState(false);
+    const [showConfirmPass, setShowConfirmPass] = useState(false);
 
     function checkPass(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -46,28 +49,46 @@ export function SignUpPage() {
 
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input
-                            id="password"
-                            type="password"
-                            placeholder="Enter password"
-                            required
-                            onChange={(e) => {
-                                setPass(e.target.value);
-                            }}
-                        />
+                        <div className='password-input'>
+                            <input
+                                id="password"
+                                type={showPass ? "text" : "password"}
+                                placeholder="Enter password"
+                                required
+                                onChange={(e) => {
+                                    setPass(e.target.value);
+                                }}
+                            />
+                            <button
+                                type="button"
+                                className="reveal-pass"
+                                onClick={() => setShowPass((v) => !v)}
+                            >
+                                <img className="eye-icon" src={EyeIcon} />
+                            </button>
+                        </div>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="confirm-password">Confirm Password</label>
-                        <input
-                            id="confirm-password"
-                            type="password"
-                            placeholder="Confirm password"
-                            required
-                            onChange={(e) => {
-                                setConfirmPass(e.target.value);
-                            }}
-                        />
+                        <div className='password-input'>
+                            <input
+                                id="confirm-password"
+                                type={showConfirmPass ? "text" : "password"}
+                                placeholder="Confirm password"
+                                required
+                                onChange={(e) => {
+                                    setConfirmPass(e.target.value);
+                                }}
+                            />
+                            <button
+                                type="button"
+                                className="reveal-pass"
+                                onClick={() => setShowConfirmPass((v) => !v)}
+                            >
+                                <img className="eye-icon" src={EyeIcon} />
+                            </button>
+                        </div>
                     </div>
 
                     {error && <p style={{ color: 'red' }}>{error}</p>}
