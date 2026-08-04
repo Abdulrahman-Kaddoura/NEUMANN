@@ -8,7 +8,6 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    font-family: Arial;
     background: linear-gradient(135deg, #6984f9, #95c2f5);
 }
 

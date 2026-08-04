@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router';
-import { LoginPage } from './pages/LoginPage';
+import { LoginPage } from './pages/auth/LoginPage';
 import { Unknown } from './pages/Unknown';
-import { SignUpPage } from './pages/SignUpPage';
+import { SignUpPage } from './pages/auth/SignUpPage';
 import { Terms } from './pages/Terms';
-import { ForgotPassword } from './pages/ForgotPassword';
+import { ForgotPassword } from './pages/auth/ForgotPassword';
 import './App.css'
 
 function App() {

@@ -1,5 +1,8 @@
 export function Unknown() {
     return (
-        <p>404 Page Not Found</p>
+        <>
+            <title>404</title>
+            <p>404 Page Not Found</p>
+        </>
     );
 }

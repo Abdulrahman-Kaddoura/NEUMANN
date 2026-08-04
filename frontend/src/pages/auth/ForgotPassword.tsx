@@ -1,8 +1,10 @@
 import { Link } from "react-router";
+import './auth.css'
 
 export function ForgotPassword() {
     return (
         <div className="login-wrapper">
+            <title>Reset Password</title>
             <div className='login-container'>
                 <h1>Reset Password</h1>
 

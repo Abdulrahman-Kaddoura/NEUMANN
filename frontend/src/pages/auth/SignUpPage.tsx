@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import './SignUpPage.css'
+import './auth.css'
 
 export function SignUpPage() {
     const [pass, setPass] = useState("");
@@ -19,6 +19,7 @@ export function SignUpPage() {
 
     return (
         <div className="login-wrapper">
+            <title>SignUp</title>
             <div className='login-container'>
                 <h1>Sign Up</h1>
 
@@ -69,7 +70,7 @@ export function SignUpPage() {
                         />
                     </div>
 
-                    {error && <p style={{color: 'red'}}>{error}</p>}
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
 
                     <div className="login-options">
                         <label className="remember-me">

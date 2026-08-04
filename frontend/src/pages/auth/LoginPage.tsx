@@ -1,9 +1,10 @@
 import { Link } from 'react-router';
-import './LoginPage.css'
+import './auth.css'
 
 export function LoginPage() {
     return (
         <div className="login-wrapper">
+            <title>Login</title>
             <div className='login-container'>
                 <h1>Login</h1>
 
