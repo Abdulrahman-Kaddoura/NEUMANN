@@ -5,6 +5,16 @@
     background: #1e2a4a;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+    width: 0;
+}
+
+.sidebar.collapsed > * {
+    opacity: 0;
 }
 
 .title {

@@ -2,10 +2,14 @@ import CollapseIcon from '../assets/collapse.svg';
 import PfpIcon from '../assets/pfp.svg';
 import './Navbar.css'
 
-export function Navbar() {
+interface NavbarProps {
+    setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export function Navbar({ setVisible }: NavbarProps) {
     return (
         <nav>
-            <button className="collapser">
+            <button className="collapser" onClick={() => setVisible(v => !v)}>
                 <img className="collapse-icon" src={CollapseIcon} alt="Collapse sidebar" />
             </button>
 
