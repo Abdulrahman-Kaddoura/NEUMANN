@@ -1,14 +1,22 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import type { FormEvent } from 'react';
 import './auth.css'
 
 export function LoginPage() {
+    const navigate = useNavigate();
+
+    function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        navigate('/dashboard');
+    }
+
     return (
         <div className="login-wrapper">
             <title>Login</title>
             <div className='login-container'>
                 <h1>Login</h1>
 
-                <form className="login-submission">
+                <form className="login-submission" onSubmit={handleSubmit}>
                     <div className="form-group">
 
                         <label htmlFor="email">Email</label>

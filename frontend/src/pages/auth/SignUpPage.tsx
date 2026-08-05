@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router';
+import type { FormEvent } from 'react';
+import { Link, useNavigate } from 'react-router';
 import EyeIcon from '../../assets/eye.svg';
 import './auth.css'
 
@@ -9,8 +10,9 @@ export function SignUpPage() {
     const [error, setError] = useState("");
     const [showPass, setShowPass] = useState(false);
     const [showConfirmPass, setShowConfirmPass] = useState(false);
+    const navigate = useNavigate();
 
-    function checkPass(event: React.SubmitEvent<HTMLFormElement>) {
+    function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         if (pass !== confirmPass) {
             setError("Passwords do not match");
@@ -18,6 +20,7 @@ export function SignUpPage() {
         }
 
         setError("");
+        navigate('/dashboard');
     }
 
     return (
@@ -26,7 +29,7 @@ export function SignUpPage() {
             <div className='login-container'>
                 <h1>Sign Up</h1>
 
-                <form onSubmit={checkPass} className="login-submission">
+                <form onSubmit={handleSubmit} className="login-submission">
 
                     <div className="form-group">
                         <label htmlFor="name">Name</label>
@@ -37,7 +40,7 @@ export function SignUpPage() {
                             required
                         />
                     </div>
-                    
+
                     <div className="form-group">
                         <label htmlFor="username">Email</label>
                         <input

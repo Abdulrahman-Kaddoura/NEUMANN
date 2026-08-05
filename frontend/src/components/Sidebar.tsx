@@ -9,9 +9,9 @@ export function Sidebar() {
             </div>
 
             <div className="sections">
-                <Link id="sidebar-btn" to="">Clients</Link>
-                <Link id="sidebar-btn" to="">Add Client</Link>
-                <Link id="sidebar-btn" to="/login">Logout</Link>
+                <Link className="sidebar-btn" to="">Clients</Link>
+                <Link className="sidebar-btn" to="">Add Client</Link>
+                <Link className="sidebar-btn logout-btn" to="/login">Logout</Link>
             </div>
 
         </div>
