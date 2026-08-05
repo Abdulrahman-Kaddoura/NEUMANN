@@ -27,15 +27,6 @@ export function SignUpPage() {
                 <h1>Sign Up</h1>
 
                 <form onSubmit={checkPass} className="login-submission">
-                    <div className="form-group">
-                        <label htmlFor="username">Email</label>
-                        <input
-                            id="email"
-                            type="text"
-                            placeholder="Enter email"
-                            required
-                        />
-                    </div>
 
                     <div className="form-group">
                         <label htmlFor="name">Name</label>
@@ -43,6 +34,16 @@ export function SignUpPage() {
                             id="name"
                             type="text"
                             placeholder="Enter name"
+                            required
+                        />
+                    </div>
+                    
+                    <div className="form-group">
+                        <label htmlFor="username">Email</label>
+                        <input
+                            id="email"
+                            type="text"
+                            placeholder="Enter email"
                             required
                         />
                     </div>

@@ -1,0 +1,34 @@
+.sidebar {
+    font-family: "Mulish", Arial, sans-serif;
+    width: 20%;
+    height: 100vh;
+    background: linear-gradient(135deg, #95c2f5, #6984f9);
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    color: white;
+    margin: 20px 25px;
+    font-size: x-large;
+}
+
+.sections {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-btn {
+    border-radius: 5px;
+    text-align: center;
+    margin: 10px;
+    color: white;
+    padding: 5px;
+    background-color:#6984f9;
+}
+
+.sidebar-btn:hover {
+    cursor: pointer;
+    text-decoration: none;
+    opacity: 0.8;
+}
