@@ -1,3 +1,4 @@
+import { Navbar } from '../components/Navbar';
 import { Sidebar } from '../components/Sidebar';
 import './Dashboard.css'
 
@@ -7,7 +8,15 @@ export function Dashboard() {
             <Sidebar />
 
             <div className="main-content">
-                hello
+                <Navbar />
+
+                <div className="summary">
+
+                </div>
+
+                <div className="clients">
+
+                </div>
             </div>
         </div>
     );
