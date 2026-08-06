@@ -13,8 +13,7 @@ export function Sidebar({ visible }: SidebarProps) {
             </div>
 
             <div className="sections">
-                <Link className="sidebar-btn" to="">Clients</Link>
-                <Link className="sidebar-btn" to="/add-client">Add Client</Link>
+                <Link className="sidebar-btn" to="/dashboard">Dashboard</Link>
                 <Link className="sidebar-btn logout-btn" to="/login">Logout</Link>
             </div>
 
