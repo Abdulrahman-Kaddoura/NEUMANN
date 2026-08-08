@@ -2,25 +2,36 @@ import { useState } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Sidebar } from '../components/Sidebar';
 import './Dashboard.css'
+import { EmployeeCard } from '../components/EmployeeCard';
+import employees from '../data/employees.json';
 
 export function Dashboard() {
     const [visible, setVisible] = useState(true);
 
     return (
-        <div className='dashboard-wrapper'>
-            
-            <Sidebar visible={visible}/>
+        <div className='app-wrapper'>
+            <header>
+                <Navbar setVisible={setVisible} />
+            </header>
 
-            <div className={`main-content ${!visible ? 'full-main' : ''}`}>
-                <Navbar setVisible={setVisible}/>
+            <div className="content-row">
+                <Sidebar visible={visible} />
 
-                <div className="summary">
+                <main className={`main-content ${!visible ? 'full-main' : ''}`}>
 
-                </div>
-
-                <div className="clients">
-
-                </div>
+                    <ul className="employee-grid">
+                        {employees.map((employee) => (
+                            <li key={employee.id}>
+                                <EmployeeCard firstName={employee.firstName}
+                                    lastName={employee.lastName}
+                                    jobTitle={employee.jobTitle}
+                                    company={employee.company}
+                                    city={employee.city}
+                                    brandColor={employee.brandColor} />
+                            </li>
+                        ))}
+                    </ul>
+                </main>
             </div>
         </div>
     );

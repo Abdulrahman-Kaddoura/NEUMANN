@@ -15,9 +15,9 @@ export function Navbar({ setVisible }: NavbarProps) {
 
             <div className="logo">NEUMANN</div>
 
-            <div className="search">
+            {/* <div className="search">
                 <input id='search-bar' placeholder='Search name, company, city...' />
-            </div>
+            </div> */}
 
             <Link className="logout-button" to="/login">Logout</Link>
         </nav>

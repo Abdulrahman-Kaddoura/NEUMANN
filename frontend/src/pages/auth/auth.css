@@ -65,6 +65,7 @@ button {
     background-color: rgb(34, 68, 255);
     color: white;
     margin-top: 10px;
+    align-self: center;
 }
 
 .password-input {

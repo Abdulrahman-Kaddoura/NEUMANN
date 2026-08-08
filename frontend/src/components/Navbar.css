@@ -65,6 +65,7 @@ nav {
     color: #1e2a4a;
     font-weight: 500;
     white-space: nowrap;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 3px 6px 0px;
 }
 
 .logout-button:hover {
