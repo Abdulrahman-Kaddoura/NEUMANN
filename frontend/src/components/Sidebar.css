@@ -17,44 +17,19 @@
     opacity: 0;
 }
 
-.title {
-    color: white;
-    margin: 20px 25px;
-    font-size: x-large;
+.filter-heading {
+    color: #8a97c2;
+    margin: 20px 25px 10px;
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
 }
 
-.sections {
+.filter-options {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 10px;
+    padding: 0 14px;
     gap: 6px;
-}
-
-.sidebar-btn {
-    border-radius: 8px;
-    text-align: left;
-    color: #c7d2f0;
-    padding: 10px 14px;
-    background-color: transparent;
-    font-weight: 500;
-}
-
-.sidebar-btn:hover {
-    cursor: pointer;
-    text-decoration: none;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-}
-
-.logout-btn {
-    margin-top: auto;
-    color: #ff8080;
-}
-
-.logout-btn:hover {
-    background-color: rgba(255, 80, 80, 0.12);
-    color: #ff8080;
 }
