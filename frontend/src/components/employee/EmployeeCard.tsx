@@ -9,7 +9,9 @@ interface EmployeeCardProps {
     brandColor: string
 }
 
-export function EmployeeCard({ firstName, lastName, jobTitle, company, city, brandColor }: EmployeeCardProps) {
+export function EmployeeCard({
+    firstName, lastName, jobTitle, company, city, brandColor
+}: EmployeeCardProps) {
     return (
         <div className='card-wrapper' style={{ '--brand': brandColor } as React.CSSProperties}>
             <div className='card-pfp-initials'>

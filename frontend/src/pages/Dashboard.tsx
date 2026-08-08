@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Sidebar } from '../components/Sidebar';
 import './Dashboard.css'
-import { EmployeeCard } from '../components/EmployeeCard';
+import { EmployeeCard } from '../components/employee/EmployeeCard';
 import employees from '../data/employees.json';
 
 export function Dashboard() {

@@ -1,0 +1,7 @@
+.details-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 100vh;
+}
+
