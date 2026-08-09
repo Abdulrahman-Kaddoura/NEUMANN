@@ -23,15 +23,19 @@ export function EmployeeCard({
                 setDetailsVisible(true);
                 setSelectedEmployee(employeeId);
             }}>
-            <div className='card-pfp-initials'>
-                {firstName[0]}{lastName[0]}
+            <div className='card-body'>
+                <div className='card-pfp-initials'>
+                    {firstName[0]}{lastName[0]}
+                </div>
+
+                <div className='card-text'>
+                    <div className='card-name'>{firstName} {lastName}</div>
+                    <div className='card-title'>{jobTitle}</div>
+                    <div className='card-meta'>{company} · {city}</div>
+                </div>
             </div>
 
-            <div className='card-text'>
-                <div className='card-name'>{firstName} {lastName}</div>
-                <div className='card-title'>{jobTitle}</div>
-                <div className='card-meta'>{company} · {city}</div>
-            </div>
+            <div className='card-bar' />
         </div>
     );
 }

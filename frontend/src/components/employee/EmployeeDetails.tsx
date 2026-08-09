@@ -5,7 +5,9 @@ interface EmployeeDetailsProps {
     lastName: string,
     jobTitle: string,
     company: string,
+    address: string,
     city: string,
+    county: string,
     email?: string,
     brandColor: string,
     detailsVisible: boolean,
@@ -16,7 +18,9 @@ export function EmployeeDetails(
         lastName,
         jobTitle,
         company,
+        address,
         city,
+        county,
         email,
         brandColor,
         detailsVisible,
@@ -44,13 +48,23 @@ export function EmployeeDetails(
                 </div>
 
                 <div className='details-field'>
+                    <div className='details-label'>Address</div>
+                    <div className='details-value'>{address}</div>
+                </div>
+
+                <div className='details-field'>
                     <div className='details-label'>City</div>
                     <div className='details-value'>{city}</div>
                 </div>
 
                 <div className='details-field'>
+                    <div className='details-label'>County</div>
+                    <div className='details-value'>{county}</div>
+                </div>
+
+                <div className='details-field'>
                     <div className='details-label'>Email</div>
-                    <div className='details-value'>{email}</div>
+                    <div className='details-value'>{email ?? '—'}</div>
                 </div>
             </div>
 

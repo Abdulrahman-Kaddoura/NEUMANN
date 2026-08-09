@@ -27,28 +27,37 @@ export function Dashboard() {
                     lastName={employeeFocused.lastName}
                     jobTitle={employeeFocused.jobTitle}
                     company={employeeFocused.company}
+                    address={employeeFocused.address}
                     city={employeeFocused.city}
+                    county={employeeFocused.county}
+                    email={employeeFocused.email}
                     brandColor={employeeFocused.brandColor}
                     detailsVisible={detailsVisible}
                     setDetailsVisible={setDetailsVisible} />}
 
                 <main className={`main-content ${!sidebarVisible ? 'full-main' : ''}`}>
 
-                    <ul className="employee-grid">
-                        {employees.map((employee) => (
-                            <li key={employee.id}>
-                                <EmployeeCard employeeId={employee.id}
-                                    firstName={employee.firstName}
-                                    lastName={employee.lastName}
-                                    jobTitle={employee.jobTitle}
-                                    company={employee.company}
-                                    city={employee.city}
-                                    brandColor={employee.brandColor}
-                                    setDetailsVisible={setDetailsVisible}
-                                    setSelectedEmployee={setSelectedEmployee} />
-                            </li>
-                        ))}
-                    </ul>
+                    <div className="directory-panel">
+                        <ul className="employee-grid">
+                            {employees.map((employee) => (
+                                <li key={employee.id}>
+                                    <EmployeeCard employeeId={employee.id}
+                                        firstName={employee.firstName}
+                                        lastName={employee.lastName}
+                                        jobTitle={employee.jobTitle}
+                                        company={employee.company}
+                                        city={employee.city}
+                                        brandColor={employee.brandColor}
+                                        setDetailsVisible={setDetailsVisible}
+                                        setSelectedEmployee={setSelectedEmployee} />
+                                </li>
+                            ))}
+                        </ul>
+                        <div className="page-buttons">
+                            <button className='prev-button'>Prev</button>
+                            <button className='next-button'>Next</button>
+                        </div>
+                    </div>
                 </main>
             </div>
         </div>
