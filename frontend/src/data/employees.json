@@ -28,5 +28,6 @@
     { "id": 27, "firstName": "Allene", "lastName": "Iturbide", "company": "Chemel", "jobTitle": "Field Technician", "email": "allene.iturbide@chemel.example", "address": "7 S 33rd St", "city": "Beverly Hills", "county": "Los Angeles", "brandColor": "#1473bb" },
     { "id": 28, "firstName": "Chanel", "lastName": "Caudy", "company": "Chanay", "jobTitle": "HR Coordinator", "email": "chanel.caudy@chanay.example", "address": "8 Jerrold Ave", "city": "Wardensville", "county": "Hardy", "brandColor": "#8a3b93" },
     { "id": 29, "firstName": "Ezekiel", "lastName": "Chui", "company": "Benton", "jobTitle": "Account Manager", "email": "ezekiel.chui@benton.example", "address": "5 Runamuck Pl", "city": "Neenah", "county": "Winnebago", "brandColor": "#8bc447" },
-    { "id": 30, "firstName": "Willow", "lastName": "Kusko", "company": "Feltz Printing", "jobTitle": "Print Specialist", "email": "willow.kusko@feltzprinting.example", "address": "4 School House Rd", "city": "Vista", "county": "San Diego", "brandColor": "#c32482" }
+    { "id": 30, "firstName": "Willow", "lastName": "Kusko", "company": "Feltz Printing", "jobTitle": "Print Specialist", "email": "willow.kusko@feltzprinting.example", "address": "4 School House Rd", "city": "Vista", "county": "San Diego", "brandColor": "#c32482" },
+    { "id": 31, "firstName": "Abd", "lastName": "Kad", "company": "Yummy", "jobTitle": "Yum Specialist", "email": "yum@yum.example", "address": "4 School House Rd", "city": "Vista", "county": "San Diego", "brandColor": "#c32482" }
 ]

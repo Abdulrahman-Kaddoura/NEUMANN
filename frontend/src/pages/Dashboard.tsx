@@ -50,6 +50,11 @@ export function Dashboard() {
                 <main className={`main-content ${!sidebarVisible ? 'full-main' : ''}`}>
 
                     <div className="directory-panel">
+                        <input
+                            type="text"
+                            className="employee-search"
+                            placeholder="Search by name, company, or job title..."
+                        />
                         <ul className="employee-grid">
                             {paginatedEmployess.map((employee) => (
                                 <li key={employee.id}>
