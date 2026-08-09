@@ -6,9 +6,10 @@ interface EmployeeDetailsProps {
     jobTitle: string,
     company: string,
     city: string,
-    county: string,
     email?: string,
-    brandColor: string
+    brandColor: string,
+    detailsVisible: boolean,
+    setDetailsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export function EmployeeDetails(
     { firstName,
@@ -16,14 +17,16 @@ export function EmployeeDetails(
         jobTitle,
         company,
         city,
-        county,
         email,
         brandColor,
+        detailsVisible,
+        setDetailsVisible
     }: EmployeeDetailsProps) {
     return (
-        <div className='details-wrapper'>
-            <div className='details-header'>
-                <div className='details-avatar' style={{ '--brand': brandColor } as React.CSSProperties}>
+        <aside className={`details-wrapper ${!detailsVisible ? 'invisible-details' : ''}`}>
+            <div className='details-header' style={{ '--brand': brandColor } as React.CSSProperties}>
+                <button className='details-close-btn' onClick={() => setDetailsVisible(false)}>×</button>
+                <div className='details-avatar'>
                     {firstName[0]}{lastName[0]}
                 </div>
                 <div className='details-name'>{firstName} {lastName}</div>
@@ -46,11 +49,6 @@ export function EmployeeDetails(
                 </div>
 
                 <div className='details-field'>
-                    <div className='details-label'>County</div>
-                    <div className='details-value'>{county}</div>
-                </div>
-
-                <div className='details-field'>
                     <div className='details-label'>Email</div>
                     <div className='details-value'>{email}</div>
                 </div>
@@ -60,6 +58,6 @@ export function EmployeeDetails(
                 <div className='details-edit-btn'>Edit</div>
                 <div className='details-delete-btn'>Delete</div>
             </div>
-        </div >
+        </aside >
     );
 }
