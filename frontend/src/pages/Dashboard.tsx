@@ -1,17 +1,29 @@
 import { useState } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Sidebar } from '../components/Sidebar';
-import './Dashboard.css'
 import { EmployeeCard } from '../components/employee/EmployeeCard';
 import employees from '../data/employees.json';
 import { EmployeeDetails } from '../components/employee/EmployeeDetails';
+import './Dashboard.css'
 
 export function Dashboard() {
     const [sidebarVisible, setSidebarVisible] = useState(true);
     const [detailsVisible, setDetailsVisible] = useState(false);
+
     const [selectedEmployee, setSelectedEmployee] = useState(1);
 
+    const [currentPage, setCurrentPage] = useState(1);
+
     const employeeFocused = employees.find((e) => e.id === selectedEmployee);
+
+    const pageSize = 15;
+    const totalPages = Math.ceil(employees.length / pageSize);
+
+    const paginatedEmployess = employees.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+    );
+
     return (
         <div className='app-wrapper'>
             <header>
@@ -39,7 +51,7 @@ export function Dashboard() {
 
                     <div className="directory-panel">
                         <ul className="employee-grid">
-                            {employees.map((employee) => (
+                            {paginatedEmployess.map((employee) => (
                                 <li key={employee.id}>
                                     <EmployeeCard employeeId={employee.id}
                                         firstName={employee.firstName}
@@ -54,8 +66,11 @@ export function Dashboard() {
                             ))}
                         </ul>
                         <div className="page-buttons">
-                            <button className='prev-button'>Prev</button>
-                            <button className='next-button'>Next</button>
+                            <button className='prev-button' disabled={currentPage === 1} onClick={() => setCurrentPage(p => Math.max(1, p - 1))}>Prev</button>
+                            <div className="page-text">
+                                Page {currentPage} out of {totalPages}
+                            </div>
+                            <button className='next-button' disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}>Next</button>
                         </div>
                     </div>
                 </main>
