@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Sidebar } from '../components/Sidebar';
 import { EmployeeCard } from '../components/employee/EmployeeCard';
-import employees from '../data/employees.json';
 import { EmployeeDetails } from '../components/employee/EmployeeDetails';
+// import { useEmployees } from '../hooks/useEmployees';
+import { usePagination } from '../hooks/usePagination';
+import employees from '../data/employees.json';
 import './Dashboard.css'
 
 export function Dashboard() {
@@ -12,26 +14,24 @@ export function Dashboard() {
 
     const [selectedEmployee, setSelectedEmployee] = useState(1);
 
-    const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
 
     const filteredEmployees = employees.filter(employee => {
-        return employee.firstName.toLowerCase().includes(searchTerm.toLowerCase()) 
-        || employee.lastName.toLowerCase().includes(searchTerm.toLowerCase())
-        || employee.company.toLowerCase().includes(searchTerm.toLowerCase())
-        || employee.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())
-        || employee.city.toLowerCase().includes(searchTerm.toLowerCase());
+        return employee.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+            || employee.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+            || employee.company.toLowerCase().includes(searchTerm.toLowerCase())
+            || employee.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())
+            || employee.city.toLowerCase().includes(searchTerm.toLowerCase());
     })
 
     const employeeFocused = employees.find((e) => e.id === selectedEmployee);
 
     const pageSize = 15;
-    const totalPages = Math.ceil(filteredEmployees.length / pageSize);
+    const { currentPage, totalPages, paginatedItems, nextPage, prevPage, setCurrentPage } = usePagination(filteredEmployees, pageSize);
 
-    const paginatedEmployess = filteredEmployees.slice(
-        (currentPage - 1) * pageSize,
-        currentPage * pageSize
-    );
+
+
+    // const { data: employees, isLoading, error } = useEmployees();
 
     return (
         <div className='app-wrapper'>
@@ -63,10 +63,10 @@ export function Dashboard() {
                             type="text"
                             className="employee-search"
                             placeholder="Search by name, company, or job title..."
-                            onChange={(e) => {setSearchTerm(e.target.value); setCurrentPage(1);}}
+                            onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
                         />
                         <ul className="employee-grid">
-                            {paginatedEmployess.map((employee) => (
+                            {paginatedItems.map((employee) => (
                                 <li key={employee.id}>
                                     <EmployeeCard employeeId={employee.id}
                                         firstName={employee.firstName}
@@ -81,11 +81,11 @@ export function Dashboard() {
                             ))}
                         </ul>
                         <div className="page-buttons">
-                            <button className='prev-button' disabled={currentPage === 1} onClick={() => setCurrentPage(p => Math.max(1, p - 1))}>Prev</button>
+                            <button className='prev-button' disabled={currentPage === 1} onClick={prevPage}>Prev</button>
                             <div className="page-text">
                                 Page {currentPage} out of {totalPages}
                             </div>
-                            <button className='next-button' disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}>Next</button>
+                            <button className='next-button' disabled={currentPage === totalPages} onClick={nextPage}>Next</button>
                         </div>
                     </div>
                 </main>
