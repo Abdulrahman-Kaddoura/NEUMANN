@@ -19,7 +19,8 @@ export function Dashboard() {
         return employee.firstName.toLowerCase().includes(searchTerm.toLowerCase()) 
         || employee.lastName.toLowerCase().includes(searchTerm.toLowerCase())
         || employee.company.toLowerCase().includes(searchTerm.toLowerCase())
-        || employee.jobTitle.toLowerCase().includes(searchTerm.toLowerCase());
+        || employee.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())
+        || employee.city.toLowerCase().includes(searchTerm.toLowerCase());
     })
 
     const employeeFocused = employees.find((e) => e.id === selectedEmployee);
@@ -62,7 +63,7 @@ export function Dashboard() {
                             type="text"
                             className="employee-search"
                             placeholder="Search by name, company, or job title..."
-                            onChange={(e) => {setSearchTerm(e.target.value)}}
+                            onChange={(e) => {setSearchTerm(e.target.value); setCurrentPage(1);}}
                         />
                         <ul className="employee-grid">
                             {paginatedEmployess.map((employee) => (
