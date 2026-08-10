@@ -7,24 +7,16 @@ import { EmployeeDetails } from '../components/employee/EmployeeDetails';
 import { usePagination } from '../hooks/usePagination';
 import employees from '../data/employees.json';
 import './Dashboard.css'
+import { useEmployeeSearch } from '../hooks/useEmployeeSearch';
 
 export function Dashboard() {
     const [sidebarVisible, setSidebarVisible] = useState(true);
     const [detailsVisible, setDetailsVisible] = useState(false);
 
     const [selectedEmployee, setSelectedEmployee] = useState(1);
-
-    const [searchTerm, setSearchTerm] = useState("");
-
-    const filteredEmployees = employees.filter(employee => {
-        return employee.firstName.toLowerCase().includes(searchTerm.toLowerCase())
-            || employee.lastName.toLowerCase().includes(searchTerm.toLowerCase())
-            || employee.company.toLowerCase().includes(searchTerm.toLowerCase())
-            || employee.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())
-            || employee.city.toLowerCase().includes(searchTerm.toLowerCase());
-    })
-
     const employeeFocused = employees.find((e) => e.id === selectedEmployee);
+
+    const { setSearchTerm, filteredEmployees } = useEmployeeSearch(employees ?? []);
 
     const pageSize = 15;
     const { currentPage, totalPages, paginatedItems, nextPage, prevPage, setCurrentPage } = usePagination(filteredEmployees, pageSize);
