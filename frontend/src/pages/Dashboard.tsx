@@ -13,13 +13,21 @@ export function Dashboard() {
     const [selectedEmployee, setSelectedEmployee] = useState(1);
 
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredEmployees = employees.filter(employee => {
+        return employee.firstName.toLowerCase().includes(searchTerm.toLowerCase()) 
+        || employee.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+        || employee.company.toLowerCase().includes(searchTerm.toLowerCase())
+        || employee.jobTitle.toLowerCase().includes(searchTerm.toLowerCase());
+    })
 
     const employeeFocused = employees.find((e) => e.id === selectedEmployee);
 
     const pageSize = 15;
-    const totalPages = Math.ceil(employees.length / pageSize);
+    const totalPages = Math.ceil(filteredEmployees.length / pageSize);
 
-    const paginatedEmployess = employees.slice(
+    const paginatedEmployess = filteredEmployees.slice(
         (currentPage - 1) * pageSize,
         currentPage * pageSize
     );
@@ -54,6 +62,7 @@ export function Dashboard() {
                             type="text"
                             className="employee-search"
                             placeholder="Search by name, company, or job title..."
+                            onChange={(e) => {setSearchTerm(e.target.value)}}
                         />
                         <ul className="employee-grid">
                             {paginatedEmployess.map((employee) => (
