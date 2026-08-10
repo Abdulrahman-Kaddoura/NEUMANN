@@ -4,9 +4,10 @@ import './Navbar.css'
 
 interface NavbarProps {
     setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    onSearchChange: (value: string) => void;
 }
 
-export function Navbar({ setVisible }: NavbarProps) {
+export function Navbar({ setVisible, onSearchChange }: NavbarProps) {
     return (
         <nav>
             <button className="collapser" onClick={() => setVisible(v => !v)}>
@@ -15,9 +16,13 @@ export function Navbar({ setVisible }: NavbarProps) {
 
             <div className="logo">NEUMANN</div>
 
-            {/* <div className="search">
-                <input id='search-bar' placeholder='Search name, company, city...' />
-            </div> */}
+            <div className="search">
+                <input
+                    id='search-bar'
+                    placeholder='Search name, company, city...'
+                    onChange={(e) => onSearchChange(e.target.value)}
+                />
+            </div>
 
             <Link className="logout-button" to="/login">Logout</Link>
         </nav>

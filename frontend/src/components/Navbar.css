@@ -47,11 +47,17 @@ nav {
 }
 
 #search-bar {
-    border-radius: 5px;
+    border-radius: 10px;
     border: 0.4px solid rgba(0, 0, 0, 0.3);
     height: 32px;
     width: 100%;
     box-sizing: border-box;
+    padding-left: 5px;
+}
+
+#search-bar:focus {
+    outline: none;
+    border: 1px solid #0597eb;
 }
 
 .logout-button {
