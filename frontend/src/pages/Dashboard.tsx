@@ -15,7 +15,7 @@ export function Dashboard() {
     const [sidebarVisible, setSidebarVisible] = useState(true);
     const [detailsVisible, setDetailsVisible] = useState(false);
 
-    const { data: employees, isLoading, error  } = useEmployees();
+    const { data: employees, isLoading, error } = useEmployees();
 
     const [selectedEmployee, setSelectedEmployee] = useState(1);
     const employeeFocused = employees?.find((e) => e.id === selectedEmployee);

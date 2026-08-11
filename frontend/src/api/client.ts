@@ -11,6 +11,8 @@ export const apiClient = axios.create({
 })
 
 export async function getEmployees(): Promise<Employee[]> {
+    //play with this time to see the skeleton grid loading phase
+    await new Promise(resolve => setTimeout(resolve, 1000)); 
     const response = await apiClient.get<Employee[]>('/employees');
     return response.data;
 }
