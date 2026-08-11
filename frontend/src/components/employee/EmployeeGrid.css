@@ -1,0 +1,10 @@
+
+.employee-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+
+    list-style: none;
+    padding: 0;
+    margin: 24px;
+}
