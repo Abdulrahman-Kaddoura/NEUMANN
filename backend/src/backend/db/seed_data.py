@@ -1,0 +1,17 @@
+EMPLOYEES = [
+    {"first_name": "James", "last_name": "Butt", "company": "Benton", "job_title": "Account Manager", "email": None, "address": "6649 N Blue Gum St", "city": "New Orleans", "county": "Orleans", "brand_color": "#8bc447"},
+    {"first_name": "Josephine", "last_name": "Darakjy", "company": "Chanay", "job_title": "Operations Lead", "email": None, "address": "4 B Blue Ridge Blvd", "city": "Brighton", "county": "Livingston", "brand_color": "#8a3b93"},
+    {"first_name": "Art", "last_name": "Venere", "company": "Chemel", "job_title": "Sales Engineer", "email": None, "address": "8 W Cerritos Ave #54", "city": "Bridgeport", "county": "Gloucester", "brand_color": "#1473bb"},
+    {"first_name": "Lenna", "last_name": "Paprocki", "company": "Feltz Printing", "job_title": "Print Specialist", "email": None, "address": "639 Main St", "city": "Anchorage", "county": "Anchorage", "brand_color": "#c32482"},
+    {"first_name": "Donette", "last_name": "Foller", "company": "Feltz Printing", "job_title": "Print Specialist", "email": None, "address": "34 Center St", "city": "Hamilton", "county": "Butler", "brand_color": "#c32482"},
+    {"first_name": "Simona", "last_name": "Morasca", "company": "Chanay", "job_title": "Operations Lead", "email": None, "address": "3 Mcauley Dr", "city": "Ashland", "county": "Ashland", "brand_color": "#8a3b93"},
+    {"first_name": "Mitsue", "last_name": "Tollner", "company": "Benton", "job_title": "Software Developer", "email": None, "address": "7 Eads St", "city": "Chicago", "county": "Cook", "brand_color": "#8bc447"},
+    {"first_name": "Leota", "last_name": "Dilliard", "company": "Commercial Press", "job_title": "Editor", "email": None, "address": "7 W Jackson Blvd", "city": "San Jose", "county": "Santa Clara", "brand_color": "#dde553"},
+    {"first_name": "Sage", "last_name": "Wieser", "company": "Feltz Printing", "job_title": "Designer", "email": None, "address": "5 Boston Ave #88", "city": "Sioux Falls", "county": "Minnehaha", "brand_color": "#c32482"},
+    {"first_name": "Kris", "last_name": "Marrier", "company": "Feltz Printing", "job_title": "Print Specialist", "email": None, "address": "228 Runamuck Pl #2808", "city": "Baltimore", "county": "Baltimore", "brand_color": "#c32482"},
+    {"first_name": "Minna", "last_name": "Amigon", "company": "Chanay", "job_title": "Operations Lead", "email": None, "address": "2371 Jerrold Ave", "city": "Kulpsville", "county": "Montgomery", "brand_color": "#8a3b93"},
+    {"first_name": "Abel", "last_name": "Maclead", "company": "Chemel", "job_title": "Field Technician", "email": None, "address": "37275 St Rt 17m M", "city": "Middle Island", "county": "Suffolk", "brand_color": "#1473bb"},
+    {"first_name": "Kiley", "last_name": "Caldarera", "company": "Chemel", "job_title": "Sales Engineer", "email": None, "address": "25 E 75th St #69", "city": "Los Angeles", "county": "Los Angeles", "brand_color": "#1473bb"},
+    {"first_name": "Bette", "last_name": "Ruta", "company": "Benton", "job_title": "Account Manager", "email": None, "address": "98 Connecticut Ave Nw", "city": "Chagrin Falls", "county": "Geauga", "brand_color": "#8bc447"},
+    {"first_name": "Veronika", "last_name": "Albares", "company": "Benton", "job_title": "Account Manager", "email": None, "address": "56 E Morehead St", "city": "Laredo", "county": "Webb", "brand_color": "#8bc447"},
+]
