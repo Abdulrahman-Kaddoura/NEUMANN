@@ -9,7 +9,15 @@ interface EmployeeGridProps {
 }
 
 
-export function EmployeeGrid({paginatedItems, setDetailsVisible, setSelectedEmployee }: EmployeeGridProps) {
+export function EmployeeGrid({ paginatedItems, setDetailsVisible, setSelectedEmployee }: EmployeeGridProps) {
+    if (paginatedItems.length === 0) {
+        return (
+            <div className="employee-grid-empty">
+                <p className="employee-grid-empty-title">No employees found</p>
+                <p className="employee-grid-empty-hint">Try adjusting your search or filters.</p>
+            </div>
+        );
+    }
     return (
         <>
             <ul className="employee-grid">

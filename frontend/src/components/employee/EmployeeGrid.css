@@ -8,3 +8,25 @@
     padding: 0;
     margin: 24px;
 }
+
+.employee-grid-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 64px 24px;
+    color: #6b7280;
+}
+
+.employee-grid-empty-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 4px;
+}
+
+.employee-grid-empty-hint {
+    font-size: 13px;
+    margin: 0;
+}

@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Sidebar } from '../components/Sidebar';
-import { EmployeeCard } from '../components/employee/EmployeeCard';
+import { EmployeeGrid } from '../components/employee/EmployeeGrid';
+import { EmployeeGridSkeleton } from '../components/employee/EmployeeGridSkeleton';
 import { EmployeeDetails } from '../components/employee/EmployeeDetails';
 import { useEmployees } from '../hooks/useEmployees';
 import { useEmployeeSearch } from '../hooks/useEmployeeSearch';
 import { usePagination } from '../hooks/usePagination';
 // import employees from '../data/employees.json';
 import './Dashboard.css'
-import { EmployeeGrid } from '../components/employee/EmployeeGrid';
-import { EmployeeGridSkeleton } from '../components/employee/EmployeeGridSkeleton';
 
 export function Dashboard() {
     const [sidebarVisible, setSidebarVisible] = useState(true);
