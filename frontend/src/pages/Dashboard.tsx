@@ -9,6 +9,7 @@ import { usePagination } from '../hooks/usePagination';
 // import employees from '../data/employees.json';
 import './Dashboard.css'
 import { EmployeeGrid } from '../components/employee/EmployeeGrid';
+import { EmployeeGridSkeleton } from '../components/employee/EmployeeGridSkeleton';
 
 export function Dashboard() {
     const [sidebarVisible, setSidebarVisible] = useState(true);
@@ -49,7 +50,9 @@ export function Dashboard() {
 
                 <main className={`main-content ${!sidebarVisible ? 'full-main' : ''}`}>
 
-                    <EmployeeGrid paginatedItems={paginatedItems} setDetailsVisible={setDetailsVisible} setSelectedEmployee={setSelectedEmployee}/>
+                    {isLoading
+                        ? <EmployeeGridSkeleton count={pageSize} />
+                        : <EmployeeGrid paginatedItems={paginatedItems} setDetailsVisible={setDetailsVisible} setSelectedEmployee={setSelectedEmployee} />}
 
                     <div className="page-buttons">
                         <button className='prev-button' disabled={currentPage === 1} onClick={prevPage}>Prev</button>
