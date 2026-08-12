@@ -18,9 +18,9 @@ docker compose up -d
 ```
 cd backend
 cp .env.example .env
-(To seed the database)
+(To seed the database :
 uv run alembic upgrade head
-uv run python -m backend.db.seed
+uv run python -m backend.db.seed )
 uv run uvicorn backend.main:app --reload --port 8000
 ```
 
