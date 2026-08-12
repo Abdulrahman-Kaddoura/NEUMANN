@@ -7,18 +7,19 @@ interface EmployeeCardProps {
     jobTitle: string,
     company: string,
     city: string,
-    brandColor: string
+    brandColor: string,
+    isSelected: boolean,
     setDetailsVisible: React.Dispatch<React.SetStateAction<boolean>>;
     setSelectedEmployee: React.Dispatch<React.SetStateAction<number>>;
     setAddFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function EmployeeCard({
-    employeeId, firstName, lastName, jobTitle, company, city, brandColor, setDetailsVisible, setSelectedEmployee, setAddFormVisible
+    employeeId, firstName, lastName, jobTitle, company, city, brandColor, isSelected, setDetailsVisible, setSelectedEmployee, setAddFormVisible
 }: EmployeeCardProps) {
     return (
         <div
-            className='card-wrapper'
+            className={`card-wrapper ${isSelected ? 'card-selected' : ''}`}
             style={{ '--brand': brandColor } as React.CSSProperties}
             onClick={() => {
                 setDetailsVisible(true);

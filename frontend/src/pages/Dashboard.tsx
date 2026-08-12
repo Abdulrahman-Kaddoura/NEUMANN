@@ -76,7 +76,7 @@ export function Dashboard() {
 
                     {isLoading
                         ? <EmployeeGridSkeleton count={pageSize} />
-                        : <EmployeeGrid paginatedItems={paginatedItems} setDetailsVisible={setDetailsVisible} setSelectedEmployee={setSelectedEmployee} setAddFormVisible={setAddFormVisible} />}
+                        : <EmployeeGrid paginatedItems={paginatedItems} setDetailsVisible={setDetailsVisible} selectedEmployee={detailsVisible ? selectedEmployee : null} setSelectedEmployee={setSelectedEmployee} setAddFormVisible={setAddFormVisible} />}
 
                     <div className="page-buttons">
                         <button className='prev-button' disabled={currentPage === 1} onClick={prevPage}>Prev</button>
