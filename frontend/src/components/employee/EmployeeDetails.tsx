@@ -12,6 +12,7 @@ interface EmployeeDetailsProps {
     brandColor: string,
     detailsVisible: boolean,
     setDetailsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    setConfirmDeleteVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export function EmployeeDetails(
     { firstName,
@@ -24,12 +25,15 @@ export function EmployeeDetails(
         email,
         brandColor,
         detailsVisible,
-        setDetailsVisible
+        setDetailsVisible,
+        setConfirmDeleteVisible
     }: EmployeeDetailsProps) {
+
+
     return (
         <aside className={`details-wrapper ${!detailsVisible ? 'invisible-details' : ''}`}>
             <div className='details-header' style={{ '--brand': brandColor } as React.CSSProperties}>
-                <button className='details-close-btn' onClick={() => setDetailsVisible(false)}>×</button>
+                <button className='details-close-btn' onClick={() => {setDetailsVisible(false); setConfirmDeleteVisible(false)}}>×</button>
                 <div className='details-avatar'>
                     {firstName[0]}{lastName[0]}
                 </div>
@@ -70,7 +74,7 @@ export function EmployeeDetails(
 
             <div className='details-actions'>
                 <div className='details-edit-btn'>Edit</div>
-                <div className='details-delete-btn'>Delete</div>
+                <div className='details-delete-btn' onClick={() => setConfirmDeleteVisible(true)}>Delete</div>
             </div>
         </aside >
     );

@@ -10,13 +10,16 @@ import { usePagination } from '../hooks/usePagination';
 // import employees from '../data/employees.json';
 import './Dashboard.css'
 import { AddEmployeeForm } from '../components/employee/AddEmployeeForm';
+import { ConfirmDelete } from '../components/ConfirmDelete';
 
 export function Dashboard() {
     const [sidebarVisible, setSidebarVisible] = useState(true);
     const [detailsVisible, setDetailsVisible] = useState(false);
     const [addFormVisible, setAddFormVisible] = useState(false);
+    const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
 
-    const { data: employees, isLoading, error } = useEmployees();
+
+    const { data: employees, isLoading } = useEmployees(); //add error later
 
     const [selectedEmployee, setSelectedEmployee] = useState(1);
     const employeeFocused = employees?.find((e) => e.id === selectedEmployee);
@@ -47,9 +50,12 @@ export function Dashboard() {
                     email={employeeFocused.email}
                     brandColor={employeeFocused.brandColor}
                     detailsVisible={detailsVisible}
-                    setDetailsVisible={setDetailsVisible} />}
+                    setDetailsVisible={setDetailsVisible}
+                    setConfirmDeleteVisible={setConfirmDeleteVisible} />}
 
-                {addFormVisible && <AddEmployeeForm setAddFormVisible={setAddFormVisible}/>}
+                {addFormVisible && <AddEmployeeForm setAddFormVisible={setAddFormVisible} />}
+
+                {confirmDeleteVisible && <ConfirmDelete setConfirmDeleteVisible={setConfirmDeleteVisible}/>}
 
                 <main className={`main-content ${!sidebarVisible ? 'full-main' : ''}`}>
 
