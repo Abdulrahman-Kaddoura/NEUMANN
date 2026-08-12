@@ -13,6 +13,7 @@ interface EmployeeDetailsProps {
     detailsVisible: boolean,
     setDetailsVisible: React.Dispatch<React.SetStateAction<boolean>>;
     setConfirmDeleteVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    setEditFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export function EmployeeDetails(
     { firstName,
@@ -26,7 +27,8 @@ export function EmployeeDetails(
         brandColor,
         detailsVisible,
         setDetailsVisible,
-        setConfirmDeleteVisible
+        setConfirmDeleteVisible,
+        setEditFormVisible
     }: EmployeeDetailsProps) {
 
 
@@ -73,7 +75,7 @@ export function EmployeeDetails(
             </div>
 
             <div className='details-actions'>
-                <div className='details-edit-btn'>Edit</div>
+                <div className='details-edit-btn' onClick={() => {setEditFormVisible(true); setDetailsVisible(false)}}>Edit</div>
                 <div className='details-delete-btn' onClick={() => setConfirmDeleteVisible(true)}>Delete</div>
             </div>
         </aside >

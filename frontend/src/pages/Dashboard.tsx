@@ -11,12 +11,14 @@ import { usePagination } from '../hooks/usePagination';
 import './Dashboard.css'
 import { AddEmployeeForm } from '../components/employee/AddEmployeeForm';
 import { ConfirmDelete } from '../components/ConfirmDelete';
+import { EditEmployeeForm } from '../components/employee/EditEmployeeForm';
 
 export function Dashboard() {
     const [sidebarVisible, setSidebarVisible] = useState(true);
     const [detailsVisible, setDetailsVisible] = useState(false);
     const [addFormVisible, setAddFormVisible] = useState(false);
     const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
+    const [editFormVisible, setEditFormVisible] = useState(false);
 
 
     const { data: employees, isLoading } = useEmployees(); //add error later
@@ -51,11 +53,24 @@ export function Dashboard() {
                     brandColor={employeeFocused.brandColor}
                     detailsVisible={detailsVisible}
                     setDetailsVisible={setDetailsVisible}
-                    setConfirmDeleteVisible={setConfirmDeleteVisible} />}
+                    setConfirmDeleteVisible={setConfirmDeleteVisible}
+                    setEditFormVisible={setEditFormVisible} />}
 
                 {addFormVisible && <AddEmployeeForm setAddFormVisible={setAddFormVisible} />}
 
-                {confirmDeleteVisible && <ConfirmDelete setConfirmDeleteVisible={setConfirmDeleteVisible}/>}
+                {employeeFocused && editFormVisible && <EditEmployeeForm
+                    firstName={employeeFocused.firstName}
+                    lastName={employeeFocused.lastName}
+                    jobTitle={employeeFocused.jobTitle}
+                    company={employeeFocused.company}
+                    address={employeeFocused.address}
+                    city={employeeFocused.city}
+                    county={employeeFocused.county}
+                    email={employeeFocused.email}
+                    brandColor={employeeFocused.brandColor}
+                    setEditFormVisible={setEditFormVisible} />}
+
+                {employeeFocused && confirmDeleteVisible && <ConfirmDelete setConfirmDeleteVisible={setConfirmDeleteVisible} setDetailsVisible={setDetailsVisible} firstName={employeeFocused.firstName} lastname={employeeFocused.lastName} />}
 
                 <main className={`main-content ${!sidebarVisible ? 'full-main' : ''}`}>
 
