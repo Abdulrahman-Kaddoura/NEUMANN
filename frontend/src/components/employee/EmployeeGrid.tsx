@@ -6,10 +6,11 @@ interface EmployeeGridProps {
     paginatedItems: Employee[];
     setDetailsVisible: React.Dispatch<React.SetStateAction<boolean>>;
     setSelectedEmployee: React.Dispatch<React.SetStateAction<number>>;
+    setAddFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
-export function EmployeeGrid({ paginatedItems, setDetailsVisible, setSelectedEmployee }: EmployeeGridProps) {
+export function EmployeeGrid({ paginatedItems, setDetailsVisible, setSelectedEmployee, setAddFormVisible }: EmployeeGridProps) {
     if (paginatedItems.length === 0) {
         return (
             <div className="employee-grid-empty">
@@ -31,7 +32,8 @@ export function EmployeeGrid({ paginatedItems, setDetailsVisible, setSelectedEmp
                             city={employee.city}
                             brandColor={employee.brandColor}
                             setDetailsVisible={setDetailsVisible}
-                            setSelectedEmployee={setSelectedEmployee} />
+                            setSelectedEmployee={setSelectedEmployee}
+                            setAddFormVisible={setAddFormVisible} />
                     </li>
                 ))}
             </ul>

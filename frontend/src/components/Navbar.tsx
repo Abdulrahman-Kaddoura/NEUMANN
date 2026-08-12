@@ -3,14 +3,16 @@ import CollapseIcon from '../assets/collapse.svg';
 import './Navbar.css'
 
 interface NavbarProps {
-    setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    setSideBarVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    setAddFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    setDetailsVisible: React.Dispatch<React.SetStateAction<boolean>>;
     onSearchChange: (value: string) => void;
 }
 
-export function Navbar({ setVisible, onSearchChange }: NavbarProps) {
+export function Navbar({ setSideBarVisible, setAddFormVisible, setDetailsVisible, onSearchChange }: NavbarProps) {
     return (
         <nav>
-            <button className="collapser" onClick={() => setVisible(v => !v)}>
+            <button className="collapser" onClick={() => setSideBarVisible(v => !v)}>
                 <img className="collapse-icon" src={CollapseIcon} alt="Toggle filter sidebar" />
             </button>
 
@@ -23,6 +25,10 @@ export function Navbar({ setVisible, onSearchChange }: NavbarProps) {
                     onChange={(e) => onSearchChange(e.target.value)}
                 />
             </div>
+
+            <button className="add-button" onClick={() => { setAddFormVisible(true); setDetailsVisible(false); }}>
+                <span className="add-icon">+</span> Add
+            </button>
 
             <Link className="logout-button" to="/login">Logout</Link>
         </nav>

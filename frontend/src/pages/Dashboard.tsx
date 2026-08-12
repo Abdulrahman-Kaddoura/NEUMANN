@@ -9,10 +9,12 @@ import { useEmployeeSearch } from '../hooks/useEmployeeSearch';
 import { usePagination } from '../hooks/usePagination';
 // import employees from '../data/employees.json';
 import './Dashboard.css'
+import { AddEmployeeForm } from '../components/employee/AddEmployeeForm';
 
 export function Dashboard() {
     const [sidebarVisible, setSidebarVisible] = useState(true);
     const [detailsVisible, setDetailsVisible] = useState(false);
+    const [addFormVisible, setAddFormVisible] = useState(false);
 
     const { data: employees, isLoading, error } = useEmployees();
 
@@ -27,7 +29,7 @@ export function Dashboard() {
     return (
         <div className='app-wrapper'>
             <header>
-                <Navbar setVisible={setSidebarVisible} onSearchChange={(value) => { setSearchTerm(value); setCurrentPage(1); }} />
+                <Navbar setSideBarVisible={setSidebarVisible} setAddFormVisible={setAddFormVisible} setDetailsVisible={setDetailsVisible} onSearchChange={(value) => { setSearchTerm(value); setCurrentPage(1); }} />
             </header>
 
             <div className="content-row">
@@ -47,11 +49,13 @@ export function Dashboard() {
                     detailsVisible={detailsVisible}
                     setDetailsVisible={setDetailsVisible} />}
 
+                {addFormVisible && <AddEmployeeForm setAddFormVisible={setAddFormVisible}/>}
+
                 <main className={`main-content ${!sidebarVisible ? 'full-main' : ''}`}>
 
                     {isLoading
                         ? <EmployeeGridSkeleton count={pageSize} />
-                        : <EmployeeGrid paginatedItems={paginatedItems} setDetailsVisible={setDetailsVisible} setSelectedEmployee={setSelectedEmployee} />}
+                        : <EmployeeGrid paginatedItems={paginatedItems} setDetailsVisible={setDetailsVisible} setSelectedEmployee={setSelectedEmployee} setAddFormVisible={setAddFormVisible} />}
 
                     <div className="page-buttons">
                         <button className='prev-button' disabled={currentPage === 1} onClick={prevPage}>Prev</button>

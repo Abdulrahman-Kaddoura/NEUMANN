@@ -10,10 +10,11 @@ interface EmployeeCardProps {
     brandColor: string
     setDetailsVisible: React.Dispatch<React.SetStateAction<boolean>>;
     setSelectedEmployee: React.Dispatch<React.SetStateAction<number>>;
+    setAddFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function EmployeeCard({
-    employeeId, firstName, lastName, jobTitle, company, city, brandColor, setDetailsVisible, setSelectedEmployee
+    employeeId, firstName, lastName, jobTitle, company, city, brandColor, setDetailsVisible, setSelectedEmployee, setAddFormVisible
 }: EmployeeCardProps) {
     return (
         <div
@@ -22,6 +23,7 @@ export function EmployeeCard({
             onClick={() => {
                 setDetailsVisible(true);
                 setSelectedEmployee(employeeId);
+                setAddFormVisible(false);
             }}>
             <div className='card-body'>
                 <div className='card-pfp-initials'>

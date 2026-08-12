@@ -1,4 +1,4 @@
-import './form.css';
+import './ConfirmDelete.css';
 
 
 export function ConfirmDelete() {
