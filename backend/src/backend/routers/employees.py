@@ -5,15 +5,26 @@ from sqlalchemy.orm import Session
 from ..constants import COMPANY_BRAND_COLORS
 from ..db.database import get_db
 from ..db.models import Employee
-from ..schemas import EmployeeCreate, EmployeeOut, EmployeeUpdate
+from ..schemas import EmployeeCreate, EmployeeListOut, EmployeeOut, EmployeeUpdate
 
 router = APIRouter(prefix="/employees", tags=["employees"])
 
+SORTABLE_FIELDS = {
+    "firstName": Employee.first_name,
+    "lastName": Employee.last_name,
+    "company": Employee.company,
+    "jobTitle": Employee.job_title,
+    "city": Employee.city,
+}
 
-@router.get("", response_model=list[EmployeeOut])
+
+@router.get("", response_model=EmployeeListOut)
 def list_employees(
     search: str | None = None,
     company: list[str] | None = Query(default=None),
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=12, ge=1, le=100),
+    sort: str | None = None,
     db: Session = Depends(get_db),
 ):
     query = db.query(Employee)
@@ -33,7 +44,18 @@ def list_employees(
     if company:
         query = query.filter(Employee.company.in_(company))
 
-    return query.all()
+    if sort:
+        descending = sort.startswith("-")
+        field = sort[1:] if descending else sort
+        column = SORTABLE_FIELDS.get(field)
+        if column is None:
+            raise HTTPException(status_code=400, detail=f"Cannot sort by '{field}'")
+        query = query.order_by(column.desc() if descending else column.asc())
+
+    total = query.count()
+    items = query.offset((page - 1) * page_size).limit(page_size).all()
+
+    return EmployeeListOut(items=items, total=total, page=page, page_size=page_size)
 
 
 @router.get("/{employee_id}", response_model=EmployeeOut)

@@ -50,3 +50,15 @@ class EmployeeCreate(BaseModel):
 
 class EmployeeUpdate(EmployeeCreate):
     pass
+
+
+class EmployeeListOut(BaseModel):
+    items: list[EmployeeOut]
+    total: int
+    page: int
+    page_size: int
+
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        populate_by_name=True,
+    )
