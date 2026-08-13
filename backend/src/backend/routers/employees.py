@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from ..constants import COMPANY_BRAND_COLORS
@@ -10,8 +11,29 @@ router = APIRouter(prefix="/employees", tags=["employees"])
 
 
 @router.get("", response_model=list[EmployeeOut])
-def list_employees(db: Session = Depends(get_db)):
-    return db.query(Employee).all()
+def list_employees(
+    search: str | None = None,
+    company: list[str] | None = Query(default=None),
+    db: Session = Depends(get_db),
+):
+    query = db.query(Employee)
+
+    if search:
+        pattern = f"%{search}%"
+        query = query.filter(
+            or_(
+                Employee.first_name.ilike(pattern),
+                Employee.last_name.ilike(pattern),
+                Employee.company.ilike(pattern),
+                Employee.job_title.ilike(pattern),
+                Employee.city.ilike(pattern),
+            )
+        )
+
+    if company:
+        query = query.filter(Employee.company.in_(company))
+
+    return query.all()
 
 
 @router.get("/{employee_id}", response_model=EmployeeOut)
