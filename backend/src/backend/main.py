@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import employees
+from .routers import companies, employees
 
 
 
@@ -13,6 +13,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(employees.router)
+app.include_router(companies.router)
 
 @app.get("/health")
 def health_check(): 

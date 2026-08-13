@@ -28,7 +28,8 @@ export function EmployeeDetails(
         detailsVisible,
         setDetailsVisible,
         setConfirmDeleteVisible,
-        setEditFormVisible
+        setEditFormVisible,
+        
     }: EmployeeDetailsProps) {
 
 
