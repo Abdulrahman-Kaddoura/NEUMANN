@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Employee } from '../types/employee';
+import type { CreateEmployee, Employee } from '../types/employee';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -15,4 +15,8 @@ export async function getEmployees(): Promise<Employee[]> {
     await new Promise(resolve => setTimeout(resolve, 1000)); 
     const response = await apiClient.get<Employee[]>('/employees');
     return response.data;
+}
+
+export async function createEmployee(data: CreateEmployee) {
+    await apiClient.post('/employees', data);
 }
