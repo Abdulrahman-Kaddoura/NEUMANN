@@ -18,5 +18,6 @@ export async function getEmployees(): Promise<Employee[]> {
 }
 
 export async function createEmployee(data: CreateEmployee) {
+    await new Promise(resolve => setTimeout(resolve, 1000));
     await apiClient.post('/employees', data);
 }

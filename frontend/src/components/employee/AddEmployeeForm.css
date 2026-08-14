@@ -76,3 +76,22 @@
     border: 1px solid #ccc;
     border-radius: 10px;
 }
+
+.success-message,
+.error-message {
+    margin: 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.success-message {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.error-message {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
