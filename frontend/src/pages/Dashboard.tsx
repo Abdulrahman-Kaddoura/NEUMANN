@@ -59,6 +59,7 @@ export function Dashboard() {
                 {addFormVisible && <AddEmployeeForm setAddFormVisible={setAddFormVisible} />}
 
                 {employeeFocused && editFormVisible && <EditEmployeeForm
+                    id={employeeFocused.id}
                     firstName={employeeFocused.firstName}
                     lastName={employeeFocused.lastName}
                     jobTitle={employeeFocused.jobTitle}
