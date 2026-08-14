@@ -69,6 +69,11 @@
     color: #374151;
 }
 
+.add-submit-button:disabled,
+.add-cancel-button:disabled {
+    cursor: not-allowed;
+}
+
 #company {
     height: 34px;
     margin-top: 4px;

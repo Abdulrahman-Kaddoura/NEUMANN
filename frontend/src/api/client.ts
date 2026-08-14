@@ -26,3 +26,8 @@ export async function editEmployee(data: EditEmployee) {
     await new Promise(resolve => setTimeout(resolve, 1000));
     await apiClient.put(`/employees/${data.id}`, data);
 }
+
+export async function deleteEmployee(id: number) {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    await apiClient.delete(`/employees/${id}`);
+}

@@ -58,7 +58,7 @@ export function Dashboard() {
 
                 {addFormVisible && <AddEmployeeForm setAddFormVisible={setAddFormVisible} />}
 
-                {employeeFocused && editFormVisible && <EditEmployeeForm
+                {editFormVisible && employeeFocused && <EditEmployeeForm
                     id={employeeFocused.id}
                     firstName={employeeFocused.firstName}
                     lastName={employeeFocused.lastName}
@@ -71,7 +71,12 @@ export function Dashboard() {
                     brandColor={employeeFocused.brandColor}
                     setEditFormVisible={setEditFormVisible} />}
 
-                {employeeFocused && confirmDeleteVisible && <ConfirmDelete setConfirmDeleteVisible={setConfirmDeleteVisible} setDetailsVisible={setDetailsVisible} firstName={employeeFocused.firstName} lastname={employeeFocused.lastName} />}
+                {confirmDeleteVisible && employeeFocused && <ConfirmDelete
+                    setConfirmDeleteVisible={setConfirmDeleteVisible}
+                    setDetailsVisible={setDetailsVisible}
+                    id={employeeFocused.id}
+                    firstName={employeeFocused.firstName}
+                    lastname={employeeFocused.lastName} />}
 
                 <main className={`main-content ${!sidebarVisible ? 'full-main' : ''}`}>
 

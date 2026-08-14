@@ -82,6 +82,12 @@ form {
     opacity: 0.8;
 }
 
+#submit-button:disabled,
+#cancel-button:disabled,
+#delete-button:disabled {
+    cursor: not-allowed;
+}
+
 #submit-button {
     background-color: rgb(34, 68, 255);
 }
