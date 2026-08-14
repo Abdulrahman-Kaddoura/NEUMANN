@@ -1,4 +1,4 @@
-import { useDeleteEmployee } from '../hooks/useDeleteEmployee';
+import { useDeleteEmployee } from '../hooks/employee/useDeleteEmployee';
 import './ConfirmDelete.css';
 
 interface ConfirmDeleteProps {

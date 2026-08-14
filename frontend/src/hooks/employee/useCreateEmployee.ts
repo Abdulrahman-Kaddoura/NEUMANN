@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { editEmployee } from "../api/client";
+import { createEmployee } from "../../api/client";
 
-export function useEditEmployee() {
+export function useCreateEmployee() {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: editEmployee,
+        mutationFn: createEmployee,
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: ['employees']

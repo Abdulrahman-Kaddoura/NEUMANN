@@ -4,10 +4,9 @@ import { Sidebar } from '../components/Sidebar';
 import { EmployeeGrid } from '../components/employee/EmployeeGrid';
 import { EmployeeGridSkeleton } from '../components/employee/EmployeeGridSkeleton';
 import { EmployeeDetails } from '../components/employee/EmployeeDetails';
-import { useEmployees } from '../hooks/useEmployees';
-import { useEmployeeSearch } from '../hooks/useEmployeeSearch';
+import { useEmployees } from '../hooks/employee/useEmployees';
+import { useEmployeeSearch } from '../hooks/employee/useEmployeeSearch';
 import { usePagination } from '../hooks/usePagination';
-// import employees from '../data/employees.json';
 import './Dashboard.css'
 import { AddEmployeeForm } from '../components/employee/AddEmployeeForm';
 import { ConfirmDelete } from '../components/ConfirmDelete';
@@ -19,7 +18,6 @@ export function Dashboard() {
     const [addFormVisible, setAddFormVisible] = useState(false);
     const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
     const [editFormVisible, setEditFormVisible] = useState(false);
-
 
     const { data: employees, isLoading } = useEmployees(); //add error later
 

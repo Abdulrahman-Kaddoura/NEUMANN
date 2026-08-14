@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Employee } from '../types/employee';
+import type { Employee } from '../../types/employee';
 
 export function useEmployeeSearch(employees: Employee[]) {
     const [searchTerm, setSearchTerm] = useState("");

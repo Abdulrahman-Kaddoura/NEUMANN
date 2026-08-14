@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './AddEmployeeForm.css'
-import { useCreateEmployee } from '../../hooks/useCreateEmployee';
+import { useCreateEmployee } from '../../hooks/employee/useCreateEmployee';
 
 interface AddEmployeeFormProps {
     setAddFormVisible: React.Dispatch<React.SetStateAction<boolean>>;

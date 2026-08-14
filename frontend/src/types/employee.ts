@@ -33,3 +33,17 @@ export type EditEmployee = {
     city: string;
     county: string;
 };
+
+export type EmployeePage = {
+    items: Employee[];
+    total: number;
+    page: number;
+    pageSize: number;
+}
+
+export type EmployeeQueryParams = {
+    search?: string; 
+    company?: string[]; 
+    page?: number; 
+    pageSize?: number
+}

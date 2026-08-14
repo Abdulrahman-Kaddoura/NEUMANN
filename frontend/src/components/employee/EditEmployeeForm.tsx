@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useEditEmployee } from '../../hooks/useEditEmployee';
+import { useEditEmployee } from '../../hooks/employee/useEditEmployee';
 import './AddEmployeeForm.css'
 //inherits from addemployeeform css cause i dont feel like making new css file tbh
 
