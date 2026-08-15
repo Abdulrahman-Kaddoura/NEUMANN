@@ -5,10 +5,11 @@ import { EmployeeGrid } from '../components/employee/EmployeeGrid';
 import { EmployeeGridSkeleton } from '../components/employee/EmployeeGridSkeleton';
 import { EmployeeDetails } from '../components/employee/EmployeeDetails';
 import { useEmployees } from '../hooks/employee/useEmployees';
-import './Dashboard.css'
 import { AddEmployeeForm } from '../components/employee/AddEmployeeForm';
 import { ConfirmDelete } from '../components/ConfirmDelete';
 import { EditEmployeeForm } from '../components/employee/EditEmployeeForm';
+import { useDebouncedValue } from '../hooks/useDebouncedValue';
+import './Dashboard.css'
 
 export function Dashboard() {
     const [sidebarVisible, setSidebarVisible] = useState(true);
@@ -21,7 +22,8 @@ export function Dashboard() {
     const [currentPage, setCurrentPage] = useState(1);
 
     const pageSize = 12;
-    const { data: employees, isLoading, error } = useEmployees({ search: searchTerm, page: currentPage, pageSize: pageSize });
+    const debouncedSearch = useDebouncedValue(searchTerm, 300);
+    const { data: employees, isLoading, error } = useEmployees({ search: debouncedSearch, page: currentPage, pageSize });
 
     const [selectedEmployee, setSelectedEmployee] = useState(1);
     const employeeFocused = employees?.items.find((e) => e.id === selectedEmployee);
@@ -82,7 +84,7 @@ export function Dashboard() {
                 <main className={`main-content ${!sidebarVisible ? 'full-main' : ''}`}>
 
                     {error ?
-                        <p>Something went wrong loading employees.</p> 
+                        <p>Something went wrong loading employees.</p>
                         : isLoading
                             ? <EmployeeGridSkeleton count={pageSize} />
                             : <EmployeeGrid paginatedItems={employees?.items} setDetailsVisible={setDetailsVisible} selectedEmployee={detailsVisible ? selectedEmployee : null} setSelectedEmployee={setSelectedEmployee} setAddFormVisible={setAddFormVisible} />}
