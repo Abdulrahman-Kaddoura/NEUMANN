@@ -4,7 +4,7 @@ import type { EmployeeQueryParams } from '../../types/employee';
 
 export function useEmployees(params: EmployeeQueryParams) {
     return useQuery({
-        queryKey: ['employees'],
+        queryKey: ['employees', params],
         queryFn: () => getEmployees(params),
     });
 }

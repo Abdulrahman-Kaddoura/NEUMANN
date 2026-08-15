@@ -3,7 +3,7 @@ import { EmployeeCard } from './EmployeeCard';
 import './EmployeeGrid.css'
 
 interface EmployeeGridProps {
-    paginatedItems: Employee[];
+    paginatedItems: Employee[] | undefined;
     selectedEmployee: number | null;
     setSelectedEmployee: React.Dispatch<React.SetStateAction<number>>;
     setDetailsVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,7 +12,7 @@ interface EmployeeGridProps {
 
 
 export function EmployeeGrid({ paginatedItems, selectedEmployee, setDetailsVisible, setSelectedEmployee, setAddFormVisible }: EmployeeGridProps) {
-    if (paginatedItems.length === 0) {
+    if (paginatedItems?.length === 0) {
         return (
             <div className="employee-grid-empty">
                 <p className="employee-grid-empty-title">No employees found</p>
@@ -23,7 +23,7 @@ export function EmployeeGrid({ paginatedItems, selectedEmployee, setDetailsVisib
     return (
         <>
             <ul className="employee-grid">
-                {paginatedItems.map((employee) => (
+                {paginatedItems?.map((employee) => (
                     <li key={employee.id}>
                         <EmployeeCard employeeId={employee.id}
                             firstName={employee.firstName}

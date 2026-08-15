@@ -5,8 +5,6 @@ import { EmployeeGrid } from '../components/employee/EmployeeGrid';
 import { EmployeeGridSkeleton } from '../components/employee/EmployeeGridSkeleton';
 import { EmployeeDetails } from '../components/employee/EmployeeDetails';
 import { useEmployees } from '../hooks/employee/useEmployees';
-import { useEmployeeSearch } from '../hooks/employee/useEmployeeSearch';
-import { usePagination } from '../hooks/usePagination';
 import './Dashboard.css'
 import { AddEmployeeForm } from '../components/employee/AddEmployeeForm';
 import { ConfirmDelete } from '../components/ConfirmDelete';
@@ -23,10 +21,11 @@ export function Dashboard() {
     const [currentPage, setCurrentPage] = useState(1);
 
     const pageSize = 12;
-    const { data: employees, isLoading, error } = useEmployees({search: searchTerm, page: currentPage, pageSize: pageSize}); //add error later
+    const { data: employees, isLoading, error } = useEmployees({ search: searchTerm, page: currentPage, pageSize: pageSize });
 
     const [selectedEmployee, setSelectedEmployee] = useState(1);
-    const employeeFocused = employees?.find((e) => e.id === selectedEmployee);
+    const employeeFocused = employees?.items.find((e) => e.id === selectedEmployee);
+    const totalPages = employees ? Math.ceil(employees.total / pageSize) : 1;
 
 
     // const { setSearchTerm, filteredEmployees } = useEmployeeSearch(employees ?? []);
@@ -82,16 +81,18 @@ export function Dashboard() {
 
                 <main className={`main-content ${!sidebarVisible ? 'full-main' : ''}`}>
 
-                    {isLoading
-                        ? <EmployeeGridSkeleton count={pageSize} />
-                        : <EmployeeGrid paginatedItems={paginatedItems} setDetailsVisible={setDetailsVisible} selectedEmployee={detailsVisible ? selectedEmployee : null} setSelectedEmployee={setSelectedEmployee} setAddFormVisible={setAddFormVisible} />}
+                    {error ?
+                        <p>Something went wrong loading employees.</p> 
+                        : isLoading
+                            ? <EmployeeGridSkeleton count={pageSize} />
+                            : <EmployeeGrid paginatedItems={employees?.items} setDetailsVisible={setDetailsVisible} selectedEmployee={detailsVisible ? selectedEmployee : null} setSelectedEmployee={setSelectedEmployee} setAddFormVisible={setAddFormVisible} />}
 
                     <div className="page-buttons">
-                        <button className='prev-button' disabled={currentPage === 1} onClick={prevPage}>Prev</button>
+                        <button className='prev-button' disabled={currentPage === 1} onClick={() => setCurrentPage((c) => c - 1)}>Prev</button>
                         <div className="page-text">
                             Page {currentPage} out of {totalPages}
                         </div>
-                        <button className='next-button' disabled={currentPage === totalPages} onClick={nextPage}>Next</button>
+                        <button className='next-button' disabled={currentPage === totalPages} onClick={() => setCurrentPage((c) => c + 1)}>Next</button>
                     </div>
                 </main>
             </div>
