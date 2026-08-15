@@ -13,8 +13,15 @@ export const apiClient = axios.create({
 export async function getEmployees(params: EmployeeQueryParams): Promise<EmployeePage> {
     //play with this time to see the skeleton grid loading phase
     await new Promise(resolve => setTimeout(resolve, 1000));
-    const response = await apiClient.get<EmployeePage>('/employees',  {params});
+    const response = await apiClient.get<EmployeePage>('/employees', {
+        params,
+        paramsSerializer: { indexes: null },
+    });
     return response.data;
+}
+
+export async function getCompanies(): Promise<string[]> {
+    return (await apiClient.get('/companies')).data;
 }
 
 export async function createEmployee(data: CreateEmployee) {

@@ -9,6 +9,7 @@ import { AddEmployeeForm } from '../components/employee/AddEmployeeForm';
 import { ConfirmDelete } from '../components/ConfirmDelete';
 import { EditEmployeeForm } from '../components/employee/EditEmployeeForm';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
+import { useCompanies } from '../hooks/useCompanies';
 import './Dashboard.css'
 
 export function Dashboard() {
@@ -23,7 +24,11 @@ export function Dashboard() {
 
     const pageSize = 12;
     const debouncedSearch = useDebouncedValue(searchTerm, 300);
-    const { data: employees, isLoading, error } = useEmployees({ search: debouncedSearch, page: currentPage, pageSize });
+    const { data: companies = [] } = useCompanies();
+    const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
+    const { data: employees, isLoading, error } = useEmployees({ search: debouncedSearch, company: selectedCompanies, page: currentPage, pageSize });
+
+
 
     const [selectedEmployee, setSelectedEmployee] = useState(1);
     const employeeFocused = employees?.items.find((e) => e.id === selectedEmployee);
@@ -41,7 +46,12 @@ export function Dashboard() {
             </header>
 
             <div className="content-row">
-                <Sidebar visible={sidebarVisible} />
+
+                <Sidebar
+                    visible={sidebarVisible}
+                    companies={companies}
+                    selectedCompanies={selectedCompanies}
+                    setSelectedCompanies={setSelectedCompanies} />
 
 
                 {employeeFocused && <EmployeeDetails
