@@ -19,15 +19,19 @@ export function Dashboard() {
     const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
     const [editFormVisible, setEditFormVisible] = useState(false);
 
-    const { data: employees, isLoading } = useEmployees(); //add error later
+    const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const pageSize = 12;
+    const { data: employees, isLoading, error } = useEmployees({search: searchTerm, page: currentPage, pageSize: pageSize}); //add error later
 
     const [selectedEmployee, setSelectedEmployee] = useState(1);
     const employeeFocused = employees?.find((e) => e.id === selectedEmployee);
 
-    const { setSearchTerm, filteredEmployees } = useEmployeeSearch(employees ?? []);
 
-    const pageSize = 12;
-    const { currentPage, totalPages, paginatedItems, nextPage, prevPage, setCurrentPage } = usePagination(filteredEmployees, pageSize);
+    // const { setSearchTerm, filteredEmployees } = useEmployeeSearch(employees ?? []);
+    // const { currentPage, totalPages, paginatedItems, nextPage, prevPage, setCurrentPage } = usePagination(filteredEmployees, pageSize);
+
 
     return (
         <div className='app-wrapper'>
