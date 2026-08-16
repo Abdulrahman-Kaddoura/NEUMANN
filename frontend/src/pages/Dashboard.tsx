@@ -51,7 +51,8 @@ export function Dashboard() {
                     visible={sidebarVisible}
                     companies={companies}
                     selectedCompanies={selectedCompanies}
-                    setSelectedCompanies={setSelectedCompanies} />
+                    setSelectedCompanies={setSelectedCompanies}
+                    onSearchChange={(value) => { setSearchTerm(value); setCurrentPage(1); }} />
 
 
                 {employeeFocused && <EmployeeDetails

@@ -22,6 +22,12 @@
     width: 100%;
 }
 
+@media (max-width: 768px) {
+    .main-content {
+        width: 100%;
+    }
+}
+
 .page-buttons {
     display: flex;
     align-items: center;

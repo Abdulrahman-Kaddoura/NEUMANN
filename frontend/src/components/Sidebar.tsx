@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import './Sidebar.css'
 
 interface SidebarProps {
@@ -5,12 +6,21 @@ interface SidebarProps {
     companies: string[];
     selectedCompanies: string[];
     setSelectedCompanies: React.Dispatch<React.SetStateAction<string[]>>;
+    onSearchChange: (value: string) => void;
 }
 
-export function Sidebar({ visible, companies, selectedCompanies, setSelectedCompanies }: SidebarProps) {
+export function Sidebar({ visible, companies, selectedCompanies, setSelectedCompanies, onSearchChange }: SidebarProps) {
 
     return (
         <aside className={`sidebar ${visible ? '' : 'collapsed'}`}>
+            <div className="sidebar-mobile-only">
+                <input
+                    id='sidebar-search-bar'
+                    placeholder='Search name, company, city...'
+                    onChange={(e) => onSearchChange(e.target.value)}
+                />
+            </div>
+
             <div className="filter-heading">Company</div>
 
             <div className="filter-options">
@@ -34,6 +44,8 @@ export function Sidebar({ visible, companies, selectedCompanies, setSelectedComp
                     ))}
                 </ul>
             </div>
+
+            <Link className="sidebar-logout-button" to="/login">Logout</Link>
         </aside>
     );
 }

@@ -104,3 +104,9 @@ nav {
     text-decoration: none;
 }
 
+@media (max-width: 768px) {
+    .search,
+    .logout-button {
+        display: none;
+    }
+}
