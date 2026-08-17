@@ -6,10 +6,11 @@ interface SidebarProps {
     companies: string[];
     selectedCompanies: string[];
     setSelectedCompanies: React.Dispatch<React.SetStateAction<string[]>>;
+    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
     onSearchChange: (value: string) => void;
 }
 
-export function Sidebar({ visible, companies, selectedCompanies, setSelectedCompanies, onSearchChange }: SidebarProps) {
+export function Sidebar({ visible, companies, selectedCompanies, setSelectedCompanies, setCurrentPage, onSearchChange }: SidebarProps) {
 
     return (
         <aside className={`sidebar ${visible ? '' : 'collapsed'}`}>
@@ -37,6 +38,7 @@ export function Sidebar({ visible, companies, selectedCompanies, setSelectedComp
                                             ? [...prev, company]
                                             : prev.filter((c) => c !== company)
                                     );
+                                    setCurrentPage(1);
                                 }}
                             />
                             <label htmlFor={`company-${company}`}>{company}</label>

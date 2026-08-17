@@ -52,6 +52,7 @@ export function Dashboard() {
                     companies={companies}
                     selectedCompanies={selectedCompanies}
                     setSelectedCompanies={setSelectedCompanies}
+                    setCurrentPage={setCurrentPage}
                     onSearchChange={(value) => { setSearchTerm(value); setCurrentPage(1); }} />
 
 
