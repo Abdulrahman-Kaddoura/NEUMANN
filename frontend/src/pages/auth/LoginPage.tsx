@@ -1,14 +1,17 @@
 import { Link, useNavigate } from 'react-router';
-import type { FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
+import { login } from '../../api/authApi';
 import './auth.css'
 
 export function LoginPage() {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        navigate('/dashboard');
+        const await login(form);
     }
+
+    const [form, setForm] = useState({email: '', password: ''});
 
     return (
         <div className="login-wrapper">
@@ -25,6 +28,8 @@ export function LoginPage() {
                             type="text"
                             placeholder="Enter email"
                             required
+                            value={form.email}
+                            onChange={(e) => { setForm((f) => ({...f, email: e.target.value}))}}
                         />
                     </div>
 
@@ -35,6 +40,8 @@ export function LoginPage() {
                             type="password"
                             placeholder="Enter password"
                             required
+                            value={form.password}
+                            onChange={(e) => { setForm((f) => ({...f, password: e.target.value}))}}
                         />
                     </div>
 
