@@ -34,7 +34,9 @@ export function EmployeeDetails(
 
 
     return (
-        <aside className={`details-wrapper ${!detailsVisible ? 'invisible-details' : ''}`}>
+        <>
+            <div className={`panel-backdrop ${detailsVisible ? 'panel-backdrop-visible' : ''}`} onClick={() => setDetailsVisible(false)} />
+            <aside className={`details-wrapper ${!detailsVisible ? 'invisible-details' : ''}`}>
             <div className='details-header' style={{ '--brand': brandColor } as React.CSSProperties}>
                 <button className='details-close-btn' onClick={() => {setDetailsVisible(false); setConfirmDeleteVisible(false)}}>×</button>
                 <div className='details-avatar'>
@@ -79,6 +81,7 @@ export function EmployeeDetails(
                 <div className='details-edit-btn' onClick={() => {setEditFormVisible(true); setDetailsVisible(false)}}>Edit</div>
                 <div className='details-delete-btn' onClick={() => setConfirmDeleteVisible(true)}>Delete</div>
             </div>
-        </aside >
+            </aside>
+        </>
     );
 }

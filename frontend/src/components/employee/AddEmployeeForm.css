@@ -19,6 +19,25 @@
     transform: translateX(100%);
 }
 
+.panel-backdrop {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .add-form-wrapper {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .panel-backdrop.panel-backdrop-visible {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.55);
+        z-index: 45;
+    }
+}
+
 .add-form-header {
     padding: 24px 24px 0;
 }

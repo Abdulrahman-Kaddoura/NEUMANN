@@ -22,7 +22,9 @@ export function AddEmployeeForm({ setAddFormVisible }: AddEmployeeFormProps) {
     const { mutate, isPending, isSuccess, isError, error } = useCreateEmployee();
 
     return (
-        <aside className='add-form-wrapper'>
+        <>
+            <div className='panel-backdrop panel-backdrop-visible' onClick={() => setAddFormVisible(false)} />
+            <aside className='add-form-wrapper'>
             <form className='add-form' onSubmit={(e) => {
                 e.preventDefault();
                 mutate({ ...form, email: form.email || null }, {
@@ -103,6 +105,7 @@ export function AddEmployeeForm({ setAddFormVisible }: AddEmployeeFormProps) {
                     <button type='button' disabled={isPending} className='add-cancel-button' onClick={() => setAddFormVisible(false)}>Cancel</button>
                 </div>
             </form>
-        </aside>
+            </aside>
+        </>
     );
 }

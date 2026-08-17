@@ -44,7 +44,9 @@ export function EditEmployeeForm({ setEditFormVisible,
     const { mutate, isSuccess, isPending, isError, error } = useEditEmployee();
 
     return (
-        <aside className='add-form-wrapper'>
+        <>
+            <div className='panel-backdrop panel-backdrop-visible' onClick={() => setEditFormVisible(false)} />
+            <aside className='add-form-wrapper'>
             <form
                 className='add-form'
                 onSubmit={(e) => {
@@ -124,6 +126,7 @@ export function EditEmployeeForm({ setEditFormVisible,
                 <button type='button' className='add-cancel-button' disabled={isPending} onClick={() => { setEditFormVisible(false); setCanSubmit(false); }}>Cancel</button>
             </div>
         </form>
-        </aside >
+        </aside>
+        </>
     );
 }
