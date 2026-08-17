@@ -7,11 +7,7 @@ export async function login(credentials: LoginRequest): Promise<LoginResponse>{
     return (await response).data
 }
 
-export async function me(token: string): Promise<User> {
-    const response = apiClient.get<User>("/auth/me", {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
+export async function me(): Promise<User> {
+    const response = apiClient.get<User>("/auth/me");
     return (await response).data;
 }

@@ -9,13 +9,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        const handleUnauthorized = () => {
+            setToken(null);
+            setUser(null);
+        };
+
+        window.addEventListener('auth:unauthorized', handleUnauthorized);
+
+        return () => {
+            window.removeEventListener('auth:unauthorized', handleUnauthorized);
+        };
+    }, []);
+
+    useEffect(() => {
         const checkAuth = async () => {
             const savedToken = localStorage.getItem('token');
             try {
                 if (savedToken) {
                     setToken(savedToken);
 
-                    const user = await meApi(savedToken);
+                    const user = await meApi();
                     setUser(user);
                 }
             } catch {
@@ -34,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const response = await loginApi({ email, password });
         setToken(response.accessToken);
         localStorage.setItem('token', response.accessToken);
-        setUser(await meApi(response.accessToken));
+        setUser(await meApi());
     };
 
     const logout = () => {
