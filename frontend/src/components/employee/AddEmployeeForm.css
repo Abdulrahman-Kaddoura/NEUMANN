@@ -119,3 +119,9 @@
     background-color: #fee2e2;
     color: #b91c1c;
 }
+
+.form-error {
+    margin: 4px 0 0;
+    color: #d32f2f;
+    font-size: 0.8rem;
+}

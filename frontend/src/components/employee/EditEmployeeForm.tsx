@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useEditEmployee } from '../../hooks/employee/useEditEmployee';
+import { isBlank } from '../../utils/validation';
 import './AddEmployeeForm.css'
 //inherits from addemployeeform css cause i dont feel like making new css file tbh
+
+const REQUIRED_FIELDS = ['firstName', 'lastName', 'company', 'jobTitle', 'address', 'city', 'county'] as const;
 
 interface EditFormProps {
     setEditFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -40,6 +43,7 @@ export function EditEmployeeForm({ setEditFormVisible,
         city,
         county
     });
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     const { mutate, isSuccess, isPending, isError, error } = useEditEmployee();
 
@@ -50,8 +54,29 @@ export function EditEmployeeForm({ setEditFormVisible,
             <form
                 className='add-form'
                 onSubmit={(e) => {
-                    e.preventDefault(); 
-                    mutate({ ...form, email: form.email || null },
+                    e.preventDefault();
+
+                    const nextErrors: Record<string, string> = {};
+                    for (const field of REQUIRED_FIELDS) {
+                        if (isBlank(form[field])) {
+                            nextErrors[field] = 'This field cannot be empty';
+                        }
+                    }
+                    setErrors(nextErrors);
+                    if (Object.keys(nextErrors).length > 0) return;
+
+                    const trimmed = {
+                        ...form,
+                        firstName: form.firstName.trim(),
+                        lastName: form.lastName.trim(),
+                        company: form.company.trim(),
+                        jobTitle: form.jobTitle.trim(),
+                        address: form.address.trim(),
+                        city: form.city.trim(),
+                        county: form.county.trim(),
+                    };
+
+                    mutate({ ...trimmed, email: form.email?.trim() || null },
                         {onSuccess: () => {
                             setTimeout(() => setEditFormVisible(false) ,1200);
                         }}
@@ -67,11 +92,13 @@ export function EditEmployeeForm({ setEditFormVisible,
                 <div className='form-group'>
                     <label htmlFor='first-name'>First Name</label>
                     <input className='form-input' value={form.firstName} onChange={(e) => { setForm(f => ({ ...f, firstName: e.target.value })); setCanSubmit(true) }} required id='first-name' placeholder='Enter First Name' />
+                    {errors.firstName && <p className='form-error'>{errors.firstName}</p>}
                 </div>
 
                 <div className='form-group'>
                     <label htmlFor='last-name'>Last Name</label>
                     <input className='form-input' value={form.lastName} onChange={(e) => { setForm(f => ({ ...f, lastName: e.target.value })); setCanSubmit(true); }} required id='last-name' placeholder='Enter Last Name' />
+                    {errors.lastName && <p className='form-error'>{errors.lastName}</p>}
                 </div>
 
                 <div className='form-group'>
@@ -84,11 +111,13 @@ export function EditEmployeeForm({ setEditFormVisible,
                         <option value='Commercial Press'>Commercial Press</option>
                         <option value='Yummy'>Yummy</option>
                     </select>
+                    {errors.company && <p className='form-error'>{errors.company}</p>}
                 </div>
 
                 <div className='form-group'>
                     <label htmlFor='job-title'>Job Title</label>
                     <input className='form-input' value={form.jobTitle} onChange={(e) => { setForm(f => ({ ...f, jobTitle: e.target.value })); setCanSubmit(true); }} required id='job-title' placeholder='Enter Job Title' />
+                    {errors.jobTitle && <p className='form-error'>{errors.jobTitle}</p>}
                 </div>
 
                 <div className='form-group'>
@@ -99,16 +128,19 @@ export function EditEmployeeForm({ setEditFormVisible,
                 <div className='form-group'>
                     <label htmlFor='address'>Address</label>
                     <input className='form-input' required value={form.address} onChange={(e) => { setForm(f => ({ ...f, address: e.target.value })); setCanSubmit(true); }} id='address' placeholder='Enter Address' />
+                    {errors.address && <p className='form-error'>{errors.address}</p>}
                 </div>
 
                 <div className='form-group'>
                     <label htmlFor='city'>City</label>
                     <input className='form-input' required value={form.city} onChange={(e) => { setForm(f => ({ ...f, city: e.target.value })); setCanSubmit(true); }} id='city' placeholder='Enter City' />
+                    {errors.city && <p className='form-error'>{errors.city}</p>}
                 </div>
 
                 <div className='form-group'>
                     <label htmlFor='county'>County</label>
                     <input className='form-input' required value={form.county} onChange={(e) => { setForm(f => ({ ...f, county: e.target.value })); setCanSubmit(true); }} id='county' placeholder='Enter County' />
+                    {errors.county && <p className='form-error'>{errors.county}</p>}
                 </div>
 
                 {isSuccess && <div className='form-group'>

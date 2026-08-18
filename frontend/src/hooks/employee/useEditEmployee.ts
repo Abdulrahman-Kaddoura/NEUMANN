@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { editEmployee } from "../../api/client";
+import { editEmployee } from "../../api/employeeApi";
 
 export function useEditEmployee() {
     const queryClient = useQueryClient();

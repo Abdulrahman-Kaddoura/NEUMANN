@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import './AddEmployeeForm.css'
 import { useCreateEmployee } from '../../hooks/employee/useCreateEmployee';
+import { isBlank } from '../../utils/validation';
 
 interface AddEmployeeFormProps {
     setAddFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+const REQUIRED_FIELDS = ['firstName', 'lastName', 'company', 'jobTitle', 'address', 'city', 'county'] as const;
 
 export function AddEmployeeForm({ setAddFormVisible }: AddEmployeeFormProps) {
 
@@ -18,6 +21,7 @@ export function AddEmployeeForm({ setAddFormVisible }: AddEmployeeFormProps) {
         city: '',
         county: ''
     });
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     const { mutate, isPending, isSuccess, isError, error } = useCreateEmployee();
 
@@ -27,7 +31,28 @@ export function AddEmployeeForm({ setAddFormVisible }: AddEmployeeFormProps) {
             <aside className='add-form-wrapper'>
             <form className='add-form' onSubmit={(e) => {
                 e.preventDefault();
-                mutate({ ...form, email: form.email || null }, {
+
+                const nextErrors: Record<string, string> = {};
+                for (const field of REQUIRED_FIELDS) {
+                    if (isBlank(form[field])) {
+                        nextErrors[field] = 'This field cannot be empty';
+                    }
+                }
+                setErrors(nextErrors);
+                if (Object.keys(nextErrors).length > 0) return;
+
+                const trimmed = {
+                    ...form,
+                    firstName: form.firstName.trim(),
+                    lastName: form.lastName.trim(),
+                    company: form.company.trim(),
+                    jobTitle: form.jobTitle.trim(),
+                    address: form.address.trim(),
+                    city: form.city.trim(),
+                    county: form.county.trim(),
+                };
+
+                mutate({ ...trimmed, email: form.email.trim() || null }, {
                     onSuccess: () => {
                         setTimeout(() => setAddFormVisible(false), 1200);
                     },
@@ -43,11 +68,13 @@ export function AddEmployeeForm({ setAddFormVisible }: AddEmployeeFormProps) {
                     <div className='form-group'>
                         <label htmlFor='first-name'>First Name</label>
                         <input className='form-input' value={form.firstName} onChange={(e) => { setForm((f) => ({ ...f, firstName: e.target.value })) }} required id='first-name' placeholder='Enter First Name' />
+                        {errors.firstName && <p className='form-error'>{errors.firstName}</p>}
                     </div>
 
                     <div className='form-group'>
                         <label htmlFor='last-name'>Last Name</label>
                         <input className='form-input' value={form.lastName} onChange={(e) => { setForm((f) => ({ ...f, lastName: e.target.value })) }} required id='last-name' placeholder='Enter Last Name' />
+                        {errors.lastName && <p className='form-error'>{errors.lastName}</p>}
                     </div>
 
                     <div className='form-group'>
@@ -63,11 +90,13 @@ export function AddEmployeeForm({ setAddFormVisible }: AddEmployeeFormProps) {
                             <option value='Commercial Press'>Commercial Press</option>
                             <option value='Yummy'>Yummy</option>
                         </select>
+                        {errors.company && <p className='form-error'>{errors.company}</p>}
                     </div>
 
                     <div className='form-group'>
                         <label htmlFor='job-title'>Job Title</label>
                         <input className='form-input' value={form.jobTitle} onChange={(e) => { setForm((f) => ({ ...f, jobTitle: e.target.value })) }} required id='job-title' placeholder='Enter Job Title' />
+                        {errors.jobTitle && <p className='form-error'>{errors.jobTitle}</p>}
                     </div>
 
                     <div className='form-group'>
@@ -78,16 +107,19 @@ export function AddEmployeeForm({ setAddFormVisible }: AddEmployeeFormProps) {
                     <div className='form-group'>
                         <label htmlFor='address'>Address</label>
                         <input className='form-input' value={form.address} onChange={(e) => { setForm((f) => ({ ...f, address: e.target.value })) }} required id='address' placeholder='Enter Address' />
+                        {errors.address && <p className='form-error'>{errors.address}</p>}
                     </div>
 
                     <div className='form-group'>
                         <label htmlFor='city'>City</label>
                         <input className='form-input' value={form.city} onChange={(e) => { setForm((f) => ({ ...f, city: e.target.value })) }} required id='city' placeholder='Enter City' />
+                        {errors.city && <p className='form-error'>{errors.city}</p>}
                     </div>
 
                     <div className='form-group'>
                         <label htmlFor='county'>County</label>
                         <input className='form-input' value={form.county} onChange={(e) => { setForm((f) => ({ ...f, county: e.target.value })) }} required id='county' placeholder='Enter County' />
+                        {errors.county && <p className='form-error'>{errors.county}</p>}
                     </div>
 
                     {isSuccess && <div className='form-group'>
