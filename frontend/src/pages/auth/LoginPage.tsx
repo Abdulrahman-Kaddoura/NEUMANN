@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router';
 import { useState, type FormEvent } from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import EyeIcon from '../../assets/eye.svg';
 import './auth.css'
 
 export function LoginPage() {
@@ -8,6 +9,7 @@ export function LoginPage() {
     const { login } = useAuth();
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPass, setShowPass] = useState(false);
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -47,22 +49,26 @@ export function LoginPage() {
 
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input
-                            id="password"
-                            type="password"
-                            placeholder="Enter password"
-                            required
-                            value={form.password}
-                            onChange={(e) => { setForm((f) => ({ ...f, password: e.target.value })) }}
-                        />
+                        <div className="password-input">
+                            <input
+                                id="password"
+                                type={showPass ? "text" : "password"}
+                                placeholder="Enter password"
+                                required
+                                value={form.password}
+                                onChange={(e) => { setForm((f) => ({ ...f, password: e.target.value })) }}
+                            />
+                            <button
+                                type="button"
+                                className="reveal-pass"
+                                onClick={() => setShowPass((v) => !v)}
+                            >
+                                <img className="eye-icon" src={EyeIcon} />
+                            </button>
+                        </div>
                     </div>
 
                     <div className="login-options">
-                        <label className="remember-me">
-                            <input type="checkbox" />
-                            Remember me
-                        </label>
-
                         <Link to="/forgot-password">Forgot password?</Link>
                     </div>
 
