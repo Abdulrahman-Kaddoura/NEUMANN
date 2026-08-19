@@ -17,3 +17,13 @@ class Employee(Base):
     city: Mapped[str] = mapped_column(String(100))
     county: Mapped[str] = mapped_column(String(100))
     brand_color: Mapped[str] = mapped_column(String(7))
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
+    hashed_password: Mapped[str] = mapped_column(String(255))
+    full_name: Mapped[str] = mapped_column(String(200))
+    role: Mapped[str] = mapped_column(String(20), default="admin")

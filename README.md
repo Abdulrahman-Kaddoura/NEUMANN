@@ -37,3 +37,8 @@ npm run dev
 app: http://localhost:5173
 docs: http://localhost:8000/docs
 health: http://localhost:8000/health 
+
+
+## 5. login info:
+email: admin@mail.com
+password: admin123

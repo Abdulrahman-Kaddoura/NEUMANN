@@ -3,11 +3,14 @@ from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from ..constants import COMPANY_BRAND_COLORS
+from ..core.deps import get_current_user
 from ..db.database import get_db
 from ..db.models import Employee
 from ..schemas import EmployeeCreate, EmployeeListOut, EmployeeOut, EmployeeUpdate
 
-router = APIRouter(prefix="/employees", tags=["employees"])
+router = APIRouter(
+    prefix="/employees", tags=["employees"], dependencies=[Depends(get_current_user)]
+)
 
 SORTABLE_FIELDS = {
     "firstName": Employee.first_name,

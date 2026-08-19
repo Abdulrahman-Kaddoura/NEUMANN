@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCompanies } from "../api/client";
+import { getCompanies } from "../api/employeeApi";
 
 export function useCompanies() {
     return useQuery({

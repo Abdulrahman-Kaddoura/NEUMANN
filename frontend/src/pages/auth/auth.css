@@ -108,10 +108,31 @@ button:disabled {
 }
 
 .form-error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     margin: 0 20px;
-    color: #d32f2f;
+    padding: 10px 12px;
+    background: #fdecea;
+    border: 1px solid #f5c2c0;
+    border-left: 3px solid #d32f2f;
+    border-radius: 6px;
+    color: #b3261e;
     font-size: 0.85rem;
     text-align: left;
+    animation: form-error-in 0.15s ease-out;
+}
+
+@keyframes form-error-in {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 a {
