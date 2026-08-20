@@ -1,4 +1,5 @@
-import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
+import { useAuth } from '../hooks/useAuth';
 import './Sidebar.css'
 
 interface SidebarProps {
@@ -11,6 +12,13 @@ interface SidebarProps {
 }
 
 export function Sidebar({ visible, companies, selectedCompanies, setSelectedCompanies, setCurrentPage, onSearchChange }: SidebarProps) {
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
+    function handleLogout() {
+        logout();
+        navigate('/login');
+    }
 
     return (
         <aside className={`sidebar ${visible ? '' : 'collapsed'}`}>
@@ -47,7 +55,7 @@ export function Sidebar({ visible, companies, selectedCompanies, setSelectedComp
                 </ul>
             </div>
 
-            <Link className="sidebar-logout-button" to="/login">Logout</Link>
+            <button className="sidebar-logout-button" onClick={handleLogout}>Logout</button>
         </aside>
     );
 }

@@ -1,5 +1,6 @@
-import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
 import CollapseIcon from '../assets/collapse.svg';
+import { useAuth } from '../hooks/useAuth';
 import './Navbar.css'
 
 interface NavbarProps {
@@ -10,6 +11,14 @@ interface NavbarProps {
 }
 
 export function Navbar({ setSideBarVisible, setAddFormVisible, setDetailsVisible, onSearchChange }: NavbarProps) {
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
+    function handleLogout() {
+        logout();
+        navigate('/login');
+    }
+
     return (
         <nav>
             <button className="collapser" onClick={() => setSideBarVisible(v => !v)}>
@@ -30,7 +39,7 @@ export function Navbar({ setSideBarVisible, setAddFormVisible, setDetailsVisible
                 <span className="add-icon">+</span> Add
             </button>
 
-            <Link className="logout-button" to="/login">Logout</Link>
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
         </nav>
     );
 }
