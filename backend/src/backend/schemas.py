@@ -57,6 +57,18 @@ class LoginRequest(BaseModel):
     password: str
 
 
+class RegisterRequest(BaseModel):
+    full_name: str
+    email: str
+    password: str
+    role: Literal["editor", "viewer"]
+
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        populate_by_name=True,
+    )
+
+
 class TokenOut(BaseModel):
     access_token: str
     token_type: str = "bearer"

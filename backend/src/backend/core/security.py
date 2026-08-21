@@ -17,6 +17,10 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     )
 
 
+def is_password_strong_enough(password: str) -> bool:
+    return len(password) >= 8
+
+
 def create_access_token(subject: str) -> str:
     expire = datetime.now(timezone.utc) + timedelta(
         minutes=settings.access_token_expire_minutes

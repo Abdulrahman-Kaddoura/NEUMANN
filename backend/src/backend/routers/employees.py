@@ -3,7 +3,7 @@ from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from ..constants import COMPANY_BRAND_COLORS
-from ..core.deps import get_current_user
+from ..core.deps import get_current_user, require_role
 from ..db.database import get_db
 from ..db.models import Employee
 from ..schemas import EmployeeCreate, EmployeeListOut, EmployeeOut, EmployeeUpdate
@@ -69,7 +69,12 @@ def get_employee(employee_id: int, db: Session = Depends(get_db)):
     return employee
     
 
-@router.post("", response_model=EmployeeOut, status_code=201)
+@router.post(
+    "",
+    response_model=EmployeeOut,
+    status_code=201,
+    dependencies=[Depends(require_role("editor"))],
+)
 def create_employee(
     payload: EmployeeCreate,
     db: Session = Depends(get_db),
@@ -92,7 +97,11 @@ def create_employee(
 
     return employee
 
-@router.put("/{employee_id}", response_model=EmployeeOut)
+@router.put(
+    "/{employee_id}",
+    response_model=EmployeeOut,
+    dependencies=[Depends(require_role("editor"))],
+)
 def update_employee(
     employee_id: int,
     payload: EmployeeUpdate,
@@ -118,7 +127,11 @@ def update_employee(
 
     return employee
 
-@router.delete("/{employee_id}", status_code=204)
+@router.delete(
+    "/{employee_id}",
+    status_code=204,
+    dependencies=[Depends(require_role("editor"))],
+)
 def delete_employee(
     employee_id: int,
     db: Session = Depends(get_db),
