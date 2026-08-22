@@ -46,6 +46,12 @@
     align-self: center;
     margin-left: 10px;
     margin-right: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: rgb(34, 68, 255);
+    color: white;
+    font-family: inherit;
+    font-size: 0.85rem;
     cursor: pointer;
 }
 

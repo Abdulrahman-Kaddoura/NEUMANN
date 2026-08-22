@@ -129,7 +129,12 @@
     border-radius: 8px;
     font-weight: 600;
     font-size: 14px;
+    font-family: inherit;
     cursor: pointer;
+}
+
+.details-delete-btn {
+    border: none;
 }
 
 .details-edit-btn {
