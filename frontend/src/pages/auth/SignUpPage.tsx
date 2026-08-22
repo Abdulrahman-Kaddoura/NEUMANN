@@ -1,26 +1,71 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
+import { isAxiosError } from 'axios';
 import { Link, useNavigate } from 'react-router';
+import { useAuth } from '../../hooks/useAuth';
+import type { Role } from '../../types/auth';
 import EyeIcon from '../../assets/eye.svg';
 import './auth.css'
 
+function extractErrorMessage(err: unknown, fallback: string): string {
+    if (isAxiosError(err) && typeof err.response?.data?.detail === 'string') {
+        return err.response.data.detail;
+    }
+    return fallback;
+}
+
 export function SignUpPage() {
-    const [pass, setPass] = useState("");
-    const [confirmPass, setConfirmPass] = useState("");
-    const [error, setError] = useState("");
+    const navigate = useNavigate();
+    const { register } = useAuth();
+
+    const [form, setForm] = useState({ fullName: '', email: '', password: '' });
+    const [confirmPass, setConfirmPass] = useState('');
+    const [role, setRole] = useState<Role>('viewer');
     const [showPass, setShowPass] = useState(false);
     const [showConfirmPass, setShowConfirmPass] = useState(false);
-    const navigate = useNavigate();
+    const [error, setError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    function validate(): string | null {
+        if (!form.fullName.trim() || !form.email.trim() || !form.password) {
+            return 'Please fill in all required fields.';
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+            return 'Please enter a valid email address.';
+        }
+        if (form.password.length < 8) {
+            return 'Password must be at least 8 characters long.';
+        }
+        if (form.password !== confirmPass) {
+            return 'Passwords do not match.';
+        }
+        return null;
+    }
+
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        if (pass !== confirmPass) {
-            setError("Passwords do not match");
+
+        const validationError = validate();
+        if (validationError) {
+            setError(validationError);
             return;
         }
 
-        setError("");
-        navigate('/dashboard');
+        setError('');
+        setIsSubmitting(true);
+        try {
+            await register({
+                fullName: form.fullName.trim(),
+                email: form.email.trim(),
+                password: form.password,
+                role,
+            });
+            navigate('/');
+        } catch (err) {
+            setError(extractErrorMessage(err, 'Could not create account. Please try again.'));
+        } finally {
+            setIsSubmitting(false);
+        }
     }
 
     return (
@@ -38,17 +83,33 @@ export function SignUpPage() {
                             type="text"
                             placeholder="Enter name"
                             required
+                            value={form.fullName}
+                            onChange={(e) => setForm((f) => ({ ...f, fullName: e.target.value }))}
                         />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="username">Email</label>
+                        <label htmlFor="email">Email</label>
                         <input
                             id="email"
                             type="text"
                             placeholder="Enter email"
                             required
+                            value={form.email}
+                            onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                         />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="role">Account type</label>
+                        <select
+                            id="role"
+                            value={role}
+                            onChange={(e) => setRole(e.target.value as Role)}
+                        >
+                            <option value="viewer">Viewer</option>
+                            <option value="editor">Editor</option>
+                        </select>
                     </div>
 
                     <div className="form-group">
@@ -59,9 +120,8 @@ export function SignUpPage() {
                                 type={showPass ? "text" : "password"}
                                 placeholder="Enter password"
                                 required
-                                onChange={(e) => {
-                                    setPass(e.target.value);
-                                }}
+                                value={form.password}
+                                onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
                             />
                             <button
                                 type="button"
@@ -81,9 +141,8 @@ export function SignUpPage() {
                                 type={showConfirmPass ? "text" : "password"}
                                 placeholder="Confirm password"
                                 required
-                                onChange={(e) => {
-                                    setConfirmPass(e.target.value);
-                                }}
+                                value={confirmPass}
+                                onChange={(e) => setConfirmPass(e.target.value)}
                             />
                             <button
                                 type="button"
@@ -95,7 +154,7 @@ export function SignUpPage() {
                         </div>
                     </div>
 
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                    {error && <p className="form-error" role="alert">{error}</p>}
 
                     <div className="login-options">
                         <label className="remember-me">
@@ -104,7 +163,9 @@ export function SignUpPage() {
                         </label>
                     </div>
 
-                    <button type="submit">Create Account</button>
+                    <button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? 'Creating account...' : 'Create Account'}
+                    </button>
 
                     <p className="signup-link">Have an account? <Link to="/login">Login</Link></p>
                 </form>
