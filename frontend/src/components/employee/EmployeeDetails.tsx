@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
+import { useAuth } from '../../hooks/useAuth';
 import './EmployeeDetails.css'
 
 interface EmployeeDetailsProps {
@@ -34,6 +35,7 @@ export function EmployeeDetails(
 
     }: EmployeeDetailsProps) {
 
+    const { user } = useAuth();
     const panelRef = useRef<HTMLElement | null>(null);
     useFocusTrap(panelRef, detailsVisible);
 
@@ -103,10 +105,12 @@ export function EmployeeDetails(
                     </div>
                 </div>
 
+                {user?.role === 'editor' && (
                 <div className='details-actions'>
                     <button type='button' className='details-edit-btn' onClick={() => { setEditFormVisible(true); setDetailsVisible(false) }}>Edit</button>
                     <button type='button' className='details-delete-btn' onClick={() => setConfirmDeleteVisible(true)}>Delete</button>
                 </div>
+                )}
             </aside>
         </>
     );

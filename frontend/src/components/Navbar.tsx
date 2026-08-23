@@ -11,7 +11,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ setSideBarVisible, setAddFormVisible, setDetailsVisible, onSearchChange }: NavbarProps) {
-    const { logout } = useAuth();
+    const { logout, user } = useAuth();
     const navigate = useNavigate();
 
     function handleLogout() {
@@ -35,9 +35,11 @@ export function Navbar({ setSideBarVisible, setAddFormVisible, setDetailsVisible
                 />
             </div>
 
-            <button className="add-button" onClick={() => { setAddFormVisible(true); setDetailsVisible(false); }}>
-                <span className="add-icon">+</span> Add
-            </button>
+            {user?.role === 'editor' && (
+                <button className="add-button" onClick={() => { setAddFormVisible(true); setDetailsVisible(false); }}>
+                    <span className="add-icon">+</span> Add
+                </button>
+            )}
 
             <button className="logout-button" onClick={handleLogout}>Logout</button>
         </nav>
