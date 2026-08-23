@@ -1,4 +1,85 @@
+:root {
+    /* backgrounds */
+    --bg-page: #f8f9fc;
+    --bg-surface: #ffffff;
+    --bg-overlay: rgba(15, 23, 42, 0.55);
+
+    /* text */
+    --text-primary: #111827;
+    --text-heading: #1e2a4a;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+
+    /* borders */
+    --border: rgba(0, 0, 0, 0.08);
+    --border-strong: rgba(0, 0, 0, 0.15);
+    --border-input: #ccc;
+
+    /* fills (solid, not translucent — disabled states, subtle backgrounds) */
+    --fill-muted: #e5e7eb;
+
+    /* brand / accent */
+    --accent: rgb(34, 68, 255);
+    --accent-focus: #0597eb;
+    --text-on-accent: #ffffff; /* text sitting on accent/danger/brand-colored fills — stays white in both themes */
+
+    /* status */
+    --danger: rgb(220, 38, 38);
+    --danger-bg: #fee2e2;
+    --success: #15803d;
+    --success-bg: #dcfce7;
+
+    /* shadow */
+    --shadow-card: rgba(0, 0, 0, 0.12);
+    --shadow-card-hover: rgba(0, 0, 0, 0.18);
+    --shadow-panel: rgba(0, 0, 0, 0.08);
+    --shadow-heavy: rgba(0, 0, 0, 0.15);
+
+    /* subtle hover tint for buttons sitting on --bg-surface */
+    --hover-tint: rgba(0, 0, 0, 0.05);
+
+    /* skeleton shimmer gradient stops */
+    --skeleton-base: #e5e7eb;
+    --skeleton-highlight: #f3f4f6;
+}
+
+[data-theme="dark"] {
+    --bg-page: #0f1420;
+    --bg-surface: #0a0a32;
+    --bg-overlay: rgba(0, 0, 0, 0.7);
+
+    --text-primary: #e5e7eb;
+    --text-heading: #f1f4ff;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.15);
+    --border-input: #3a4258;
+    --fill-muted: #2a3245;
+
+    --accent: rgb(90, 120, 255);
+    --accent-focus: #4db8ff;
+
+    --danger: #f87171;
+    --danger-bg: rgba(220, 38, 38, 0.15);
+    --success: #4ade80;
+    --success-bg: rgba(21, 128, 61, 0.15);
+
+    --shadow-card: rgba(0, 0, 0, 0.4);
+    --shadow-card-hover: rgba(0, 0, 0, 0.55);
+    --shadow-panel: rgba(0, 0, 0, 0.4);
+    --shadow-heavy: rgba(0, 0, 0, 0.6);
+
+    --hover-tint: rgba(255, 255, 255, 0.08);
+
+    --skeleton-base: #2a3245;
+    --skeleton-highlight: #333c54;
+}
+
 body {
     margin: 0;
     font-family: "Mulish", Arial, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
 }

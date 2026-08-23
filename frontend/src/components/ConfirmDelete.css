@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    background: rgba(15, 23, 42, 0.55);
+    background: var(--bg-overlay);
     z-index: 60;
 }
 
@@ -14,9 +14,9 @@
     justify-content: center;
     align-items: center;
     padding: 32px;
-    background: #fafafa;
+    background: var(--bg-surface);
     border-radius: 16px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    box-shadow: 0 20px 40px var(--shadow-heavy);
     width: 100%;
     max-width: 450px;
 }
@@ -32,7 +32,7 @@ form {
     margin: 0 0 8px;
     font-size: 20px;
     font-weight: 600;
-    color: #111827;
+    color: var(--text-primary);
     text-align: center;
 }
 
@@ -46,15 +46,17 @@ form {
 .form-input {
     box-sizing: border-box;
     border-radius: 4px;
-    border: 2px solid #ccc;
+    border: 2px solid var(--border-input);
     padding: 0 12px;
     height: 40px;
     width: 100%;
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
 }
 
 .form-input:focus {
     outline: none;
-    border-color: #2244ff;
+    border-color: var(--accent);
 }
 
 .action-buttons {
@@ -73,7 +75,7 @@ form {
     padding: 12px;
     font-size: 15px;
     font-weight: 500;
-    color: white;
+    color: var(--text-on-accent);
     cursor: pointer;
 }
 
@@ -90,16 +92,16 @@ form {
 }
 
 #submit-button {
-    background-color: rgb(34, 68, 255);
+    background-color: var(--accent);
 }
 
 #cancel-button {
-    background-color: #ffff;
-    color: black;
-    border: solid 1px grey;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border: solid 1px var(--border-input);
+    box-shadow: 0 2px 6px var(--shadow-heavy);
 }
 
 #delete-button {
-    background-color: rgb(220, 38, 38);
+    background-color: var(--danger);
 }

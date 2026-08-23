@@ -13,7 +13,7 @@
 .main-content {
     height: 100%;
     width: 85%;
-    background-color: #f8f9fc;
+    background-color: var(--bg-page);
     transition: width 0.3s ease;
     overflow-y: auto;
 }
@@ -48,15 +48,15 @@
     margin-right: 10px;
     border: none;
     border-radius: 6px;
-    background-color: rgb(34, 68, 255);
-    color: white;
+    background-color: var(--accent);
+    color: var(--text-on-accent);
     font-family: inherit;
     font-size: 0.85rem;
     cursor: pointer;
 }
 
 .prev-button:disabled, .next-button:disabled {
-    background-color: #e5e7eb;
-    color: #9ca3af;
+    background-color: var(--fill-muted);
+    color: var(--text-muted);
     cursor: not-allowed;
 }

@@ -12,7 +12,8 @@ body {
 }
 
 .login-container {
-    background-color: white;
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
     text-align: center;
     width: 370px;
     padding: 30px;
@@ -31,10 +32,12 @@ body {
     margin-top: 4px;
     height: 34px;
     padding: 0 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-input);
     border-radius: 10px;
     font-family: inherit;
     font-size: 1rem;
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
 }
 
 .login-options {
@@ -65,8 +68,8 @@ body {
     border-radius: 10px;
     width: 80%;
     height: 40px;
-    background-color: rgb(34, 68, 255);
-    color: white;
+    background-color: var(--accent);
+    color: var(--text-on-accent);
     margin-top: 10px;
     align-self: center;
 }
@@ -118,11 +121,11 @@ body {
     gap: 8px;
     margin: 0 20px;
     padding: 10px 12px;
-    background: #fdecea;
-    border: 1px solid #f5c2c0;
-    border-left: 3px solid #d32f2f;
+    background: var(--danger-bg);
+    border: 1px solid var(--danger);
+    border-left: 3px solid var(--danger);
     border-radius: 6px;
-    color: #b3261e;
+    color: var(--danger);
     font-size: 0.85rem;
     text-align: left;
     animation: form-error-in 0.15s ease-out;
@@ -141,7 +144,7 @@ body {
 }
 
 a {
-    color: rgb(34, 68, 255);
+    color: var(--accent);
     text-decoration: none;
 }
 

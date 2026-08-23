@@ -33,7 +33,7 @@
         z-index: 40;
         transform: translateX(0);
         transition: transform 0.3s ease;
-        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 2px 0 12px var(--shadow-heavy);
     }
 
     .sidebar.collapsed {
@@ -63,7 +63,7 @@
 
     #sidebar-search-bar:focus {
         outline: none;
-        box-shadow: 0 0 0 1px #0597eb;
+        box-shadow: 0 0 0 1px var(--accent-focus);
     }
 
     .sidebar-logout-button {
@@ -130,7 +130,7 @@
 .filter-options input[type="checkbox"] {
     width: 15px;
     height: 15px;
-    accent-color: #0597eb;
+    accent-color: var(--accent-focus);
     cursor: pointer;
 }
 

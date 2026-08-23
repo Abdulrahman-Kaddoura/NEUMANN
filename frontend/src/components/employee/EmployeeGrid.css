@@ -16,13 +16,13 @@
     justify-content: center;
     text-align: center;
     padding: 64px 24px;
-    color: #6b7280;
+    color: var(--text-secondary);
 }
 
 .employee-grid-empty-title {
     font-size: 15px;
     font-weight: 600;
-    color: #374151;
+    color: var(--text-primary);
     margin: 0 0 4px;
 }
 

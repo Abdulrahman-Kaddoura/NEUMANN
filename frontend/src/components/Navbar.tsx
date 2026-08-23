@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router';
 import CollapseIcon from '../assets/collapse.svg';
+import SunIcon from '../assets/sun.svg';
+import MoonIcon from '../assets/moon.svg';
 import { useAuth } from '../hooks/useAuth';
+import { useTheme } from '../hooks/useTheme';
 import './Navbar.css'
 
 interface NavbarProps {
@@ -12,6 +15,7 @@ interface NavbarProps {
 
 export function Navbar({ setSideBarVisible, setAddFormVisible, setDetailsVisible, onSearchChange }: NavbarProps) {
     const { logout, user } = useAuth();
+    const { theme, toggleTheme } = useTheme();
     const navigate = useNavigate();
 
     function handleLogout() {
@@ -36,6 +40,19 @@ export function Navbar({ setSideBarVisible, setAddFormVisible, setDetailsVisible
             </div>
 
             <div className="nav-actions">
+                <button
+                    className="theme-toggle"
+                    onClick={toggleTheme}
+                    aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                    title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                >
+                    <img
+                        className="theme-toggle-icon"
+                        src={theme === 'dark' ? SunIcon : MoonIcon}
+                        alt=""
+                    />
+                </button>
+
                 {user?.role === 'editor' && (
                     <button className="add-button" onClick={() => { setAddFormVisible(true); setDetailsVisible(false); }}>
                         <span className="add-icon">+</span> Add

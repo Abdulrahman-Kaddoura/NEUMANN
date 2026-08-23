@@ -7,8 +7,8 @@
     width: 30%;
     min-width: 320px;
     height: 100vh;
-    background: white;
-    box-shadow: -2px 0 12px rgba(0, 0, 0, 0.08);
+    background: var(--bg-surface);
+    box-shadow: -2px 0 12px var(--shadow-panel);
     overflow-y: auto;
     transform: translateX(0);
     transition: transform 0.3s ease;
@@ -33,7 +33,7 @@
         display: block;
         position: fixed;
         inset: 0;
-        background: rgba(15, 23, 42, 0.55);
+        background: var(--bg-overlay);
         z-index: 45;
     }
 }
@@ -46,13 +46,13 @@
     margin: 0 0 4px;
     font-size: 20px;
     font-weight: 700;
-    color: #111827;
+    color: var(--text-primary);
 }
 
 .add-form-header p {
     margin: 0;
     font-size: 13px;
-    color: #6b7280;
+    color: var(--text-secondary);
 }
 
 .add-form {
@@ -96,8 +96,8 @@
 }
 
 .add-submit-button {
-    background-color: rgb(34, 68, 255);
-    color: white;
+    background-color: var(--accent);
+    color: var(--text-on-accent);
 }
 
 .add-submit-button:hover,
@@ -106,8 +106,8 @@
 }
 
 .add-cancel-button {
-    background-color: #e5e7eb;
-    color: #374151;
+    background-color: var(--fill-muted);
+    color: var(--text-primary);
 }
 
 .add-submit-button:disabled,
@@ -120,8 +120,10 @@
     height: 34px;
     margin-top: 4px;
     padding: 0 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-input);
     border-radius: 10px;
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
 }
 
 .success-message,
@@ -134,17 +136,17 @@
 }
 
 .success-message {
-    background-color: #dcfce7;
-    color: #15803d;
+    background-color: var(--success-bg);
+    color: var(--success);
 }
 
 .error-message {
-    background-color: #fee2e2;
-    color: #b91c1c;
+    background-color: var(--danger-bg);
+    color: var(--danger);
 }
 
 .form-error {
     margin: 4px 0 0;
-    color: #d32f2f;
+    color: var(--danger);
     font-size: 0.8rem;
 }
