@@ -1,264 +1,81 @@
-# Neumann Full-Stack Plan
+# Neumann Directory — Status & Remaining Work (Month 2)
 
-Scope: frontend (§0-§8) and backend (§9). The frontend sections were
-originally written assuming the backend was a black box; now that the
-backend is being built alongside, its API contract (§9) is the source of
-truth for endpoint paths/methods used throughout §1-§7.
-
-Frontend stack: React 19 + TS + Vite, React Router, TanStack Query, CSS
-custom properties for theming, Mulish font (already wired).
-
-Backend stack: FastAPI + Pydantic v2 + SQLAlchemy 2.0 + Alembic, PostgreSQL
-via Docker, JWT auth. See §9 for details.
+Scope: full-stack (React/TS frontend + FastAPI backend), per `TRAINING_SPEC.pdf`.
+This replaces the old Month-1 planning doc — Month 1 is done and then some;
+what follows is what's actually left, checked against the spec and the repo.
 
 ---
 
-## 0. Foundations (do before any feature work)
+## Done (Month 1 core + Month 2 items already shipped)
 
-- [ ] Install `@tanstack/react-query`, set up `QueryClientProvider` in `main.tsx`.
-- [ ] Add a typed API client in `src/api/client.ts` (thin `fetch` wrapper:
-      base URL, JSON parsing, error normalization, attaches auth token).
-- [ ] Define `src/types/employee.ts` and `src/types/auth.ts` — no `any`.
-      Per the training spec's seed data (Appendix A) and mockups, `Employee`
-      needs: `id` (read-only), `firstName`, `lastName`, `company`,
-      `jobTitle`, `email` (optional), `address`, `city`, `county`,
-      `brandColor` (hex string), `photoUrl` (optional — falls back to
-      initials avatar), and optionally `bio` (Month 2 AI feature).
-- [ ] Add CSS custom properties to `index.css` under `:root` for the base
-      theme (spacing, radii, greys, shadow, breakpoints as comments). Brand
-      color per employee will be set as an inline `style={{ '--brand': ... }}`
-      on the card/panel, not hardcoded per component.
-- [ ] Trim `App.tsx` routes down to `/login`, `/`, `/employees/:id` — drop
-      `/signup`, `/terms`, `/forgot-password` (leftover from the requests
-      take-home, out of scope here). Keep them only if you decide to build
-      register later (Month 2).
+- [x] Auth: register/login/me, JWT, bcrypt hashing, `ProtectedRoute`.
+- [x] Roles on the backend: `admin`/`editor`/`viewer`, enforced via `require_role`
+      on create/update/delete in `backend/src/backend/routers/employees.py`.
+- [x] Employee grid: cards, initials-avatar fallback, brand-color bottom bar,
+      skeleton loading state, empty state.
+- [x] Server-side search (`?search=`), company filter (`?company=`),
+      pagination (`?page=`/`?page_size=`), sort (`?sort=`) — debounced on
+      the client (`useDebouncedValue`).
+- [x] Details panel (view/add/edit modes), slide-in, brand-color accent,
+      focus trap, confirm-delete flow.
+- [x] Full CRUD wired end-to-end through React Query, cache invalidation
+      on mutation, no full reloads.
+- [x] Client + server validation (required fields, email format).
+- [x] `/health` endpoint, Alembic migrations, seeded Postgres via Docker.
 
 ---
 
-## 1. Authentication (Month 1 slice: login + logout + route guard)
+## Left to do
 
-**Status: login page UI exists (`LoginPage.tsx`), needs wiring.**
+### Required deliverables (not stretch — graded directly)
 
-- [ ] `useAuth` context/hook holding `{ token, user, login, logout }`,
-      persisted to `localStorage`.
-- [ ] `POST /auth/login` via React Query `useMutation`. On success: store
-      token, redirect to `/`. On failure: inline error message on the form
-      (reuse `form.css` `.form-error` styling).
-- [ ] `GET /auth/me` on app load (if a token exists) to hydrate `user` and
-      confirm the token is still valid; on 401, clear token and redirect
-      to `/login`.
-- [ ] `Logout` button (in `Navbar.tsx` — the header, not the sidebar; the
-      sidebar is filter-only per the mockups) clears token + redirects
-      to `/login`.
-- [ ] `ProtectedRoute` wrapper component: no valid token → redirect to
-      `/login`. Wrap `/` and `/employees/:id`.
-- [ ] (Month 2, not now) Register screen + role field (`admin` / `viewer`)
-      on the user object, used later to hide edit/delete controls for
-      viewers.
+- [ ] **Automated tests.** None exist yet (`backend/` has no `test_*.py`,
+      `frontend/` has no `*.test.*`). Spec requires:
+  - Backend: pytest covering CRUD endpoints, auth, validation (SQLite or
+    disposable Postgres test DB).
+  - Frontend: Vitest + React Testing Library for a few key components
+    (card renders, form validates).
+- [ ] **`docs/DESIGN.md`** — architecture diagram, component tree, API
+      contract, DB schema, key decisions (incl. Postgres-vs-MySQL, where AI
+      was used). `docs/` doesn't exist yet.
+- [ ] **`docs/TEST_CASES.md`** — table of scenario/steps/expected/actual/
+      pass-fail per module.
 
----
+### Gaps vs. spec found while auditing
 
-## 2. Directory shell (layout only, no data yet)
+- [ ] **Role-based UI gating.** Backend already 403s a `viewer` on
+      create/update/delete, but [EmployeeDetails.tsx](frontend/src/components/employee/EmployeeDetails.tsx#L107-L108)
+      always renders Edit/Delete buttons regardless of role — a viewer sees
+      controls that just fail when clicked. Hide them client-side based on
+      the current user's role.
+- [ ] **`/employees/:id` route** — spec's routing list expects it; `App.tsx`
+      currently only has `/`, `/dashboard`, `/login`, `/signup`, `/terms`.
+- [ ] **Drop `/terms`** — leftover from the take-home, out of scope per
+      CLAUDE.md, still routed in `App.tsx`.
 
-Reuses `Navbar`, `Sidebar`, `Dashboard` wrapper already ported over and
-already reshaped to match the mockups (§ Figures 2–6 of the training spec):
+### Month-2 stretch goals (§8 — pick several, not all)
 
-- [x] `Sidebar.tsx` trimmed to filter-only: a "Company" heading + checkbox
-      list placeholder (no nav links, no logout — that lives in the header).
-- [x] `Navbar.tsx` now holds: collapse/menu toggle, "NEUMANN" logo,
-      `+ Add` button, user name/role label, Logout link — matching
-      Figure 3's header layout. The `+ Add` button and user label are
-      static placeholders until auth (§1) and the panel (§4) exist.
-- [ ] Rename/repurpose `Dashboard.tsx` as the directory page mounted at `/`.
-- [ ] On mobile, header collapses to just the logo + menu toggle (hide
-      search/+Add/user-label/logout behind the toggle or a secondary row);
-      sidebar becomes an overlay behind that same toggle (Figure 5).
-- [ ] Grid container: CSS Grid with `repeat(auto-fill, minmax(Npx, 1fr))`
-      so cards-per-row scales with viewport width automatically — no JS
-      breakpoint logic needed for the column count itself.
-- [ ] Verify layout works from ~360px up to desktop with just the sidebar
-      collapse behavior already built (`visible` state in `Dashboard.tsx`)
-      extended to auto-collapse under a breakpoint on mount.
+- [ ] Avatar/photo upload (file endpoint + storage, default-avatar fallback).
+- [ ] Dark mode + design tokens.
+- [ ] CI (GitHub Actions running pytest + vitest on push) — no `.github/workflows` yet.
+- [ ] Full Dockerization — current `docker-compose.yml` only runs Postgres;
+      API and web aren't containerized.
+- [ ] AI bio feature (`POST /employees/{id}/bio`, env-gated on
+      `ANTHROPIC_API_KEY`, "Generate with AI" action in the panel).
+- [ ] Deploy (API+DB to Render/Railway/Fly.io, frontend to Vercel/Netlify),
+      live URL in README.
+- [ ] Observability & hardening — rate limiting on `/auth/login`, request
+      logging, `.env.example` hygiene (already present, verify no secrets
+      committed).
 
 ---
 
-## 3. Employee data + card grid
+## Priority order
 
-- [ ] `useEmployees()` query hook (`GET /employees`) via React Query —
-      handles loading/error/caching. No manual `useState` + `useEffect`
-      fetch pattern.
-- [ ] `EmployeeCard` component, per Figure 2/3: photo or initials-avatar
-      fallback (derive initials from first/last name when no photo URL),
-      full name, **job title** (own line, accent-colored per mockup),
-      `company · city` line, bottom bar tinted via `--brand` CSS variable.
-- [ ] Loading state: CSS skeleton cards (same grid, placeholder shapes,
-      shimmer via CSS animation) shown while the query is loading; fade
-      real cards in with a CSS transition once data resolves.
-- [ ] Empty state: friendly message + illustration/icon when the filtered
-      list is empty (distinct from "still loading").
-- [x] Search box: client-side filter by name/company/city against
-      the already-fetched list — plain `useState` + `.filter()`, no need
-      for React Query here since it's local, not server, filtering (Month 1).
-- [ ] Company filter (sidebar): checkbox list derived from the unique set
-      of companies in the fetched data. Selected companies narrow the
-      grid. Animate add/remove with CSS (`transition` on opacity/transform,
-      or a library-free FLIP if you want it smooth — start with a simple
-      fade/scale transition, upgrade only if it looks bad).
-- [ ] Selected-card highlight: track `selectedId` in state, apply a
-      class/border style to the matching card.
-
----
-
-## 4. Details panel (slide-in, shared by view/add/edit)
-
-- [ ] `EmployeePanel` component, single implementation with a `mode` prop:
-      `"view" | "add" | "edit"`.
-- [ ] Positioning: `position: fixed` (mobile) / part of a flex layout that
-      shrinks the grid (desktop), animated via `transform: translateX(...)`
-      + `transition`, not width/display toggling — keeps it GPU-cheap and
-      matches the "CSS transform, not a plugin" requirement.
-- [ ] Desktop: panel pushes grid aside (grid container gets a
-      `margin-right`/reduced width when panel is open). Mobile: panel
-      overlays (fixed, full-height, over the grid with a backdrop).
-- [ ] Panel accent bar/border uses the employee's `--brand` variable, same
-      mechanism as the card.
-- [ ] Focus management: on open, move focus into the panel (first focusable
-      field or the close button); on close, return focus to the card/button
-      that opened it. Trap focus while open (basic: `Escape` closes panel).
-- [ ] `aria-modal`, `role="dialog"`/`"complementary"` as appropriate,
-      `aria-labelledby` pointing at the panel heading.
-
----
-
-## 5. View mode
-
-- [ ] Read-only layout of the full employee record inside the panel, per
-      Figure 3/6: avatar + name in the brand-colored header band, then a
-      label/value list — Job title, Company, City, County, Email (em-dash
-      if absent).
-- [ ] "Edit" and "Delete" buttons (hidden entirely for `viewer` role once
-      roles exist in Month 2; always visible for now).
-- [ ] (Month 2, optional) Bio field with a "✨ Generate with AI" action that
-      calls `POST /employees/{id}/bio`; only render the action if the
-      backend reports the AI feature enabled (don't hardcode it on — the
-      endpoint is env-gated and may not exist).
-
----
-
-## 6. Add / Edit form (panel in form mode)
-
-- [ ] Reuse `form.css` field styling (`.form-group`, `.form-input`,
-      `.action-buttons`) already ported, restyled to fit the panel instead
-      of a centered modal.
-- [ ] Fields, in the order shown in Figure 4: Employee ID (read-only,
-      edit mode only), First name, Last name, Company, Job title, Email,
-      Brand color (color swatch input + hex text field kept in sync).
-      City/county/address can ride along as additional fields even though
-      the mockup's form only shows the subset above — match Figure 4
-      exactly for the required set, add the rest below it.
-- [ ] Edit mode pre-fills all fields from the selected employee; the ID
-      field, if shown at all, is rendered read-only (disabled input or
-      plain text, never editable).
-- [ ] Client-side validation before submit:
-  - required: first name, last name, company
-  - email: valid format if non-empty
-  - brand color: valid hex (`^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$`)
-  - inline, field-level error text under each invalid field (no alert()).
-- [ ] Submit via `useMutation` (`POST /employees` for add, `PUT
-      /employees/{id}` for edit — matches §9 contract). On success:
-      invalidate/update the employees query cache so the grid reflects the
-      change with no full reload; close the panel.
-- [ ] Server-side validation errors (e.g. duplicate, server rejects hex)
-      surface as the same inline field errors, not a generic alert.
-
----
-
-## 7. Delete flow
-
-- [ ] `ConfirmDelete.tsx` (already ported/generalized) wired with
-      `itemLabel` = employee's name, `onConfirm` = delete mutation.
-- [ ] On confirm: `useMutation` (`DELETE /employees/:id`), on success
-      invalidate the employees query and remove the card from the grid,
-      close both the confirm dialog and (if open) the details panel for
-      that employee.
-
----
-
-## 8. Polish pass (do last)
-
-- [ ] Keyboard nav: tab order through header → sidebar → grid cards →
-      panel; cards focusable and activatable with Enter/Space.
-- [ ] Responsive check at 360px, 768px, 1024px, 1440px — grid columns,
-      header collapse, sidebar toggle, panel overlay vs push.
-- [ ] Remove any leftover request-take-home artifacts if more turn up.
-- [ ] Sanity pass with `tsc --noEmit` and a manual click-through of all four
-      CRUD operations end to end against the real backend once it exists.
-
----
-
-## 9. Backend
-
-### 9.1 API contract
-
-| Method | Path | Purpose |
-|---|---|---|
-| POST | `/auth/register` | Create an account (Month 2 / optional Month 1). |
-| POST | `/auth/login` | Exchange email+password for a JWT. |
-| GET | `/auth/me` | Current user from the token. |
-| GET | `/employees` | List employees. Supports `?search=`, `?company=`, `?page=`, `?page_size=`, `?sort=` (server-side in Month 2). |
-| GET | `/employees/{id}` | One employee. |
-| POST | `/employees` | Create (auth required). |
-| PUT | `/employees/{id}` | Update (auth required). |
-| DELETE | `/employees/{id}` | Delete (auth required, admin). |
-| GET | `/companies` | Distinct company list (for the sidebar filter). |
-| GET | `/health` | Liveness check. |
-
-### 9.2 Stack
-
-- [ ] **FastAPI** (Python) — async, typed; auto-generates OpenAPI/Swagger
-      docs at `/docs`.
-- [ ] **Pydantic v2** schemas for request/response validation — this is the
-      server-side validation layer backing §6's client-side checks.
-- [ ] **SQLAlchemy 2.0** ORM for the data layer, with **Alembic** for
-      migrations.
-- [ ] **Auth**: JWT bearer tokens (`python-jose` or `pyjwt`). Passwords
-      hashed with **bcrypt** via `passlib` — never stored in plaintext.
-- [ ] **Config** via environment variables (`.env`, read with
-      `pydantic-settings`). No secrets in code.
-- [ ] **CORS** configured so the Vite dev server can call the API.
-- [ ] All responses are JSON over HTTP(S). Errors return proper status
-      codes (400/401/403/404/422) with a JSON body.
-
-### 9.3 Database
-
-- [ ] **PostgreSQL, run via Docker (recommended)** — richer types
-      (JSON/JSONB, arrays, `uuid`), industry-default for new backend work,
-      first-class SQLAlchemy/Alembic support. Ship a `docker-compose.yml`
-      for it.
-- [ ] MySQL is a viable alternative (also first-class with
-      SQLAlchemy/Alembic) — since the ORM abstracts the dialect, switching
-      is a one-line `DATABASE_URL` change in `.env`. Optionally ship a
-      `docker-compose.mysql.yml` alongside the Postgres one to prove the
-      app is DB-agnostic, but Postgres is the default to build against.
-- [ ] Seed the database with the default data (Appendix A of the training
-      spec) on first run, via a seed script or migration — this should be
-      the same data currently in `frontend/src/data/employees.json`, so
-      the frontend's behavior doesn't change when it switches from the
-      static import to `useEmployees()`.
-
-### 9.4 Sequencing
-
-- [ ] Stand up FastAPI + Postgres in Docker, `/health` endpoint, CORS —
-      smallest possible running server first.
-- [ ] `/employees` (GET list, GET one) + seed data — unblocks §3
-      (`useEmployees()`) end-to-end against a real API.
-- [ ] `/auth/register`, `/auth/login`, `/auth/me` — unblocks §1.
-- [ ] `/employees` POST/PUT/DELETE with auth guards — unblocks §6/§7.
-- [ ] `/companies` — unblocks the sidebar filter in §3.
-
----
-
-## Explicitly out of scope for this pass (Month 2)
-
-- Register screen, role-based (`admin`/`viewer`) permission gating.
-- Server-side search/filtering (client-side is sufficient for Month 1).
+1. Tests + `docs/` — these are graded as required deliverables (15% + 10%
+   of the rubric), not bonus, and are currently at zero.
+2. Role-gated UI + `/employees/:id` route — small, closes a real
+   functional gap in an otherwise-complete feature.
+3. Pick 2–3 stretch items from §8 for the bonus (+10%). CI and Dockerizing
+   the whole app are cheap wins if tests already exist; the AI bio feature
+   is the most visible one against Figures 3/6 of the spec.
