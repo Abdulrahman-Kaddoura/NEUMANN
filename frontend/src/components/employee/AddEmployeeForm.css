@@ -85,6 +85,7 @@
 
 .add-submit-button,
 .add-cancel-button {
+    flex: 1;
     border: none;
     border-radius: 10px;
     height: 40px;

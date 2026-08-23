@@ -3,7 +3,6 @@ import { LoginPage } from './pages/auth/LoginPage';
 import { Unknown } from './pages/Unknown';
 import { SignUpPage } from './pages/auth/SignUpPage';
 import { Terms } from './pages/Terms';
-import { ForgotPassword } from './pages/auth/ForgotPassword';
 import { Dashboard } from './pages/Dashboard';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import './App.css'
@@ -22,7 +21,6 @@ function App() {
       < Route path="/login" element={< LoginPage />} />
       < Route path="/signup" element={< SignUpPage />} />
       < Route path="/terms" element={< Terms />} />
-      < Route path="/forgot-password" element={< ForgotPassword />} />
       < Route path="/dashboard" element={
         <ProtectedRoute>
           <Dashboard />

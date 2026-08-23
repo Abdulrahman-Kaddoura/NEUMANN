@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDeleteEmployee } from '../hooks/employee/useDeleteEmployee';
 import './ConfirmDelete.css';
 
@@ -14,8 +15,22 @@ export function ConfirmDelete({ setConfirmDeleteVisible, setDetailsVisible, id, 
 
     const { mutate, isSuccess, isPending, isError, error } = useDeleteEmployee();
 
+    useEffect(() => {
+        function handleKeyDown(e: KeyboardEvent) {
+            if (e.key === 'Escape') {
+                setConfirmDeleteVisible(false);
+            }
+        }
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [setConfirmDeleteVisible]);
+
     return (
-        <div className="modal">
+        <div className="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-delete-heading">
             <div className="form-card">
                 <form onSubmit={(e) => {
                     e.preventDefault(); mutate(id, {
@@ -24,7 +39,7 @@ export function ConfirmDelete({ setConfirmDeleteVisible, setDetailsVisible, id, 
                         }
                     })
                 }}>
-                    <h2 className="form-title">Delete {firstName} {lastname}?</h2>
+                    <h2 id="confirm-delete-heading" className="form-title">Delete {firstName} {lastname}?</h2>
 
                     {isSuccess && <div className='form-group'>
                         <p className='success-message'>Employee deleted!</p>

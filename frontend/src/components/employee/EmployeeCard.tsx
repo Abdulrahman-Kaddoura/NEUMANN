@@ -17,14 +17,24 @@ interface EmployeeCardProps {
 export function EmployeeCard({
     employeeId, firstName, lastName, jobTitle, company, city, brandColor, isSelected, setDetailsVisible, setSelectedEmployee, setAddFormVisible
 }: EmployeeCardProps) {
+    const openDetails = () => {
+        setDetailsVisible(true);
+        setSelectedEmployee(employeeId);
+        setAddFormVisible(false);
+    };
+
     return (
         <div
             className={`card-wrapper ${isSelected ? 'card-selected' : ''}`}
             style={{ '--brand': brandColor } as React.CSSProperties}
-            onClick={() => {
-                setDetailsVisible(true);
-                setSelectedEmployee(employeeId);
-                setAddFormVisible(false);
+            role='button'
+            tabIndex={0}
+            onClick={openDetails}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openDetails();
+                }
             }}>
             <div className='card-body'>
                 <div className='card-pfp-initials'>

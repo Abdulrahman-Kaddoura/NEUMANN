@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import './EmployeeDetails.css'
 
 interface EmployeeDetailsProps {
@@ -29,58 +30,78 @@ export function EmployeeDetails(
         setDetailsVisible,
         setConfirmDeleteVisible,
         setEditFormVisible,
-        
+
     }: EmployeeDetailsProps) {
 
+    useEffect(() => {
+        function handleKeyDown(e: KeyboardEvent) {
+            if (e.key === 'Escape' && detailsVisible) {
+                setDetailsVisible(false);
+            }
+        }
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [detailsVisible, setDetailsVisible]);
 
     return (
         <>
             <div className={`panel-backdrop ${detailsVisible ? 'panel-backdrop-visible' : ''}`} onClick={() => setDetailsVisible(false)} />
-            <aside className={`details-wrapper ${!detailsVisible ? 'invisible-details' : ''}`}>
-            <div className='details-header' style={{ '--brand': brandColor } as React.CSSProperties}>
-                <button className='details-close-btn' onClick={() => {setDetailsVisible(false); setConfirmDeleteVisible(false)}}>×</button>
-                <div className='details-avatar'>
-                    {firstName[0]}{lastName[0]}
-                </div>
-                <div className='details-name'>{firstName} {lastName}</div>
-            </div>
-
-            <div className='details-fields'>
-                <div className='details-field'>
-                    <div className='details-label'>Job title</div>
-                    <div className='details-value'>{jobTitle}</div>
-                </div>
-
-                <div className='details-field'>
-                    <div className='details-label'>Company</div>
-                    <div className='details-value'>{company}</div>
+            <aside
+                className={`details-wrapper ${!detailsVisible ? 'invisible-details' : ''}`}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="employee-details-heading"
+            >
+                <div className='details-header' style={{ '--brand': brandColor } as React.CSSProperties}>
+                    <button className='details-close-btn' onClick={() => { setDetailsVisible(false); setConfirmDeleteVisible(false) }}>×</button>
+                    <div className='details-avatar'>
+                        {firstName[0]}{lastName[0]}
+                    </div>
+                    <div id="employee-details-heading" className='details-name'>
+                        {firstName} {lastName}
+                    </div>
                 </div>
 
-                <div className='details-field'>
-                    <div className='details-label'>Address</div>
-                    <div className='details-value'>{address}</div>
+                <div className='details-fields'>
+                    <div className='details-field'>
+                        <div className='details-label'>Job title</div>
+                        <div className='details-value'>{jobTitle}</div>
+                    </div>
+
+                    <div className='details-field'>
+                        <div className='details-label'>Company</div>
+                        <div className='details-value'>{company}</div>
+                    </div>
+
+                    <div className='details-field'>
+                        <div className='details-label'>Address</div>
+                        <div className='details-value'>{address}</div>
+                    </div>
+
+                    <div className='details-field'>
+                        <div className='details-label'>City</div>
+                        <div className='details-value'>{city}</div>
+                    </div>
+
+                    <div className='details-field'>
+                        <div className='details-label'>County</div>
+                        <div className='details-value'>{county}</div>
+                    </div>
+
+                    <div className='details-field'>
+                        <div className='details-label'>Email</div>
+                        <div className='details-value'>{email ?? '—'}</div>
+                    </div>
                 </div>
 
-                <div className='details-field'>
-                    <div className='details-label'>City</div>
-                    <div className='details-value'>{city}</div>
+                <div className='details-actions'>
+                    <button type='button' className='details-edit-btn' onClick={() => { setEditFormVisible(true); setDetailsVisible(false) }}>Edit</button>
+                    <button type='button' className='details-delete-btn' onClick={() => setConfirmDeleteVisible(true)}>Delete</button>
                 </div>
-
-                <div className='details-field'>
-                    <div className='details-label'>County</div>
-                    <div className='details-value'>{county}</div>
-                </div>
-
-                <div className='details-field'>
-                    <div className='details-label'>Email</div>
-                    <div className='details-value'>{email ?? '—'}</div>
-                </div>
-            </div>
-
-            <div className='details-actions'>
-                <div className='details-edit-btn' onClick={() => {setEditFormVisible(true); setDetailsVisible(false)}}>Edit</div>
-                <div className='details-delete-btn' onClick={() => setConfirmDeleteVisible(true)}>Delete</div>
-            </div>
             </aside>
         </>
     );

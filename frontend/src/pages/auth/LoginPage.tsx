@@ -68,10 +68,6 @@ export function LoginPage() {
                         </div>
                     </div>
 
-                    <div className="login-options">
-                        <Link to="/forgot-password">Forgot password?</Link>
-                    </div>
-
                     {error && <p className="form-error" role="alert">{error}</p>}
 
                     <button type="submit" disabled={isSubmitting}>
