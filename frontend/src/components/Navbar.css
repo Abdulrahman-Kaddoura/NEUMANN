@@ -60,10 +60,16 @@ nav {
     border: 1px solid #0597eb;
 }
 
+.nav-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .add-button {
     color: white;
     background-color: rgb(34, 68, 255);
-    margin-left: auto;
     width: auto;
     height: 32px;
     display: flex;

@@ -42,3 +42,11 @@ health: http://localhost:8000/health
 ## 5. login info:
 email: admin@mail.com
 password: admin123
+
+view@mail.com
+temppass
+
+edit@mail.com
+temppass
+
+you can also create your own account now
