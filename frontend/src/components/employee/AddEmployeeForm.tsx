@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './AddEmployeeForm.css'
 import { useCreateEmployee } from '../../hooks/employee/useCreateEmployee';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { isBlank, isValidEmail } from '../../utils/validation';
 
 interface AddEmployeeFormProps {
@@ -25,6 +26,9 @@ export function AddEmployeeForm({ setAddFormVisible }: AddEmployeeFormProps) {
 
     const { mutate, isPending, isSuccess, isError, error } = useCreateEmployee();
 
+    const panelRef = useRef<HTMLElement>(null);
+    useFocusTrap(panelRef, true);
+
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
             if (e.key === 'Escape') {
@@ -42,7 +46,7 @@ export function AddEmployeeForm({ setAddFormVisible }: AddEmployeeFormProps) {
     return (
         <>
             <div className='panel-backdrop panel-backdrop-visible' onClick={() => setAddFormVisible(false)} />
-            <aside className='add-form-wrapper'
+            <aside ref={panelRef} className='add-form-wrapper'
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="add-employee-heading">

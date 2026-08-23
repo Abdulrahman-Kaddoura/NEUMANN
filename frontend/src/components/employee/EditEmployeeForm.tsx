@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useEditEmployee } from '../../hooks/employee/useEditEmployee';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { isBlank, isValidEmail } from '../../utils/validation';
 import './AddEmployeeForm.css'
 //inherits from addemployeeform css cause i dont feel like making new css file tbh
@@ -47,6 +48,9 @@ export function EditEmployeeForm({ setEditFormVisible,
 
     const { mutate, isSuccess, isPending, isError, error } = useEditEmployee();
 
+    const panelRef = useRef<HTMLElement>(null);
+    useFocusTrap(panelRef, true);
+
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
             if (e.key === 'Escape') {
@@ -65,6 +69,7 @@ export function EditEmployeeForm({ setEditFormVisible,
         <>
             <div className='panel-backdrop panel-backdrop-visible' onClick={() => setEditFormVisible(false)} />
             <aside
+                ref={panelRef}
                 className="add-form-wrapper"
                 role="dialog"
                 aria-modal="true"

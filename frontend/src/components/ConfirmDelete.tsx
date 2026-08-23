@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDeleteEmployee } from '../hooks/employee/useDeleteEmployee';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 import './ConfirmDelete.css';
 
 interface ConfirmDeleteProps {
@@ -14,6 +15,9 @@ interface ConfirmDeleteProps {
 export function ConfirmDelete({ setConfirmDeleteVisible, setDetailsVisible, id, firstName, lastname }: ConfirmDeleteProps) {
 
     const { mutate, isSuccess, isPending, isError, error } = useDeleteEmployee();
+
+    const panelRef = useRef<HTMLDivElement>(null);
+    useFocusTrap(panelRef, true);
 
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
@@ -30,7 +34,7 @@ export function ConfirmDelete({ setConfirmDeleteVisible, setDetailsVisible, id, 
     }, [setConfirmDeleteVisible]);
 
     return (
-        <div className="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-delete-heading">
+        <div ref={panelRef} className="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-delete-heading">
             <div className="form-card">
                 <form onSubmit={(e) => {
                     e.preventDefault(); mutate(id, {

@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import './EmployeeDetails.css'
 
 interface EmployeeDetailsProps {
@@ -33,6 +34,9 @@ export function EmployeeDetails(
 
     }: EmployeeDetailsProps) {
 
+    const panelRef = useRef<HTMLElement | null>(null);
+    useFocusTrap(panelRef, detailsVisible);
+
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
             if (e.key === 'Escape' && detailsVisible) {
@@ -51,6 +55,7 @@ export function EmployeeDetails(
         <>
             <div className={`panel-backdrop ${detailsVisible ? 'panel-backdrop-visible' : ''}`} onClick={() => setDetailsVisible(false)} />
             <aside
+                ref={panelRef}
                 className={`details-wrapper ${!detailsVisible ? 'invisible-details' : ''}`}
                 role="dialog"
                 aria-modal="true"
