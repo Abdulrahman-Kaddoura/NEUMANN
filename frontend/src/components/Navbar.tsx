@@ -40,6 +40,7 @@ export function Navbar({ setSideBarVisible, setAddFormVisible, setDetailsVisible
             </div>
 
             <div className="nav-actions">
+                <p>Welcome {user?.fullName}</p>
                 <button
                     className="theme-toggle"
                     onClick={toggleTheme}

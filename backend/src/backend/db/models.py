@@ -12,7 +12,7 @@ class Employee(Base):
     last_name: Mapped[str] = mapped_column(String(100))
     company: Mapped[str] = mapped_column(String(150))
     job_title: Mapped[str] = mapped_column(String(150))
-    email: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    email: Mapped[str | None] = mapped_column(String(255), unique=True, nullable=True)
     address: Mapped[str] = mapped_column(String(255))
     city: Mapped[str] = mapped_column(String(100))
     county: Mapped[str] = mapped_column(String(100))

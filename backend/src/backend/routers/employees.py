@@ -79,6 +79,12 @@ def create_employee(
     payload: EmployeeCreate,
     db: Session = Depends(get_db),
 ):
+    if payload.email and db.query(Employee).filter(Employee.email == payload.email).first() is not None:
+        raise HTTPException(
+            status_code=409,
+            detail="An employee with this email already exists",
+        )
+
     employee = Employee(
         first_name=payload.first_name,
         last_name=payload.last_name,
@@ -111,6 +117,18 @@ def update_employee(
 
     if employee is None:
         raise HTTPException(status_code=404, detail="Employee not found")
+
+    if (
+        payload.email
+        and db.query(Employee)
+        .filter(Employee.email == payload.email, Employee.id != employee_id)
+        .first()
+        is not None
+    ):
+        raise HTTPException(
+            status_code=409,
+            detail="An employee with this email already exists",
+        )
 
     employee.first_name = payload.first_name
     employee.last_name = payload.last_name

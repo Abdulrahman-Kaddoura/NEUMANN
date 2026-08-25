@@ -2,6 +2,7 @@ export type User = {
     id: number;
     email: string;
     role: string;
+    fullName: string;
 }
 
 export type LoginRequest = {
