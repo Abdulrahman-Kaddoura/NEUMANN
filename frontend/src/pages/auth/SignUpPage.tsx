@@ -159,7 +159,7 @@ export function SignUpPage() {
                     <div className="login-options">
                         <label className="remember-me">
                             <input type="checkbox" required />
-                            I agree to the <Link to="/terms">terms and conditions</Link>
+                            I agree to the <Link to="/terms" target="_blank" rel="noopener noreferrer">terms and conditions</Link>
                         </label>
                     </div>
 
