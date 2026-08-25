@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../../hooks/useAuth';
 import type { Role } from '../../types/auth';
 import EyeIcon from '../../assets/eye.svg';
+import { PasswordStrengthIndicator } from '../../components/PasswordStrengthIndicator';
 import './auth.css'
 
 function extractErrorMessage(err: unknown, fallback: string): string {
@@ -113,7 +114,10 @@ export function SignUpPage() {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">
+                            Password
+                            <PasswordStrengthIndicator password={form.password} />
+                        </label>
                         <div className='password-input'>
                             <input
                                 id="password"
