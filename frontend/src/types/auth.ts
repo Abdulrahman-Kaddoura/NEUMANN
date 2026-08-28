@@ -5,6 +5,10 @@ export type User = {
     fullName: string;
 }
 
+export type Users = {
+    items: User[];
+}
+
 export type LoginRequest = {
     email: string;
     password: string;

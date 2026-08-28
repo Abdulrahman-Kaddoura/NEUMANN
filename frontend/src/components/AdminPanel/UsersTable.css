@@ -1,0 +1,52 @@
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
+}
+
+.users-table th {
+    text-align: left;
+    padding: 8px 10px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-surface);
+}
+
+.users-table td {
+    padding: 8px 10px;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.users-table tbody tr:hover {
+    background-color: var(--hover-tint);
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.role-badge.editor {
+    color: var(--accent);
+    background-color: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.role-badge.viewer {
+    color: var(--text-secondary);
+    background-color: var(--fill-muted);
+}
