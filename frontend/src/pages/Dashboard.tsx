@@ -11,6 +11,9 @@ import { EditEmployeeForm } from '../components/employee/EditEmployeeForm';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 import { useCompanies } from '../hooks/useCompanies';
 import './Dashboard.css'
+import { AdminFAB } from '../components/AdminPanel/AdminFAB';
+import { useAuth } from '../hooks/useAuth';
+import { UsersPanel } from '../components/AdminPanel/UsersPanel';
 
 export function Dashboard() {
     const [sidebarVisible, setSidebarVisible] = useState(true);
@@ -18,6 +21,8 @@ export function Dashboard() {
     const [addFormVisible, setAddFormVisible] = useState(false);
     const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
     const [editFormVisible, setEditFormVisible] = useState(false);
+    const [adminFABVisible, setAdminFABVisible] = useState(true);
+    const [usersPanelVisible, setUsersPanelVisible] = useState(false);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -28,7 +33,7 @@ export function Dashboard() {
     const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
     const { data: employees, isLoading, error } = useEmployees({ search: debouncedSearch, company: selectedCompanies, page: currentPage, pageSize });
 
-
+    const { user } = useAuth();
 
     const [selectedEmployee, setSelectedEmployee] = useState(1);
     const employeeFocused = employees?.items.find((e) => e.id === selectedEmployee);
@@ -92,6 +97,9 @@ export function Dashboard() {
                     id={employeeFocused.id}
                     firstName={employeeFocused.firstName}
                     lastname={employeeFocused.lastName} />}
+
+                {adminFABVisible && (user?.role === 'admin') && <AdminFAB setUsersPanelVisible={setUsersPanelVisible} setAdminFABVisible={setAdminFABVisible}/>}
+                {usersPanelVisible && (user?.role === 'admin') && <UsersPanel setAdminFABVisible={setAdminFABVisible} setUsersPanelVisible={setUsersPanelVisible}/>}
 
                 <main className={`main-content ${!sidebarVisible ? 'full-main' : ''}`}>
 

@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router';
-import CollapseIcon from '../assets/collapse.svg';
 import SunIcon from '../assets/sun.svg';
 import MoonIcon from '../assets/moon.svg';
 import { useAuth } from '../hooks/useAuth';
@@ -25,8 +24,23 @@ export function Navbar({ setSideBarVisible, setAddFormVisible, setDetailsVisible
 
     return (
         <nav>
-            <button className="collapser" onClick={() => setSideBarVisible(v => !v)}>
-                <img className="collapse-icon" src={CollapseIcon} alt="Toggle filter sidebar" />
+            <button className="collapser" onClick={() => setSideBarVisible(v => !v)} aria-label="Toggle filter sidebar">
+                <svg
+                    className="collapse-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
             </button>
 
             <div className="logo">NEUMANN</div>
