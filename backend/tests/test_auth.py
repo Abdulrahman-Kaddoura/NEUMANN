@@ -114,3 +114,35 @@ def test_me_rejects_invalid_token(client):
     )
 
     assert response.status_code == 401
+
+
+def test_register_rejects_malformed_email(client):
+    response = client.post(
+        "/auth/register",
+        json={
+            "fullName": "Bad Email",
+            "email": "not-an-email",
+            "password": "password123",
+            "role": "editor",
+        },
+    )
+
+    assert response.status_code == 422
+
+
+def test_login_rate_limited_after_too_many_attempts(client, make_user):
+    make_user(email="ratelimited@example.com", password="password123")
+
+    for _ in range(5):
+        response = client.post(
+            "/auth/login",
+            json={"email": "ratelimited@example.com", "password": "wrong-password"},
+        )
+        assert response.status_code == 401
+
+    response = client.post(
+        "/auth/login",
+        json={"email": "ratelimited@example.com", "password": "wrong-password"},
+    )
+
+    assert response.status_code == 429

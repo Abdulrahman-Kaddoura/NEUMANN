@@ -134,3 +134,20 @@ cannot register your way to `admin`. Admin accounts are seeded directly
   `docs/TEST_CASES.md` / `docs/DESIGN.md` documents were generated with Claude
   Code from the existing implementation, then reviewed against the actual
   route/model code rather than assumed correct.
+
+## Observability & hardening (§8.12)
+
+- **Request logging**: `main.py` has an HTTP middleware (`log_requests`) that
+  logs method, path, status code, and duration in ms for every request, via a
+  `backend.requests` logger.
+- **Rate limiting**: `/auth/login` is limited to 5 requests/minute per client
+  IP via `slowapi` (`core/limiter.py`). Exceeding it returns 429. In-memory
+  storage — fine for a single-process dev/demo deployment, would need a shared
+  backend (e.g. Redis) behind multiple workers/instances.
+- **Input sanitization**: email fields (`LoginRequest`, `RegisterRequest`,
+  `EmployeeCreate`/`EmployeeUpdate`) now use Pydantic's `EmailStr` instead of
+  plain `str`, so malformed emails are rejected with 422 at the API boundary,
+  not just caught by the frontend's `isValidEmail`.
+- **Secrets**: `backend/.env` is gitignored (`**/.env` in the root
+  `.gitignore`) and was never committed; `backend/.env.example` documents the
+  required variables with placeholder values only.

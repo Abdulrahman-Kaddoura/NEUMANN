@@ -1,6 +1,6 @@
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, EmailStr
 from pydantic.alias_generators import to_camel
 
 Company = Literal[
@@ -19,7 +19,7 @@ class EmployeeOut(BaseModel):
     last_name: str
     company: str
     job_title: str
-    email: str | None
+    email: EmailStr | None
     address: str
     city: str
     county: str
@@ -37,7 +37,7 @@ class EmployeeCreate(BaseModel):
     last_name: str
     company: Company
     job_title: str
-    email: str | None = None
+    email: EmailStr | None = None
     address: str
     city: str
     county: str
@@ -53,13 +53,13 @@ class EmployeeUpdate(EmployeeCreate):
 
 
 class LoginRequest(BaseModel):
-    email: str
+    email: EmailStr
     password: str
 
 
 class RegisterRequest(BaseModel):
     full_name: str
-    email: str
+    email: EmailStr
     password: str
     role: Literal["editor", "viewer"]
 

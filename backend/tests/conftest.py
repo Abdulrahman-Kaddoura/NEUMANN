@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
+from backend.core.limiter import limiter
 from backend.core.security import create_access_token, hash_password
 from backend.db.database import Base, get_db
 from backend.db.models import Employee, User
@@ -39,9 +40,11 @@ def client(db_session):
             pass
 
     app.dependency_overrides[get_db] = override_get_db
+    limiter.reset()
     with TestClient(app) as test_client:
         yield test_client
     app.dependency_overrides.clear()
+    limiter.reset()
 
 
 @pytest.fixture()

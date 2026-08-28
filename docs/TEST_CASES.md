@@ -86,13 +86,26 @@ npm run test:run
 |---|---|---|---|---|
 | Liveness check | GET /health | 200, {"status":"ok"} | same | Pass |
 
+## Hardening (§8.12)
+
+| Scenario | Steps | Expected | Actual | Pass/Fail |
+|---|---|---|---|---|
+| Register malformed email | POST /auth/register, email="not-an-email" | 422 | same | Pass |
+| Create employee malformed email | POST /employees, email="not-an-email" | 422 | same | Pass |
+| Login rate limit | 6 login attempts in a row from same client | First 5 evaluated normally, 6th returns 429 | same | Pass |
+| Request logging | Any request | Method, path, status, duration logged | verified manually (see below) | Pass |
+
 ## Notes
 
-- Backend: 38/38 passing. Frontend: 43/43 passing.
+- Backend: 41/41 passing. Frontend: 43/43 passing.
 - `require_role("editor")` gates create/update/delete on employees — an `admin`
   user gets 403 on all three. The API contract in TRAINING_SPEC.pdf marks DELETE
   as admin-only; the code as written only allows editor. Flagging in case that's
   not intentional.
-- `EmployeeCreate.email` / `EmployeeUpdate.email` are plain `str`, not validated
-  server-side for format (client-side `isValidEmail` catches it in the UI, but
-  the API itself will accept a malformed email).
+- Email fields (`LoginRequest`, `RegisterRequest`, `EmployeeCreate`/`EmployeeUpdate`)
+  now use Pydantic `EmailStr` — malformed emails are rejected with 422 server-side,
+  not just caught client-side. Requires the `pydantic[email]` extra (`email-validator`).
+- `/auth/login` is rate-limited to 5 requests/minute per client IP (slowapi,
+  in-memory storage). A 6th attempt within the window gets 429.
+- All requests are logged (`backend.requests` logger): method, path, status,
+  duration in ms.

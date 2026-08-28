@@ -162,6 +162,15 @@ def test_create_employee_rejects_unknown_company(client, make_user, auth_headers
     assert response.status_code == 422
 
 
+def test_create_employee_rejects_malformed_email(client, make_user, auth_headers):
+    editor = make_user(email="editor4b@example.com", role="editor")
+    payload = {**VALID_EMPLOYEE_PAYLOAD, "email": "not-an-email"}
+
+    response = client.post("/employees", json=payload, headers=auth_headers(editor))
+
+    assert response.status_code == 422
+
+
 def test_create_employee_rejects_duplicate_email(client, make_user, auth_headers, make_employee):
     editor = make_user(email="editor5@example.com", role="editor")
     make_employee(email="taken@example.com")
