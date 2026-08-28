@@ -92,6 +92,15 @@ class UserOut(BaseModel):
     )
 
 
+class UserListOut(BaseModel):
+    items: list[UserOut]
+
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        populate_by_name=True,
+    )
+
+
 class EmployeeListOut(BaseModel):
     items: list[EmployeeOut]
     total: int
