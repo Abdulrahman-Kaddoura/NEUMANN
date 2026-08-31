@@ -6,6 +6,11 @@ const SKELETON_ROWS = 5;
 export function UsersTableSkeleton() {
     return (
         <table className='users-table'>
+            <colgroup>
+                <col style={{ width: '30%' }} />
+                <col style={{ width: '15%' }} />
+                <col style={{ width: '55%' }} />
+            </colgroup>
             <thead>
                 <tr>
                     <th>Name</th>

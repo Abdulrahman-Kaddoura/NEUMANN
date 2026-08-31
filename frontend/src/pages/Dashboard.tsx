@@ -11,9 +11,9 @@ import { EditEmployeeForm } from '../components/employee/EditEmployeeForm';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 import { useCompanies } from '../hooks/useCompanies';
 import './Dashboard.css'
-import { AdminFAB } from '../components/AdminPanel/AdminFAB';
+import { AdminFAB } from '../components/admin/AdminFAB';
 import { useAuth } from '../hooks/useAuth';
-import { UsersPanel } from '../components/AdminPanel/UsersPanel';
+import { UsersPanel } from '../components/admin/UsersPanel';
 
 export function Dashboard() {
     const [sidebarVisible, setSidebarVisible] = useState(true);
@@ -109,13 +109,13 @@ export function Dashboard() {
                             ? <EmployeeGridSkeleton count={pageSize} />
                             : <EmployeeGrid paginatedItems={employees?.items} setDetailsVisible={setDetailsVisible} selectedEmployee={detailsVisible ? selectedEmployee : null} setSelectedEmployee={setSelectedEmployee} setAddFormVisible={setAddFormVisible} />}
 
-                    <div className="page-buttons">
+                    {totalPages > 1 && <div className="page-buttons">
                         <button className='prev-button' disabled={currentPage === 1} onClick={() => setCurrentPage((c) => c - 1)}>Prev</button>
                         <div className="page-text">
                             Page {currentPage} out of {totalPages}
                         </div>
                         <button className='next-button' disabled={currentPage === totalPages} onClick={() => setCurrentPage((c) => c + 1)}>Next</button>
-                    </div>
+                    </div>}
                 </main>
             </div>
         </div>
