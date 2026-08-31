@@ -24,6 +24,7 @@ class EmployeeOut(BaseModel):
     city: str
     county: str
     brand_color: str
+    photo_url: str | None
 
     model_config = ConfigDict(
         from_attributes=True,

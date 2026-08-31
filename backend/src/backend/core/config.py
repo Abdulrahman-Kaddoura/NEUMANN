@@ -5,6 +5,8 @@ class Settings(BaseSettings):
     secret_key: str
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 60 * 8
+    upload_dir: str = "uploads"
+    max_photo_size_mb: int = 5
 
     class Config:
         env_file = ".env"

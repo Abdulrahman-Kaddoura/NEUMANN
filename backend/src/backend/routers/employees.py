@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from ..constants import COMPANY_BRAND_COLORS
 from ..core.deps import get_current_user, require_role
+from ..core.storage import delete_employee_photo, save_employee_photo
 from ..db.database import get_db
 from ..db.models import Employee
 from ..schemas import EmployeeCreate, EmployeeListOut, EmployeeOut, EmployeeUpdate
@@ -144,6 +145,52 @@ def update_employee(
     db.refresh(employee)
 
     return employee
+
+@router.post(
+    "/{employee_id}/photo",
+    response_model=EmployeeOut,
+    dependencies=[Depends(require_role("editor"))],
+)
+async def upload_employee_photo(
+    employee_id: int,
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+):
+    employee = db.get(Employee, employee_id)
+    if employee is None:
+        raise HTTPException(status_code=404, detail="Employee not found")
+
+    photo_url = await save_employee_photo(file)
+    delete_employee_photo(employee.photo_url)
+    employee.photo_url = photo_url
+
+    db.commit()
+    db.refresh(employee)
+
+    return employee
+
+
+@router.delete(
+    "/{employee_id}/photo",
+    response_model=EmployeeOut,
+    dependencies=[Depends(require_role("editor"))],
+)
+def remove_employee_photo(
+    employee_id: int,
+    db: Session = Depends(get_db),
+):
+    employee = db.get(Employee, employee_id)
+    if employee is None:
+        raise HTTPException(status_code=404, detail="Employee not found")
+
+    delete_employee_photo(employee.photo_url)
+    employee.photo_url = None
+
+    db.commit()
+    db.refresh(employee)
+
+    return employee
+
 
 @router.delete(
     "/{employee_id}",

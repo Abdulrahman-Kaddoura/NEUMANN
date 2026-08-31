@@ -17,6 +17,7 @@ class Employee(Base):
     city: Mapped[str] = mapped_column(String(100))
     county: Mapped[str] = mapped_column(String(100))
     brand_color: Mapped[str] = mapped_column(String(7))
+    photo_url: Mapped[str | None] = mapped_column(String(255), nullable=True)
 
 
 class User(Base):
