@@ -54,7 +54,9 @@ def list_employees(
         column = SORTABLE_FIELDS.get(field)
         if column is None:
             raise HTTPException(status_code=400, detail=f"Cannot sort by '{field}'")
-        query = query.order_by(column.desc() if descending else column.asc())
+        query = query.order_by(column.desc() if descending else column.asc(), Employee.id)
+    else:
+        query = query.order_by(Employee.id)
 
     total = query.count()
     items = query.offset((page - 1) * page_size).limit(page_size).all()
