@@ -98,10 +98,10 @@ npm run test:run
 ## Notes
 
 - Backend: 41/41 passing. Frontend: 43/43 passing.
-- `require_role("editor")` gates create/update/delete on employees — an `admin`
-  user gets 403 on all three. The API contract in TRAINING_SPEC.pdf marks DELETE
-  as admin-only; the code as written only allows editor. Flagging in case that's
-  not intentional.
+- `require_role("editor", "admin")` gates create/update/delete/photo-upload/photo-delete
+  on employees. Previously only `editor` was allowed, which contradicted the
+  API contract in TRAINING_SPEC.pdf (DELETE marked admin-only) — fixed so
+  `admin` has full employee CRUD too.
 - Email fields (`LoginRequest`, `RegisterRequest`, `EmployeeCreate`/`EmployeeUpdate`)
   now use Pydantic `EmailStr` — malformed emails are rejected with 422 server-side,
   not just caught client-side. Requires the `pydantic[email]` extra (`email-validator`).

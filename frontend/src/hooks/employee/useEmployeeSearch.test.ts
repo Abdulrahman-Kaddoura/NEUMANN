@@ -15,6 +15,7 @@ function makeEmployee(overrides: Partial<Employee>): Employee {
         city: 'London',
         county: 'Greater London',
         brandColor: '#6C5CE7',
+        photoUrl: null,
         ...overrides,
     };
 }

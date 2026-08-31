@@ -32,6 +32,7 @@ export function EmployeeGrid({ paginatedItems, selectedEmployee, setDetailsVisib
                             company={employee.company}
                             city={employee.city}
                             brandColor={employee.brandColor}
+                            photoUrl={employee.photoUrl}
                             isSelected={selectedEmployee === employee.id}
                             setDetailsVisible={setDetailsVisible}
                             setSelectedEmployee={setSelectedEmployee}

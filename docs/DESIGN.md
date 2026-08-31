@@ -105,10 +105,11 @@ JWT (HS256, `python-jose`), 8-hour expiry, subject = user email. Passwords
 hashed with bcrypt, never stored or logged in plaintext.
 
 Three roles exist on `User.role`: `admin`, `editor`, `viewer`.
-- `admin`: can view `/users` (the admin panel). Cannot create/edit/delete
-  employees — `require_role("editor")` gates those three endpoints and does
-  not include `admin`. This is a known gap against the original API-contract
-  table (see `docs/TEST_CASES.md`), left as-is rather than silently changed.
+- `admin`: full employee CRUD (including photo upload/delete), plus can view
+  `/users` (the admin panel). `require_role("editor", "admin")` gates the
+  employee-mutating endpoints — this used to allow only `editor`, which
+  contradicted the API-contract table (see `docs/TEST_CASES.md`); fixed to
+  match the spec.
 - `editor`: full employee CRUD, no access to `/users`.
 - `viewer`: read-only on employees, no access to `/users`.
 

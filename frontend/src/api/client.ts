@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL;
+export const API_URL = import.meta.env.VITE_API_URL;
 
 export const apiClient = axios.create({
     baseURL: API_URL,
@@ -32,3 +32,7 @@ apiClient.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+export function resolvePhotoUrl(photoUrl: string | null): string | undefined {
+    return photoUrl ? `${API_URL}${photoUrl}` : undefined;
+}

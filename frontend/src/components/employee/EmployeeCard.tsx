@@ -1,3 +1,4 @@
+import { resolvePhotoUrl } from '../../api/client';
 import './EmployeeCard.css'
 
 interface EmployeeCardProps {
@@ -8,6 +9,7 @@ interface EmployeeCardProps {
     company: string,
     city: string,
     brandColor: string,
+    photoUrl: string | null,
     isSelected: boolean,
     setDetailsVisible: React.Dispatch<React.SetStateAction<boolean>>;
     setSelectedEmployee: React.Dispatch<React.SetStateAction<number>>;
@@ -15,7 +17,7 @@ interface EmployeeCardProps {
 }
 
 export function EmployeeCard({
-    employeeId, firstName, lastName, jobTitle, company, city, brandColor, isSelected, setDetailsVisible, setSelectedEmployee, setAddFormVisible
+    employeeId, firstName, lastName, jobTitle, company, city, brandColor, photoUrl, isSelected, setDetailsVisible, setSelectedEmployee, setAddFormVisible
 }: EmployeeCardProps) {
     const openDetails = () => {
         setDetailsVisible(true);
@@ -37,9 +39,13 @@ export function EmployeeCard({
                 }
             }}>
             <div className='card-body'>
-                <div className='card-pfp-initials'>
-                    {firstName[0]}{lastName[0]}
-                </div>
+                {photoUrl ? (
+                    <img className='card-pfp-photo' src={resolvePhotoUrl(photoUrl)} alt='' />
+                ) : (
+                    <div className='card-pfp-initials'>
+                        {firstName[0]}{lastName[0]}
+                    </div>
+                )}
 
                 <div className='card-text'>
                     <div className='card-name'>{firstName} {lastName}</div>

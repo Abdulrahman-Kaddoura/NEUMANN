@@ -1,4 +1,4 @@
-import type { CreateEmployee, EditEmployee, EmployeePage, EmployeeQueryParams } from '../types/employee';
+import type { CreateEmployee, EditEmployee, Employee, EmployeePage, EmployeeQueryParams } from '../types/employee';
 import { apiClient } from './client';
 
 
@@ -29,4 +29,19 @@ export async function editEmployee(data: EditEmployee) {
 export async function deleteEmployee(id: number) {
     await new Promise(resolve => setTimeout(resolve, 1000));
     await apiClient.delete(`/employees/${id}`);
+}
+
+export async function uploadEmployeePhoto(id: number, file: File): Promise<Employee> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await apiClient.post<Employee>(`/employees/${id}/photo`, formData, {
+        headers: { 'Content-Type': null },
+    });
+    return response.data;
+}
+
+export async function deleteEmployeePhoto(id: number): Promise<Employee> {
+    const response = await apiClient.delete<Employee>(`/employees/${id}/photo`);
+    return response.data;
 }

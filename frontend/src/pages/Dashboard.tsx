@@ -62,6 +62,7 @@ export function Dashboard() {
 
 
                 {employeeFocused && <EmployeeDetails
+                    id={employeeFocused.id}
                     firstName={employeeFocused.firstName}
                     lastName={employeeFocused.lastName}
                     jobTitle={employeeFocused.jobTitle}
@@ -71,6 +72,7 @@ export function Dashboard() {
                     county={employeeFocused.county}
                     email={employeeFocused.email}
                     brandColor={employeeFocused.brandColor}
+                    photoUrl={employeeFocused.photoUrl}
                     detailsVisible={detailsVisible}
                     setDetailsVisible={setDetailsVisible}
                     setConfirmDeleteVisible={setConfirmDeleteVisible}

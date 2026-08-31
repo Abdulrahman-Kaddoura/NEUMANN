@@ -3,6 +3,7 @@ import SunIcon from '../assets/sun.svg';
 import MoonIcon from '../assets/moon.svg';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
+import { canManageEmployees } from '../utils/roles';
 import './Navbar.css'
 
 interface NavbarProps {
@@ -68,7 +69,7 @@ export function Navbar({ setSideBarVisible, setAddFormVisible, setDetailsVisible
                     />
                 </button>
 
-                {user?.role === 'editor' && (
+                {canManageEmployees(user?.role) && (
                     <button className="add-button" onClick={() => { setAddFormVisible(true); setDetailsVisible(false); }}>
                         <span className="add-icon">+</span> Add
                     </button>

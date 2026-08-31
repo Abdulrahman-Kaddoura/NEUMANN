@@ -1,9 +1,17 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { resolvePhotoUrl } from '../../api/client';
+import { useDeleteEmployeePhoto } from '../../hooks/employee/useDeleteEmployeePhoto';
+import { useUploadEmployeePhoto } from '../../hooks/employee/useUploadEmployeePhoto';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { useAuth } from '../../hooks/useAuth';
+import { canManageEmployees } from '../../utils/roles';
 import './EmployeeDetails.css'
 
+const MAX_PHOTO_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_PHOTO_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
+
 interface EmployeeDetailsProps {
+    id: number,
     firstName: string,
     lastName: string,
     jobTitle: string,
@@ -13,13 +21,15 @@ interface EmployeeDetailsProps {
     county: string,
     email?: string,
     brandColor: string,
+    photoUrl: string | null,
     detailsVisible: boolean,
     setDetailsVisible: React.Dispatch<React.SetStateAction<boolean>>;
     setConfirmDeleteVisible: React.Dispatch<React.SetStateAction<boolean>>;
     setEditFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export function EmployeeDetails(
-    { firstName,
+    { id,
+        firstName,
         lastName,
         jobTitle,
         company,
@@ -28,6 +38,7 @@ export function EmployeeDetails(
         county,
         email,
         brandColor,
+        photoUrl,
         detailsVisible,
         setDetailsVisible,
         setConfirmDeleteVisible,
@@ -37,7 +48,47 @@ export function EmployeeDetails(
 
     const { user } = useAuth();
     const panelRef = useRef<HTMLElement | null>(null);
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
     useFocusTrap(panelRef, detailsVisible);
+
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+    const [photoError, setPhotoError] = useState<string | null>(null);
+
+    const uploadPhoto = useUploadEmployeePhoto();
+    const deletePhoto = useDeleteEmployeePhoto();
+
+    useEffect(() => {
+        setPreviewUrl(null);
+        setPhotoError(null);
+    }, [id]);
+
+    function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files?.[0];
+        e.target.value = '';
+        if (!file) return;
+
+        if (!ACCEPTED_PHOTO_TYPES.includes(file.type)) {
+            setPhotoError('Photo must be a PNG, JPEG, or WEBP image');
+            return;
+        }
+        if (file.size > MAX_PHOTO_SIZE) {
+            setPhotoError('Photo must be smaller than 5MB');
+            return;
+        }
+
+        setPhotoError(null);
+        const localUrl = URL.createObjectURL(file);
+        setPreviewUrl(localUrl);
+
+        uploadPhoto.mutate({ id, file }, {
+            onSettled: () => URL.revokeObjectURL(localUrl),
+            onSuccess: () => setPreviewUrl(null),
+            onError: () => {
+                setPreviewUrl(null);
+                setPhotoError('Failed to upload photo');
+            },
+        });
+    }
 
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
@@ -65,13 +116,55 @@ export function EmployeeDetails(
             >
                 <div className='details-header' style={{ '--brand': brandColor } as React.CSSProperties}>
                     <button className='details-close-btn' onClick={() => { setDetailsVisible(false); setConfirmDeleteVisible(false) }}>×</button>
-                    <div className='details-avatar'>
-                        {firstName[0]}{lastName[0]}
+                    <div className='details-avatar-wrapper'>
+                        {previewUrl || photoUrl ? (
+                            <img className='details-avatar-photo' src={previewUrl ?? resolvePhotoUrl(photoUrl)} alt='' />
+                        ) : (
+                            <div className='details-avatar'>
+                                {firstName[0]}{lastName[0]}
+                            </div>
+                        )}
+
+                        {canManageEmployees(user?.role) && (
+                            <>
+                                <button
+                                    type='button'
+                                    className='details-avatar-edit-btn'
+                                    onClick={() => fileInputRef.current?.click()}
+                                    disabled={uploadPhoto.isPending || deletePhoto.isPending}
+                                    aria-label='Change photo'
+                                    title='Change photo'
+                                >
+                                    ✎
+                                </button>
+                                {photoUrl && !previewUrl && (
+                                    <button
+                                        type='button'
+                                        className='details-avatar-remove-btn'
+                                        onClick={() => deletePhoto.mutate(id)}
+                                        disabled={uploadPhoto.isPending || deletePhoto.isPending}
+                                        aria-label='Remove photo'
+                                        title='Remove photo'
+                                    >
+                                        ×
+                                    </button>
+                                )}
+                                <input
+                                    ref={fileInputRef}
+                                    type='file'
+                                    accept='image/png,image/jpeg,image/webp'
+                                    className='details-avatar-input'
+                                    onChange={handlePhotoChange}
+                                />
+                            </>
+                        )}
                     </div>
                     <div id="employee-details-heading" className='details-name'>
                         {firstName} {lastName}
                     </div>
                 </div>
+
+                {photoError && <p className='details-photo-error'>{photoError}</p>}
 
                 <div className='details-fields'>
                     <div className='details-field'>
@@ -105,7 +198,7 @@ export function EmployeeDetails(
                     </div>
                 </div>
 
-                {user?.role === 'editor' && (
+                {canManageEmployees(user?.role) && (
                 <div className='details-actions'>
                     <button type='button' className='details-edit-btn' onClick={() => { setEditFormVisible(true); setDetailsVisible(false) }}>Edit</button>
                     <button type='button' className='details-delete-btn' onClick={() => setConfirmDeleteVisible(true)}>Delete</button>

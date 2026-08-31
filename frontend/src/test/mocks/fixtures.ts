@@ -20,6 +20,7 @@ export const mockEmployees: Employee[] = [
         city: 'Berlin',
         county: 'Germany',
         brandColor: '#4F46E5',
+        photoUrl: null,
     },
     {
         id: 2,
@@ -32,6 +33,7 @@ export const mockEmployees: Employee[] = [
         city: 'London',
         county: 'United Kingdom',
         brandColor: '#059669',
+        photoUrl: null,
     },
     {
         id: 3,
@@ -44,6 +46,7 @@ export const mockEmployees: Employee[] = [
         city: 'New York',
         county: 'United States',
         brandColor: '#DC2626',
+        photoUrl: null,
     },
 ];
 

@@ -80,6 +80,70 @@
     font-size: 18px;
 }
 
+.details-avatar-wrapper {
+    position: relative;
+    width: 56px;
+    height: 56px;
+}
+
+.details-avatar-photo {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.details-avatar-edit-btn,
+.details-avatar-remove-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    font-size: 11px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.details-avatar-edit-btn {
+    bottom: -2px;
+    right: -2px;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+}
+
+.details-avatar-remove-btn {
+    top: -2px;
+    right: -2px;
+    background: var(--danger);
+    color: var(--text-on-accent);
+}
+
+.details-avatar-edit-btn:hover,
+.details-avatar-remove-btn:hover {
+    opacity: 0.85;
+}
+
+.details-avatar-edit-btn:disabled,
+.details-avatar-remove-btn:disabled {
+    cursor: default;
+    opacity: 0.6;
+}
+
+.details-avatar-input {
+    display: none;
+}
+
+.details-photo-error {
+    margin: 0;
+    padding: 0 24px;
+    color: var(--danger);
+    font-size: 0.8rem;
+}
+
 .details-name {
     font-size: 20px;
     font-weight: 700;

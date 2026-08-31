@@ -9,6 +9,7 @@ export type Employee = {
     city: string;
     county: string;
     brandColor: string;
+    photoUrl: string | null;
 };
 
 export type CreateEmployee = {

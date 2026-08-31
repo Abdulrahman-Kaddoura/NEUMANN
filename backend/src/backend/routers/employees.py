@@ -74,7 +74,7 @@ def get_employee(employee_id: int, db: Session = Depends(get_db)):
     "",
     response_model=EmployeeOut,
     status_code=201,
-    dependencies=[Depends(require_role("editor"))],
+    dependencies=[Depends(require_role("editor", "admin"))],
 )
 def create_employee(
     payload: EmployeeCreate,
@@ -107,7 +107,7 @@ def create_employee(
 @router.put(
     "/{employee_id}",
     response_model=EmployeeOut,
-    dependencies=[Depends(require_role("editor"))],
+    dependencies=[Depends(require_role("editor", "admin"))],
 )
 def update_employee(
     employee_id: int,
@@ -149,7 +149,7 @@ def update_employee(
 @router.post(
     "/{employee_id}/photo",
     response_model=EmployeeOut,
-    dependencies=[Depends(require_role("editor"))],
+    dependencies=[Depends(require_role("editor", "admin"))],
 )
 async def upload_employee_photo(
     employee_id: int,
@@ -173,7 +173,7 @@ async def upload_employee_photo(
 @router.delete(
     "/{employee_id}/photo",
     response_model=EmployeeOut,
-    dependencies=[Depends(require_role("editor"))],
+    dependencies=[Depends(require_role("editor", "admin"))],
 )
 def remove_employee_photo(
     employee_id: int,
@@ -195,7 +195,7 @@ def remove_employee_photo(
 @router.delete(
     "/{employee_id}",
     status_code=204,
-    dependencies=[Depends(require_role("editor"))],
+    dependencies=[Depends(require_role("editor", "admin"))],
 )
 def delete_employee(
     employee_id: int,
